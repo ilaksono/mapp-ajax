@@ -15,3 +15,4 @@
 * DELETE /maps/:id -> delete select map
 * POST /maps/:id/fav
 * GET /maps/:id/new -> template to make a new map
+
