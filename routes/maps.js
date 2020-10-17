@@ -6,24 +6,23 @@
  */
 const testUserID = 3;
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
-
   router.get("/", (req, res) => {
     const mapURLs = [];
     dbHelpers.loadAllMaps()
-    .then(maps => {
-      for (const map of maps) {
-        const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 300, 300, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-        console.log("test", mapStaticURL);
-        mapURLs.push(mapStaticURL);
-      }
-      const templateVars = { mapURLs };
-      console.log(mapURLs);
-      res.render("home", templateVars);
-    }).catch(err => console.log(err) );
+      .then(maps => {
+        for (const map of maps) {
+          const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 300, 300, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+          console.log("test", mapStaticURL);
+          mapURLs.push(mapStaticURL);
+        }
+        const templateVars = { mapURLs };
+        console.log(mapURLs);
+        res.render("home", templateVars);
+      }).catch(err => console.log(err));
   });
 
   router.get("/", (req, res) => {
@@ -68,7 +67,7 @@ module.exports = (db) => {
     const query = `INSERT INTO maps (title, description, owner_id, date_created)
     VALUES ($1, $2, $3, $4)
     RETURNING *;`;
-    return db.query(query, [locObj.mapTitle, locObj.mapDesc
+    db.query(query, [locObj.mapTitle, locObj.mapDesc
       , testUserID, locObj.dateCreated])
       .then(res => {
         console.log(res.rows[0]);
@@ -78,11 +77,15 @@ module.exports = (db) => {
         for (const i in locObj.lat) {
           const queryParams = [res.rows[0].id, locObj.lat[i]
             , locObj.lng[i], locObj.title[i], locObj.desc[i], locObj.img[i]];
-          db.query(query2, queryParams)
+          db.query(query2, queryParams);
         }
-      }).catch(err1 => console.log(err1));
-
+        res.redirect(`/${res.rows[0].map_id}`);
+      }).catch(err1 => res.json(err1));
   });
+  router.get('/:id', (req, res) => {
+    const templateVars = {};
+    return res.render('edit_map', templateVars);
+  })
 
   return router;
 };

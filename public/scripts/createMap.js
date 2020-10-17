@@ -26,33 +26,37 @@ function initMap() {
   //   console.log(mapsMouseEvent.latLng.toJSON());
   // })
 }
+const markersArr = [];
+const formArr = [];
+let numDeleted = 0;
+
 function clickHandle(map, myLatlng) {
-  let infoWindow = new google.maps.InfoWindow({
-    content: 'Click map to get lat/lng',
-    position: myLatlng
-  });
+  // let infoWindow = new google.maps.InfoWindow({
+  //   content: 'Click map to get lat/lng',
+  //   position: myLatlng
+  // });
 
   map.addListener('click', (mapsMouseEvent) => {
-    infoWindow.close();
-    infoWindow = new google.maps.InfoWindow({
-      position: mapsMouseEvent.latLng
-    });
-    infoWindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
-    infoWindow.open(map);
+    // infoWindow.close();
+    // infoWindow = new google.maps.InfoWindow({
+    //   position: mapsMouseEvent.latLng
+    // });
+    // infoWindow.setContent(JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2));
+    // infoWindow.open(map);
     const latVal = mapsMouseEvent.latLng.toJSON().lat;
     const lngVal = mapsMouseEvent.latLng.toJSON().lng;
+    const markCntr = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
       position: { lat: latVal, lng: lngVal },
       map: map,
-      icon: 'http://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`
     });
-    const markCntr = $('.mark-container').children().length + 1;
     $newLat = $(`<input type="text" name='lat${markCntr - 1}' hidden>`).val(latVal);
     $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(lngVal);
     $newTitle = $(`<input type='text' name='loc_title${markCntr - 1}' value='title${markCntr}'>`);
     $newDesc = $(`<input type='text' name='loc_desc${markCntr - 1}' value='desc${markCntr}'>`);
     $imgURL = $(`<input type='text' name='img_url${markCntr - 1}' value='example.png'>`);
-    $newDiv = $(`<div>`);
+    $newDiv = $(`<div id='entry${markCntr - 1}'>`);
     $newLabel = $(`<label>`).text(markCntr);
     // $('#lat-lngs').append($newLat).append($newLng);
     $newLabel.appendTo($newDiv);
@@ -61,23 +65,31 @@ function clickHandle(map, myLatlng) {
     $newTitle.appendTo($newDiv);
     $newDesc.appendTo($newDiv);
     $imgURL.appendTo($newDiv);
+    formArr.push($newDiv);
     $newDiv.appendTo($('.mark-container'));
+    marker.addListener('click', function() {
+      marker.setMap(null);
+      let index = markersArr.indexOf(this)
+      $(`#entry${index}`).remove();
+      numDeleted++;
+    });
+    markersArr.push(marker);
     // console.log(mapsMouseEvent.latLng.toJSON());
   });
 };
-function throwError (element) {
+function throwError(element) {
   $('.err-msg').hide();
-  if(element === 'MARKTITLE')
+  if (element === 'MARKTITLE')
     $('.err-msg').text('Location title fields cannot be empty!').show();
   else if (element === 'MAPTITLE')
     $('.err-msg').text('Map title cannot be empty!').show();
-  return  
+  return;
 }
 $(document).ready(function () {
   $('#lat-lngs').on('submit', function (event) {
     event.preventDefault();
-    for (let i = 0; i < $('.mark-container').children().length; i++) {
-      if (!$(`input[name='loc_title${i}']`).val())
+    for (const divNum in formArr) {
+      if (!$(`input[name='loc_title${divNum}']`).val())
         return throwError('MARKTITLE');
     }
     if ($('#map-title-js').val() === '')
