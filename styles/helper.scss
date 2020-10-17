@@ -1,0 +1,12 @@
+$logo-font: 'Fredoka One', cursive;
+$font-stack: 'Source Sans Pro', sans-serif;
+$darkgreen: #003A3D;
+$lightpink: #FEC8C6;
+$red: #A02C27;
+
+@mixin flexbox($flex-direction, $justify-content, $align-items) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
