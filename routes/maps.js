@@ -12,17 +12,15 @@ module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
 
   router.get("/", (req, res) => {
-    const mapURLs = [];
+    const loadedMaps = [];
     dbHelpers.loadAllMaps()
     .then(maps => {
       for (const map of maps) {
         const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 300, 300, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-        console.log("test", mapStaticURL);
-        mapURLs.push(mapStaticURL);
+        loadedMaps.push({ mapStaticURL, title: map.title, description: map.description });
       }
-      const templateVars = { mapURLs };
-      console.log(mapURLs);
-      res.render("home", templateVars);
+      const templateVars = { loadedMaps };
+      res.render("maps", templateVars);
     }).catch(err => console.log(err) );
   });
 
