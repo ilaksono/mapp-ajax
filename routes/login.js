@@ -15,9 +15,9 @@ module.exports = (db) => {
     `
     db.query(query, [user.email, user.password])
     .then(response => {
-      constDbUser = response.rows[0]
-      if (constDbUser.email.length > 0) {
-        res.redirect('login')
+      const dbUser = response.rows[0]
+      if (dbUser.email.length > 0) {
+        res.redirect('maps')
       }
       res.send("Please enter email and password")
     })

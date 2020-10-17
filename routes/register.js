@@ -1,3 +1,4 @@
+const { response } = require('express');
 const express = require('express');
 const router  = express.Router();
 
@@ -12,8 +13,13 @@ module.exports = (db) => {
     INSERT INTO users (username, email, password)
     VALUES ($1, $2, $3) RETURNING *;
     `
-    res.redirect('maps')
-    return db.query(query, [user.username, user.email, user.password])
+    console.log(user)
+    if (user.username === "" || user.email === "" || user.password === "") {
+      res.send("Please enter all fields to register")
+    } else {
+      db.query(query, [user.username, user.email, user.password])
+      res.redirect('maps')
+    }
   })
   return router;
 };
