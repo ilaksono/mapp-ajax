@@ -14,13 +14,16 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     const mapURLs = [];
     dbHelpers.loadAllMaps()
-    .then(map => {
-
-      console.log("hi");
-      console.log(map.);
+    .then(maps => {
+      for (const map of maps) {
+        const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 300, 300, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+        console.log("test", mapStaticURL);
+        mapURLs.push(mapStaticURL);
+      }
+      const templateVars = { mapURLs };
+      console.log(mapURLs);
+      res.render("home", templateVars);
     }).catch(err => console.log(err) );
-/*     const templateVars = {};
-    res.render("/", templateVars) */
   });
   return router;
 };
