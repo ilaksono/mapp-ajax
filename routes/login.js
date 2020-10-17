@@ -10,6 +10,7 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
     const user = req.body
+    req.session.userId = "";
     const query = `
     SELECT * FROM users
     WHERE email = $1
@@ -24,6 +25,7 @@ module.exports = (db) => {
         bcrypt.compare(user.password, dbUser.password, (err, result) => {
           if (result) {
             res.redirect('maps')
+            req.session.userId = dbUser.id;
           } else {
             res.send("Failed to login");
           }
