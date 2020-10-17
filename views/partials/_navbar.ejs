@@ -1,33 +1,20 @@
 <header>
-  <div class="outercontainer bg-dark-green">
-    <div class="innercontainer">
-      <a class="logo" href="/">mapp</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <% if(user = false) { %>
-          <a class="nav-item nav-link" href="/urls">My URLs</a>
-          <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-          <% } %>
+  <div class="outer-container bg-dark-green">
+    <div class="inner-container">
+      <div class="logo-container">
+        <a class="logo" href="/">mapp</a>
+        <i class="fas fa-map-marked-alt"></i>
+      </div>
+      <div class="button-container">
+        <div class="button">
+          <form action="/login" method="GET" class="form-inline">
+            <button class="bttn-stretch bttn-md bttn-default">Login</button>
+          </form>
         </div>
-        <div class="navbar-nav container d-flex justify-content-end">
-          <% if(user = false) { %>
-            <form action="/logout" method="POST" class="form-inline">
-              <div class="text-center mr-3 nav-item text-light">
-                Logged In As: <b><%= user.email %></b>
-              </div>
-              <button type="submit" class="btn btn-light">Logout</button>
-            </form>
-          <% } else { %>
-            <form action="/login" method="GET" class="form-inline">
-              <button type="submit" class="btn btn-light mb-0 mt-0 mr-3">Login</button>
-            </form>
-            <form action="/register" method="GET" class="form-inline">
-              <button type="submit" class="btn btn-light mb-0 mt-0">Register</button>
-            </form>
-          <% } %>
+        <div class="button">
+          <form action="/register" method="GET" class="form-inline">
+            <button class="bttn-stretch bttn-md bttn-default">Register</button>
+          </form>
         </div>
       </div>
     </div>
