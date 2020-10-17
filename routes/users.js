@@ -11,14 +11,19 @@ const router  = express.Router();
 module.exports = (db) => {
   router.get("/", (req, res) => {
     db.query(`
-    SELECT * FROM users
-    WHERE id = 1;
+    SELECT users.username, maps.title, maps.description
+    FROM users
+    JOIN maps ON users.id=maps.owner_id
+    WHERE users.id = 1;
     `)
       .then(data => {
         const users = data.rows[0].username;
-        console.log(users)
+        const title = data.rows[0].title
+        const description = data.rows[0].description
         const templateVars = {
           user: users,
+          title: title,
+          description: description
         };
         res.render('users', templateVars);
       })
@@ -28,5 +33,6 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
   return router;
 };
