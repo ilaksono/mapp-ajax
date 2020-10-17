@@ -17,7 +17,8 @@ CREATE TABLE maps (
   id SERIAL PRIMARY KEY NOT NULL,
   title VARCHAR(250) NOT NULL,
   description VARCHAR(250),
-  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+  owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+  date_created DATE NOT NULL
 );
 
 CREATE TABLE favourites (
