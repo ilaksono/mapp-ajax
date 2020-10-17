@@ -9,19 +9,18 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  const dbHelpers = require('../db/dbHelpers')(db);
+
   router.get("/", (req, res) => {
-    let query = `SELECT * FROM widgets`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const widgets = data.rows;
-        res.json({ widgets });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    const mapURLs = [];
+    dbHelpers.loadAllMaps()
+    .then(map => {
+
+      console.log("hi");
+      console.log(map.);
+    }).catch(err => console.log(err) );
+/*     const templateVars = {};
+    res.render("/", templateVars) */
   });
   return router;
 };
