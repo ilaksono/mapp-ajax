@@ -15,10 +15,8 @@ module.exports = (db) => {
     `
     db.query(query, [user.email, user.password])
     .then(response => {
-      console.log(response.rows[0].username)
       constDbUser = response.rows[0]
       if (constDbUser.email.length > 0) {
-        console.log("hello", constDbUser.username)
         res.redirect('login')
       }
       res.send("Please enter email and password")
@@ -28,7 +26,3 @@ module.exports = (db) => {
 
   return router;
 };
-
-// if (user.email === "" || user.password === "") {
-//   res.send("403: Failed to login");
-// }
