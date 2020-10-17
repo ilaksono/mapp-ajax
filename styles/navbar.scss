@@ -1,0 +1,134 @@
+@import 'helper';
+
+.outer-container {
+  @include flexbox(row, center, center);
+  width: 100%;
+  height: 100px;
+  position: fixed;
+  background-color: $grey;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+  border-bottom: 1px solid $darkgrey;
+}
+
+.inner-container {
+  @include flexbox(row, space-between, center);
+  width: 1000px;
+}
+
+.button-container {
+  @include flexbox(row, space-between, center);
+}
+
+.button {
+  @include flexbox(row, center, center);
+  width: 100px;
+}
+
+.logo {
+  text-decoration: none;
+  font-family: $logo-font;
+  font-size: 32px;
+  color: $red;
+}
+
+.logo:hover {
+  text-decoration: none;
+  color: $red;
+}
+
+.fa-map-marked-alt {
+  padding-left: 10px;
+  font-size: 36px;
+  color: $blue;
+}
+
+.bg-grey {
+  background-color: $grey;
+}
+
+.bttn-default {
+  color: #fff;
+}
+
+
+.bttn-md {
+  font-size: 20px;
+  font-family: $font-stack;
+  padding: 5px 12px;
+}
+.bttn-stretch {
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  border-color: transparent;
+  background: transparent;
+  font-weight: 400;
+  cursor: pointer;
+  position: relative;
+  font-size: 20px;
+  font-family: $font-stack;
+  padding: 5px 12px;
+  overflow: hidden;
+  border-width: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  letter-spacing: 0;
+  -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+.bttn-stretch:after,
+.bttn-stretch:before {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  content: '';
+  opacity: 0.65;
+  -webkit-transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.2s cubic-bezier(0.02, 0.01, 0.47, 1);
+  -webkit-transform: scaleX(0);
+          transform: scaleX(0);
+}
+.bttn-stretch:after {
+  top: 0;
+}
+.bttn-stretch:before {
+  bottom: 0;
+}
+.bttn-stretch:hover,
+.bttn-stretch:focus {
+  letter-spacing: 2px;
+  opacity: 0.9;
+  -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+.bttn-stretch:hover:after,
+.bttn-stretch:focus:after {
+  opacity: 1;
+  -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+}
+.bttn-stretch:hover:before,
+.bttn-stretch:focus:before {
+  opacity: 1;
+  -webkit-transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+  transition: all 0.3s cubic-bezier(0.02, 0.01, 0.47, 1);
+  -webkit-transform: scaleX(1);
+          transform: scaleX(1);
+}
+
+.bttn-stretch.bttn-md {
+  font-size: 20px;
+  font-family: $font-stack;
+  padding: 5px 12px;
+}
+
+.bttn-stretch.bttn-default {
+  color: $blue;
+}
