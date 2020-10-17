@@ -3,7 +3,7 @@ const router  = express.Router();
 const bcrypt = require("bcrypt");
 const users = require('./users');
 const salt = bcrypt.genSaltSync(10);
-const cookieSession = require("cookie-session");
+
 
 
 module.exports = (db) => {
@@ -13,6 +13,7 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
     const user = req.body
+    // WHY AM I DOING THIS, you'll remember
     req.session.userId = "";
     const insertQuery = `
     INSERT INTO users (username, email, password)
@@ -27,14 +28,15 @@ module.exports = (db) => {
     }
     db.query(dbCheckQuery, [user.email])
     .then(response => {
+
       const dbUser = response.rows[0]
       if (dbUser) {
         res.send('This email already exists')
       } else {
         res.redirect('maps')
-        return db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
-        .then(response1 => {
-          req.session.userId = response1.rows[0].id;
+        db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
+        .then(response => {
+          req.session.userId = response.rows[0].id;
         })
       }
     })
