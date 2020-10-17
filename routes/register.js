@@ -1,5 +1,7 @@
 const express = require('express');
 const router  = express.Router();
+const bcrypt = require("bcrypt")
+const salt = bcrypt.genSaltSync(10);
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -8,12 +10,27 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
     const user = req.body
-    const query = `
+    const insertQuery = `
     INSERT INTO users (username, email, password)
     VALUES ($1, $2, $3) RETURNING *;
     `
-    res.redirect('maps')
-    return db.query(query, [user.username, user.email, user.password])
+    const dbCheckQuery = `
+    SELECT * FROM users
+    WHERE email = $1
+    `
+    if (user.username === "" || user.email === "" || user.password === "") {
+      return res.send('Please enter all fields to register')
+    }
+    db.query(dbCheckQuery, [user.email])
+    .then(response => {
+      const dbUser = response.rows[0]
+      if (dbUser) {
+        res.send('This email already exists')
+      } else {
+        res.redirect('maps')
+        return db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
+      }
+    })
   })
   return router;
 };
