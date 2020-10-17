@@ -48,11 +48,6 @@
   background-color: $grey;
 }
 
-.bttn-default {
-  color: #fff;
-}
-
-
 .bttn-md {
   font-size: 20px;
   font-family: $font-stack;
@@ -131,4 +126,9 @@
 
 .bttn-stretch.bttn-default {
   color: $blue;
+}
+
+.bttn-stretch:focus {
+  outline: none;
+  border: none;
 }
