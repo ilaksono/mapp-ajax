@@ -14,5 +14,5 @@
 * PUT /maps/:id -> modify/edit select maps -> SUBMIT? OR AJAX
 * DELETE /maps/:id -> delete select map
 * POST /maps/:id/fav
-* GET /maps/:id/new -> template to make a new map
+* GET /maps/new -> template to make a new map
 
