@@ -1,7 +1,10 @@
 const express = require('express');
 const router  = express.Router();
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const users = require('./users');
 const salt = bcrypt.genSaltSync(10);
+const cookieSession = require("cookie-session");
+
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -10,6 +13,7 @@ module.exports = (db) => {
 
   router.post("/", (req, res) => {
     const user = req.body
+    req.session.userId = "";
     const insertQuery = `
     INSERT INTO users (username, email, password)
     VALUES ($1, $2, $3) RETURNING *;
@@ -29,6 +33,9 @@ module.exports = (db) => {
       } else {
         res.redirect('maps')
         return db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
+        .then(response1 => {
+          req.session.userId = response1.rows[0].id;
+        })
       }
     })
   })
