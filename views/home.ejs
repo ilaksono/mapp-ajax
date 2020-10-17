@@ -13,9 +13,10 @@
   </head>
 
   <body>
-    <h1>My Google Map</h1>
-    <img src="https://maps.googleapis.com/maps/api/staticmap?center=Berkeley,CA&zoom=14&size=400x400&key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"/>
-    <img src="https://maps.googleapis.com/maps/api/staticmap?center=40.714728,-73.998672&zoom=6&key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I" />
+    <h1>My Google Mapssss</h1>
+    <% for (const map of mapURLs) { %>
+      <div class="container"><img src="<%= map %>" /></div>
+    <% } %>
   </body>
 </html>
 

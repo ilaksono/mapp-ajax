@@ -9,10 +9,10 @@ INSERT INTO maps (title, description, owner_id) VALUES ('Good Views Map', 'Map s
 INSERT INTO maps (title, description, owner_id) VALUES ('Bathroom Map', 'Map showing public bathrooms in a city', 4);
 
 INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
-VALUES (1, 38.8951, -770364, 'Washington, DC','Shopper''s Drug Mart' ,'https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350'),
-(2, 48.8951, -770364, 'Some Place','McDonald''s','https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350'),
-(3, 58.8951, -770364, 'Somewhere','Applebee''s','https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350'),
-(4, 68.8951, -770364, 'Some place','Golf Course','https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350');
+VALUES (1, 38.895321, -34.135462, 'Washington, DC','Shopper''s Drug Mart' ,'https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350'),
+(2, 48.895321, -35.135469, 'Some Place','McDonald''s','https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350'),
+(3, 58.893251, -47.198471, 'Somewhere','Applebee''s','https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350'),
+(4, 68.893251, -12.184695, 'Some place','Golf Course','https://images.pexels.com/photos/2086676/pexels-photo-2086676.jpeg?auto=compress&cs=tinysrgb&h350');
 
 INSERT INTO favourites (user_id, map_id) VALUES (1, 3);
 INSERT INTO favourites (user_id, map_id) VALUES (2, 3);
