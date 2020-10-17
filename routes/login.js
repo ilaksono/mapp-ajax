@@ -1,5 +1,7 @@
 const express = require('express');
 const router  = express.Router();
+const bcrypt = require("bcrypt")
+
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -11,17 +13,25 @@ module.exports = (db) => {
     const query = `
     SELECT * FROM users
     WHERE email = $1
-    AND password = $2
     `
-    db.query(query, [user.email, user.password])
+    if (user.email === "" || user.password === "") {
+      return res.send('Please enter email and password')
+    }
+    db.query(query, [user.email])
     .then(response => {
       const dbUser = response.rows[0]
-      if (dbUser.email.length > 0) {
-        res.redirect('maps')
+      if (dbUser) {
+        bcrypt.compare(user.password, dbUser.password, (err, result) => {
+          if (result) {
+            res.redirect('maps')
+          } else {
+            res.send("Failed to login");
+          }
+        })
+      } else {
+        res.send("Failed to login");
       }
-      res.send("Please enter email and password")
     })
-
   });
 
   return router;
