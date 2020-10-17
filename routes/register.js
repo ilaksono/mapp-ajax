@@ -1,7 +1,6 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require("bcrypt");
-const users = require('./users');
 const salt = bcrypt.genSaltSync(10);
 
 
@@ -36,7 +35,7 @@ module.exports = (db) => {
         res.redirect('maps')
         db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
         .then(response => {
-          req.session.userId = response.rows[0].id;
+          res.req.session.userId = response.rows[0].id;
         })
       }
     })
