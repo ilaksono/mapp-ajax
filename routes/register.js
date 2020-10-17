@@ -1,6 +1,7 @@
-const { response } = require('express');
 const express = require('express');
 const router  = express.Router();
+const bcrypt = require("bcrypt")
+const salt = bcrypt.genSaltSync(10);
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -27,7 +28,7 @@ module.exports = (db) => {
         res.send('This email already exists')
       } else {
         res.redirect('maps')
-        return db.query(insertQuery, [user.username, user.email, user.password])
+        return db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
       }
     })
   })
