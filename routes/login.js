@@ -11,10 +11,10 @@ module.exports = (db) => {
   router.post("/", (req, res) => {
     const user = req.body
     req.session.userId = "";
-    const query = `
+    const query = `;
     SELECT * FROM users
-    WHERE email = $1
-    `
+    WHERE email = $1;
+    `;
     if (user.email === "" || user.password === "") {
       return res.send('Please enter email and password')
     }

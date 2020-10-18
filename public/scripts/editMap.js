@@ -29,6 +29,7 @@ const initializeMarker = (markersJson, count) => {
 };
 
 function formAddRow(mJson) {
+
   const markCntr = $('.mark-container').children().length + 1 + numDeleted;
   const $newLat = $(`<input type="text" name='lat${markCntr - 1}' hidden>`).val(mJson.latitude);
   const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(mJson.longitude);
@@ -46,7 +47,7 @@ function formAddRow(mJson) {
   $imgURL.appendTo($newDiv);
   $newDiv.appendTo($('.mark-container'));
 
-}
+};
 
 function initMap(center) {
   var options = {
