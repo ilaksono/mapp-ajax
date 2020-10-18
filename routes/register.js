@@ -7,7 +7,7 @@ const salt = bcrypt.genSaltSync(10);
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    return res.render('register', { user: req.session ? req.session.userId : null });
+    return res.render('register', { username: null, userId: null });
   });
 
   router.post("/", (req, res) => {
@@ -24,7 +24,7 @@ module.exports = (db) => {
     `
     if (user.username === "" || user.email === "" || user.password === "") {
       err_msg = 'Please enter all fields to register';
-      return res.render('register', { err_msg: err_msg } );
+      return res.render('register', { err_msg: err_msg, username: null, userId: null } );
     }
     db.query(dbCheckQuery, [user.email])
     .then(response => {
@@ -32,7 +32,7 @@ module.exports = (db) => {
       const dbUser = response.rows[0]
       if (dbUser) {
         err_msg = 'This email is already associated with an account';
-        return res.render('register', { err_msg: err_msg } );
+        return res.render('register', { err_msg: err_msg, username: null, userId: null } );
       } else {
         db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
         .then(response => {
