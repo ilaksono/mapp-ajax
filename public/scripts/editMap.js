@@ -7,7 +7,7 @@ let center = {};
 let numDeleted = 0;
 const initializeMarker = (markersJson, count) => {
   dbData.push(markersJson.id);
-  console.log(dbData);
+  // console.log(dbData);
   // console.log(typeof markersJson.latitude, markersJson.latitude)
   const marker = new google.maps.Marker({
     position: { lat: markersJson.latitude, lng: markersJson.longitude },
@@ -17,10 +17,10 @@ const initializeMarker = (markersJson, count) => {
   marker.addListener('click', function () {
     marker.setMap(null);
     const index = markerArr.indexOf(this);
-    console.log(markerArr.length);
+    // console.log(markerArr.length);
     markDeleteIds.push(dbData[index]);
     dbData.splice(index, 1, '');
-    console.log(dbData);
+    // console.log(dbData);
     $(`#entry${index}`).remove();
     numDeleted++;
   });
@@ -114,7 +114,7 @@ $(document).ready(() => {
     const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}&og_marks=${dbData}`;
     console.log(newData);
     $.ajax({ method: 'PUT', url: `/api/maps/${mapId}`, data: newData }).done(res => {
-      console.log('success', res.url);
+      // console.log('success', res.url);
       window.location.assign(res.url);
     });
   });

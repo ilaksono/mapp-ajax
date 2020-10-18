@@ -16,8 +16,9 @@
   flex-direction: column;
   align-items: center;
   width: 70%;
-  background-color: rgb(214, 238, 214);
+  background-color: #C3ECB2;
 }
+
 
 h1 {
   align-self: center;
@@ -30,8 +31,9 @@ h1 {
   width: 100%;
 }
 .map-form {
-  background-color: lightblue;
+  background-color: #AADAFF;
   display: flex;
+  font-family: $font-stack;
   flex-direction: column;
   float: left;
   overflow-y: auto;
@@ -64,11 +66,16 @@ h1 {
 }
 .map-form button {
   width: 100px;
+  font-family: $font-stack;
   align-self: center;
+  cursor:pointer;
+  border: solid 1px $blue;
+  border-radius: 11px;
 }
 
 .map-form input {
   margin: 10px;
+  border: none;
   border-bottom: 3px solid black;
   background-color: $grey;
   font-family: $font-stack;
@@ -85,6 +92,9 @@ h1 {
   align-items: flex-start;
   margin-top: 100px;
   // justify-content: space-between;
+}
+i {
+  height: 16px;
 }
 
 .mark-container {
@@ -107,4 +117,8 @@ h1 {
 }
 .fav-icon:hover {
   cursor: pointer;
+}
+.blend-form {
+  background-color: #AADAFF;
+  border: none;
 }

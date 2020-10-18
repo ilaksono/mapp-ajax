@@ -80,9 +80,12 @@ module.exports = (db) => {
   });
 
   router.get('/:id', (req, res) => {
-    const templateVars = {};
+    dbHelpers.getUserById(req.session.userId)
+      .then(user => {
+        const templateVars = { username: user.username, userId: user.id };
+        return res.render('edit_map', templateVars);
+      });
 
-    return res.render('edit_map', templateVars);
   });
 
   return router;
