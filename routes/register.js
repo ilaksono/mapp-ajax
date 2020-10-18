@@ -37,7 +37,7 @@ module.exports = (db) => {
         res.redirect('maps')
         db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
         .then(response => {
-          res.req.session.userId = response.rows[0].id;
+          req.session.userId = response.rows[0].id;
         })
       }
     })
