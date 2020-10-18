@@ -9,7 +9,7 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"></script>
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="/styles/layout.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/create-map.css" type="text/css" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
@@ -19,30 +19,25 @@
 </head>
 
 <body>
-  <h1>Edit/Modify Map</h1>
-  <span><h3>Created By: </h3><h2 class='creator'></h2></span>
+  <div class='page-container'>
   <form id='lat-lngs'>
     <div class='title-desc-container'>
-      <label>
-        Title:
-      </label><input type='text' id='map-title-js' name='map_title'>
-      <label>
-        Description:
-      </label>
-      <input type='text' class='map-desc-js' name='map_desc'>
-      <i class="fas fa-heart fav-icon"></i>
+     <input type='text' id='map-title-js' name='map_title'>
+      <input type='text' class='map-desc-js' name='map_desc'>      
     </div>
-    <div id='map'></div>
     <button type='submit'>Submit Changes</button> 
     <span class='err-msg'></span>
     <div class='input-heads'>
-      <h3>Title:</h3>
-      <h3>Description:</h3>
-      <h3>URL:</h3>
     </div>
     <div class='mark-container'>
     </div>
   </form>
+  <div class='map-container'>
+    
+    <div class='map-head'><i class="fas fa-heart fav-icon"></i><h1>Edit/Modify Map</h1><h3>Created By: <span class='creator'></span></h3></div>
+    <div id='map'></div>
+  </div>
+</div>
 </body>
 
 </html>
