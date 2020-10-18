@@ -23,7 +23,7 @@ module.exports = (db) => {
         }
         dbHelpers.getUserById(req.session.userId)
         .then(user => {
-          const templateVars = { loadedMaps, username: user.username, userId: user.Id };
+          const templateVars = { loadedMaps, username: user.username, userId: user.id };
           res.render("maps", templateVars);
         })
         .catch(err => console.log(err));
