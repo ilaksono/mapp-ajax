@@ -77,13 +77,16 @@ $(document).ready(function () {
     }
     if ($('#map-title-js').val() === '')
       return throwError('MAPTITLE');
-    console.log($(this));
+    // console.log($(this));
     const formData = $(this).serialize();
-    console.log(formData);
+    // console.log(formData);
     const dateCreated = new Date().toISOString().slice(0, 10).replace('T', ' ');
     const newData = formData + `&date_created=${dateCreated}`;
     console.log(newData);
-    $.ajax({ method: 'POST', url: `/maps`, data: newData });
+    $.ajax({ method: 'POST', url: `/maps`, data: newData })
+      .done(res => {
+        window.location.assign(res.url);
+      });
   });
 });
 
