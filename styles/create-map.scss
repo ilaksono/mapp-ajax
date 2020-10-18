@@ -1,3 +1,5 @@
+@import 'helper';
+
 #map {
   height: 400px;
   width: 100%;
@@ -31,4 +33,14 @@ form input {
   color: red;
   font-weight: bold;
 
+}
+
+.fav-icon-like {
+  color: $red;
+}
+.fav-icon-not {
+  color: $darkgrey;
+}
+.fav-icon:hover {
+  cursor: pointer;
 }
