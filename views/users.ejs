@@ -17,17 +17,25 @@
 
 
   <body>
-
+    <%- include('partials/_navbar') %>
     <main>
       <h1>Hello <%= username %>!</h1>
       <p>This is your profile!</p>
+
       <h3>Favorites</h3>
+      <% for (const item of allFavourited) { %>
+      <p><%= item.title %></p>
+      <p><%= item.description %></p>
+      <img src="<%= item.mapStaticURL %>"/>
+      <% } %>
+
       <h3>Contributed to</h3>
       <% for (const item of allContributed) { %>
       <p><%= item.title %></p>
       <p><%= item.description %></p>
       <img src="<%= item.mapStaticURL %>"/>
       <% } %>
+
     </main>
   </body>
 </html>

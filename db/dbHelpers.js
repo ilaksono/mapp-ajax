@@ -106,7 +106,7 @@ module.exports = (db) => {
     WHERE user_id = $1;
     `;
     return db.query(queryString, [userId])
-      .then(response => response.rows[0]);
+      .then(response => response.rows);
   }
 
   return {

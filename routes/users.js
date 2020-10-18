@@ -14,17 +14,25 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     console.log(req.params.id);
     const allContributed = []
+    const allFavourited = []
+    dbHelpers.getFavouritesById(req.params.id)
+    .then(fav => {
+      console.log(fav)
+      for (const item of fav) {
+        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+          allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
+      }
+    })
     dbHelpers.getContributorById(req.params.id)
-    // dbHelpers.getFavouritesById(req.params.id)
     .then(data => {
       for (const item of data) {
-        console.log(item)
         const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           allContributed.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
       }
       dbHelpers.getUserById(req.params.id)
       .then(user => {
         const templateVars = {
+          allFavourited,
           allContributed,
           username: user.username,
           userId: user.id
