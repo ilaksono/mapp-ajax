@@ -1,6 +1,6 @@
 
 function initMap() {
-  const myLatlng = { lat: 42.3601, lng: -71.0589 };
+  const myLatlng = { lat: 43.6532, lng: -79.3832 };
   var options = {
     zoom: 8,
     center: myLatlng

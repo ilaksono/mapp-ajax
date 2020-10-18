@@ -35,7 +35,7 @@ module.exports = (db) => {
     const descArr = [];
     const imgArr = [];
     for (let i = 0; i < Object.keys(datajson).length; i += 5) {
-      const index = Math.floor(i / 5);
+      const index = Number(Object.keys(datajson)[i][3]);
       latArr.push(Number(datajson[`lat${index}`]));
       lngArr.push(Number(datajson[`lng${index}`]));
       titleArr.push(datajson[`loc_title${index}`]);
@@ -48,12 +48,43 @@ module.exports = (db) => {
       , desc: descArr, img: imgArr
     };
 
+    
+    
   };
+  
+  const createUpdateArray = (json, num) => {
+    const latArr = [];
+    const lngArr = [];
+    const titleArr = [];
+    const descArr = [];
+    const imgArr = [];
+    for (let i = 0; i < num; i++) {
+      const index = Number(Object.keys(json)[0][3]);
+      latArr.push(Number(json[`lat${index}`]));
+      lngArr.push(Number(json[`lng${index}`]));
+      titleArr.push(json[`loc_title${index}`]);
+      descArr.push(json[`loc_desc${index}`]);
+      imgArr.push(json[`img_url${index}`]);
+
+      delete json[`lat${index}`];
+      delete json[`lng${index}`];
+      delete json[`loc_title${index}`];
+      delete json[`loc_desc${index}`];
+      delete json[`img_url${index}`];
+    }
+    return {
+      latitude: latArr, longitude: lngArr, title: titleArr
+      , description: descArr, image_url: imgArr
+    }
+
+  }
+
 
   return {
     fetchLatlngByIP,
     createLocationsArray, 
     loadAllMaps, 
-    buildStaticURL
+    buildStaticURL,
+    createUpdateArray
   };
 };

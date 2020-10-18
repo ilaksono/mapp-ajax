@@ -1,7 +1,7 @@
 const markerArr = [];
 const mapId = Number(window.location.pathname.split('').slice(6).join(''));
 const dbData = [];
-const marKDeleteIds = [];
+const markDeleteIds = [];
 let map;
 let center = {};
 let numDeleted = 0;
@@ -18,7 +18,8 @@ const initializeMarker = (markersJson, count) => {
   marker.addListener('click', function () {
     marker.setMap(null);
     const index = markerArr.indexOf(this);
-    marKDeleteIds.push(dbData[index]);
+    markDeleteIds.push(dbData[index]);
+    $(`#entry${index}`).remove();
     numDeleted++;
   });
   formAddRow(markersJson);
@@ -57,7 +58,7 @@ function initMap(center) {
 function clickHandle() {
   map.addListener('click', (mapsMouseEvent) => {
     const lat = mapsMouseEvent.latLng.toJSON().lat;
-    const lng = mapsMouseEvent.latLng.toJSON().lng
+    const lng = mapsMouseEvent.latLng.toJSON().lng;
     const marker = new google.maps.Marker({
       position: { lat, lng },
       map,
@@ -70,17 +71,16 @@ function clickHandle() {
       $(`#entry${index}`).remove();
       numDeleted++;
     });
-    markerArr.push(marker);
 
     const markJson = {
       latitude: lat,
       longitude: lng,
       title: 'new title',
       description: 'description',
-      image_url: 'example.png' 
-    }
+      image_url: 'example.png'
+    };
     formAddRow(markJson);
-
+    markerArr.push(marker);
   });
 }
 
@@ -91,18 +91,33 @@ $(document).ready(() => {
     center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length;
     center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length;
     initMap(center);
+    $('.creator').text(data[0].username);
     return data;
   }).done(data => {
-    console.log(data);
+    // console.log(data);
+    $('#map-title-js').val(data[0].maps_title)
+    $('#map-desc-js').val(data[0].maps_description);
     data.forEach((val, index) => {
       initializeMarker(val, index);
     });
   });
 
+  // map_id: mapId, deleted ids: markDeleteIds
+  // numNew = numTotal-numDeleted(markDeleteIds.length)
+  //  
   $('form').on('submit', function (event) {
     event.preventDefault();
-    console.log(marKDeleteIds, 'delete ids');
-    console.log('');
+    const numDeleted = markDeleteIds.length;
+
+    // console.log(markDeleteIds, 'delete ids');
+    const formData = $(this).serialize();
+    // console.log($(this).serialize());
+    console.log(markDeleteIds);
+    const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}`;
+    console.log(newData);
+    $.ajax({ method: 'PUT', url: `/api/maps/${mapId}`, data: newData }).success(function () {
+      console.log('success');
+    });
 
   });
 });
