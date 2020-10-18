@@ -31,6 +31,12 @@
       <button type="submit">Login</button>
 
     </form>
+    <br>
+
+    <% if(locals.err_msg) { %>
+      <div class="alert alert-danger" role="alert"><%= err_msg %></div>
+      <% } %>
+
 
   </main>
   </body>

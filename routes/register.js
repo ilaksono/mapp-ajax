@@ -23,14 +23,16 @@ module.exports = (db) => {
     WHERE email = $1;
     `
     if (user.username === "" || user.email === "" || user.password === "") {
-      return res.send('Please enter all fields to register')
+      err_msg = 'Please enter all fields to register';
+      return res.render('register', { err_msg: err_msg } );
     }
     db.query(dbCheckQuery, [user.email])
     .then(response => {
 
       const dbUser = response.rows[0]
       if (dbUser) {
-        res.send('This email already exists')
+        err_msg = 'This email is already associated with an account';
+        return res.render('register', { err_msg: err_msg } );
       } else {
         db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
         .then(response => {
