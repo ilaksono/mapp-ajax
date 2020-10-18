@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const testUser = 3;
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
@@ -24,19 +25,16 @@ module.exports = (db) => {
     let delArr = dataJson.deleted.split(',');
     if (delArr[0] === '')
       delArr = [];
-    // console.log(delArr.length);
     const ogLen = Number(dataJson.og_len);
     const mapTitle = dataJson.map_title;
     const mapDesc = dataJson.map_desc;
     const markerIDs = dataJson.og_marks.split(',');
-    console.log(markerIDs);
-    for(let i = 0; i < markerIDs.length; i++) {
-      if(!markerIDs[i]) {
+    for (let i = 0; i < markerIDs.length; i++) {
+      if (!markerIDs[i]) {
         markerIDs.splice(i, 1);
         i--;
-      } 
+      }
     }
-    // console.log(delArr);
     delete dataJson.deleted;
     delete dataJson.og_len;
     delete dataJson.map_title;
@@ -77,8 +75,6 @@ module.exports = (db) => {
     for (const i in updateObj.latitude) {
 
       let updateQuery;
-      // console.log(key, typeof value[i]);
-      // console.log(key, value[i], updateObj.latitude[i]);
       updateQuery = `UPDATE markers 
            SET title = $1 WHERE id = $2;`;
       db.query(updateQuery, [updateObj.title[i], Number(markerIDs[i])])
@@ -95,11 +91,6 @@ module.exports = (db) => {
         .catch(err => console.log(err, '2-3'));
     }
 
-    // if (key !== 'latitude' && key !== 'longitude' && key !== 'map_id') {
-    //   db.query(updateQuery, [`${key}`, value[i], updateObj.latitude[i]])
-    //     .catch(err => console.log(err, '2'));
-    // }
-
     //insert
     const insertQuery = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
     VALUES ($1, $2, $3, $4, $5, $6)
@@ -112,7 +103,44 @@ module.exports = (db) => {
         .catch(err => console.log(err, '3'));
     }
 
-    return res.status(200).json({url: '/maps'});
+    return res.status(200).json({ url: '/maps' });
+  });
+
+  router.get('/:id/fav', (req, res) => {
+    const favQuery = `SELECT * FROM favourites
+    WHERE map_id = $1 AND user_id = $2
+    ;`;
+    db.query(favQuery, [req.params.id, testUser])
+      .then(data => {
+        if (data.rows[0]) {
+          if (data.rows[0].id) return res.status(200).json({ val: true });
+        }
+        else
+          return res.status(200).json({ val: false });
+      }).catch(err => console.log(err, '1'));
+  });
+
+  router.post('/:id/fav', (req, res) => {
+    const favQuery = `INSERT INTO favourites
+    (user_id, map_id) VALUES ($1, $2)
+    RETURNING *;
+    `;
+    db.query(favQuery, [testUser, req.params.id])
+      .then(data => {
+        console.log(data.rows[0]);
+        return res.status(200).json({ val: 'INSERT' });
+      }).catch(err => console.log(err,'2'));
+  });
+
+  router.delete('/:id/fav', (req, res) => {
+    const favQuery = `DELETE FROM favourites 
+    WHERE user_id = $1 AND map_id = $2
+    RETURNING *;`;
+    db.query(favQuery, [testUser, req.params.id])
+      .then(data => {
+        console.log(data.rows[0]);
+        return res.status(200).json({ val: 'DELETE' });
+      }).catch(err => console.log(err,'3'));
   });
 
   return router;
