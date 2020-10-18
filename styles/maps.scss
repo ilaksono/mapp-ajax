@@ -5,6 +5,10 @@
   flex-wrap: wrap;
 }
 
+a {
+  display: block;
+}
+
 .map-card {
   @include flexbox(column, flex-start, center);
   height: 350px;
@@ -14,14 +18,16 @@
   border: 1px solid $darkgrey;
   border-radius: 15px;
   padding-top: 15px;
+  color: $blue;
   box-sizing: content-box
 }
 
 .map-card:hover {
-  cursor: pointer;
   box-shadow: 7px 10px $darkgrey;
   border: 2px solid $blue;
-  margin: 14px calc((100% - 275px * 3) / 6 - 4px);
+  margin: 14px calc((100% - 275px * 3) / 6 - 3px);
+  color: $blue;
+  text-decoration: none;
 }
 
 .map-container {

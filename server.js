@@ -62,7 +62,7 @@ app.use('/api/maps', markersRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+  res.redirect("maps");
 });
 
 

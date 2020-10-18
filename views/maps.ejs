@@ -24,7 +24,7 @@
       <h2>All Maps</h2>
       <div class="all-maps-container">
         <% for (const map of loadedMaps) { %>
-          <div class="map-card">
+          <a class="map-card" href="/maps/<%= map.id %>">
             <div class="map-container">
               <img src="<%= map.mapStaticURL %>" />
             </div>

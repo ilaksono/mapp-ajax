@@ -16,7 +16,7 @@ module.exports = (db) => {
       .then(maps => {
         for (const map of maps) {
           const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-          loadedMaps.push({ mapStaticURL, title: map.title, description: map.description });
+          loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description });
         }
         dbHelpers.getUserById(req.session.userId)
         .then(user => {
