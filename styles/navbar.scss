@@ -17,13 +17,44 @@
   width: 1000px;
 }
 
-.button-container {
+.left-container {
   @include flexbox(row, space-between, center);
 }
+
+.profile {
+  margin-left: 15px;
+}
+
+.right-container {
+  @include flexbox(row, space-between, center);
+}
+
 
 .button {
   @include flexbox(row, center, center);
   width: 100px;
+}
+
+.user {
+  @include flexbox(row, center, center);
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.blue {
+  color: $blue;
+}
+
+.profile {
+  @include flexbox(row, center, center);
+  margin-left: 10px;
+  width: 160px;
+}
+
+.map {
+  @include flexbox(row, center, center);
+  width: 150px;
+
 }
 
 .logo {

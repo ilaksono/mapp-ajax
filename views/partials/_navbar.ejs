@@ -1,26 +1,42 @@
 <header>
   <div class="outer-container bg-dark-green">
     <div class="inner-container">
-      <div class="logo-container">
+      <div class="left-container">
         <a class="logo" href="/">mapp</a>
         <i class="fas fa-map-marked-alt"></i>
+        <% if(userId) { %>
+          <div class="profile">
+            <form action="/users/<%= userId %>" method="GET" class="form-inline">
+              <button class="bttn-stretch bttn-md bttn-default">Your Profile</button>
+            </form>
+          </div>
+          <div class="map">
+            <form action="/maps/new" method="GET" class="form-inline">
+              <button class="bttn-stretch bttn-md bttn-default">Create Map</button>
+            </form>
+          </div>
+        <% } %>
       </div>
-      <div class="button-container">
-        <div class="button">
-          <form action="/login" method="GET" class="form-inline">
-            <button class="bttn-stretch bttn-md bttn-default">Login</button>
-          </form>
-        </div>
-        <div class="button">
-          <form action="/register" method="GET" class="form-inline">
-            <button class="bttn-stretch bttn-md bttn-default">Register</button>
-          </form>
-        </div>
-        <div class="button">
-          <form action="/logout" method="POST" class="form-inline">
-            <button class="bttn-stretch bttn-md bttn-default">Logout</button>
-          </form>
-        </div>
+      <div class="right-container">
+        <% if(!userId) { %>
+          <div class="button">
+            <form action="/login" method="GET" class="form-inline">
+              <button class="bttn-stretch bttn-md bttn-default">Login</button>
+            </form>
+          </div>
+          <div class="button">
+            <form action="/register" method="GET" class="form-inline">
+              <button class="bttn-stretch bttn-md bttn-default">Register</button>
+            </form>
+          </div>
+        <% } else { %>
+          <div class="user"><span class="blue">Welcome back <strong><%= username %></strong></span></div>
+          <div class="button">
+            <form action="/logout" method="POST" class="form-inline">
+              <button class="bttn-stretch bttn-md bttn-default">Logout</button>
+            </form>
+          </div>
+        <% } %>
       </div>
     </div>
   </div>

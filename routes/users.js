@@ -9,29 +9,26 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  router.get("/", (req, res) => {
-    db.query(`
-    SELECT users.username, maps.title, maps.description
-    FROM users
-    JOIN maps ON users.id=maps.owner_id
-    WHERE users.id = 1;
-    `)
-      .then(data => {
-        const users = data.rows[0].username;
-        const title = data.rows[0].title
-        const description = data.rows[0].description
-        const templateVars = {
-          user: users,
-          title: title,
-          description: description
-        };
-        res.render('users', templateVars);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+  const dbHelpers = require('../db/dbHelpers')(db);
+  router.get("/:id", (req, res) => {
+    console.log(req.params.id);
+    dbHelpers.getUserById(req.params.id)
+    .then(data => {
+      const users = data.username;
+      const title = data.title
+      const description = data.description
+      const templateVars = {
+        user: users,
+        title: title,
+        description: description
+      };
+      res.render('users', templateVars);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
   });
   return router;
 };

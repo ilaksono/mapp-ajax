@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    return res.render('login')
+    return res.render('login', { user: req.session ? req.session.userId : null });
   });
 
   router.post("/", (req, res) => {
@@ -16,7 +16,8 @@ module.exports = (db) => {
     WHERE email = $1;
     `;
     if (user.email === "" || user.password === "") {
-      return res.send('Please enter email and password')
+      err_msg = 'Please enter valid email and password';
+      return res.render('login', { err_msg: err_msg } );
     }
     db.query(query, [user.email])
     .then(response => {
@@ -24,14 +25,16 @@ module.exports = (db) => {
       if (dbUser) {
         bcrypt.compare(user.password, dbUser.password, (err, result) => {
           if (result) {
-            res.redirect('maps')
             req.session.userId = dbUser.id;
+            res.redirect('maps');
           } else {
-            res.send("Failed to login");
+            err_msg = 'Failed to login';
+            return res.render('login', { err_msg: err_msg } );
           }
         })
       } else {
-        res.send("Failed to login");
+        err_msg = 'Failed to login';
+        return res.render('login', { err_msg: err_msg } );
       }
     })
   });

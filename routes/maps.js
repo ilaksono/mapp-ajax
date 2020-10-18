@@ -18,8 +18,13 @@ module.exports = (db) => {
           const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           loadedMaps.push({ mapStaticURL, title: map.title, description: map.description });
         }
-        const templateVars = { loadedMaps };
-        res.render("maps", templateVars);
+        dbHelpers.getUserById(req.session.userId)
+        .then(user => {
+          const username = user.username ? user.username : null;
+          const userId = user.id ? user.id : null;
+          const templateVars = { loadedMaps, username, userId };
+          res.render("maps", templateVars);
+        });
       }).catch(err => console.log(err));
   });
 
@@ -42,6 +47,7 @@ module.exports = (db) => {
     const defaultFrame = dbHelpers.fetchLatlngByIP();
     console.log(defaultFrame);
     const templateVars = {
+      user: req.session.userId,
       defaultFrame
     };
     return res.render('create_map', templateVars);
@@ -84,7 +90,7 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     const templateVars = {};
-    
+
     return res.render('edit_map', templateVars);
   });
 
