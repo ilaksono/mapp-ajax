@@ -47,11 +47,8 @@ module.exports = (db) => {
       lat: latArr, lng: lngArr, title: titleArr
       , desc: descArr, img: imgArr
     };
-
-    
-    
   };
-  
+
   const createUpdateArray = (json, num) => {
     const latArr = [];
     const lngArr = [];
@@ -72,18 +69,17 @@ module.exports = (db) => {
       delete json[`loc_desc${index}`];
       delete json[`img_url${index}`];
     }
+    
     return {
       latitude: latArr, longitude: lngArr, title: titleArr
       , description: descArr, image_url: imgArr
-    }
-
-  }
-
+    };
+  };
 
   return {
     fetchLatlngByIP,
-    createLocationsArray, 
-    loadAllMaps, 
+    createLocationsArray,
+    loadAllMaps,
     buildStaticURL,
     createUpdateArray
   };

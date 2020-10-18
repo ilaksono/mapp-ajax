@@ -28,16 +28,28 @@ module.exports = (db) => {
     const ogLen = Number(dataJson.og_len);
     const mapTitle = dataJson.map_title;
     const mapDesc = dataJson.map_desc;
+    const markerIDs = dataJson.og_marks.split(',');
+    console.log(markerIDs);
+    for(let i = 0; i < markerIDs.length; i++) {
+      if(!markerIDs[i]) {
+        markerIDs.splice(i, 1);
+        i--;
+      } 
+    }
     // console.log(delArr);
     delete dataJson.deleted;
     delete dataJson.og_len;
     delete dataJson.map_title;
     delete dataJson.map_desc;
+    delete dataJson.og_marks;
     console.log(dataJson, 'trim');
-    updateObj = dbHelpers.createUpdateArray(dataJson, ogLen - delArr.length);
+    const updateObj = dbHelpers.createUpdateArray(dataJson, ogLen - delArr.length) || {};
 
     console.log('update: ', updateObj);
     console.log('new: ', dataJson);
+
+    const insertObj = dbHelpers.createLocationsArray(dataJson) || {};
+    console.log(insertObj, 'insert');
 
     //delete
     const deleteQuery = `UPDATE markers 
@@ -45,7 +57,7 @@ module.exports = (db) => {
     RETURNING *;`;
     for (const id of delArr) {
       db.query(deleteQuery, [Number(id)])
-        .catch(err => console.log(err));
+        .catch(err => console.log(err, '1'));
     }
 
     // update map title/desc
@@ -56,30 +68,51 @@ module.exports = (db) => {
     SET description = $1 WHERE id = $2
     RETURNING *;`;
     db.query(mapUpQueryTitle, [mapTitle, Number(req.params.id)])
-    .catch(err => console.log(err));
+      .catch(err => console.log(err, '4'));
     db.query(mapUpQueryDesc, [mapDesc, Number(req.params.id)])
-    .catch(err => console.log(err));
+      .catch(err => console.log(err, '5'));
 
     //update markers
-    const updateQuery = `UPDATE markers 
-    SET $1 = $2 WHERE latitude = $3
-    RETURNING *;`;
 
     for (const i in updateObj.latitude) {
-      for (let [key, value] of Object.entries(updateObj)) {
-        // console.log(key, value[i], updateObj.latitude[i]);
-        db.query(updateQuery, [key, value[i], updateObj.latitude[i]])
-      }
+
+      let updateQuery;
+      // console.log(key, typeof value[i]);
+      // console.log(key, value[i], updateObj.latitude[i]);
+      updateQuery = `UPDATE markers 
+           SET title = $1 WHERE id = $2;`;
+      db.query(updateQuery, [updateObj.title[i], Number(markerIDs[i])])
+        .catch(err => console.log(err, '2-1'));
+      updateQuery = `UPDATE markers 
+            SET description = $1 WHERE id = $2
+           ;`;
+      db.query(updateQuery, [updateObj.description[i], Number(markerIDs[i])])
+        .catch(err => console.log(err, '2-2'));
+      updateQuery = `UPDATE markers 
+            SET image_url = $1 WHERE id = $2
+           ;`;
+      db.query(updateQuery, [updateObj.image_url[i], Number(markerIDs[i])])
+        .catch(err => console.log(err, '2-3'));
     }
 
-    
+    // if (key !== 'latitude' && key !== 'longitude' && key !== 'map_id') {
+    //   db.query(updateQuery, [`${key}`, value[i], updateObj.latitude[i]])
+    //     .catch(err => console.log(err, '2'));
+    // }
 
     //insert
-    const insertQuery = `INSERT INTO markers 
-    (map_id, latitude, longitude, title, description, image_url)
-    VALUES ($1, $2, $3, $4, $5, $6)`
+    const insertQuery = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
+    VALUES ($1, $2, $3, $4, $5, $6)
+    RETURNING *;`;
+    for (const i in insertObj.lat) {
+      const queryParams = [Number(req.params.id), insertObj.lat[i], insertObj.lng[i]
+        , insertObj.title[i], insertObj.desc[i], insertObj.img[i]];
+      // console.log(queryParams);
+      db.query(insertQuery, queryParams)
+        .catch(err => console.log(err, '3'));
+    }
 
-
+    return res.status(200).json({url: '/maps'});
   });
 
   return router;

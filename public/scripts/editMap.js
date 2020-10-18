@@ -5,10 +5,9 @@ const markDeleteIds = [];
 let map;
 let center = {};
 let numDeleted = 0;
-
 const initializeMarker = (markersJson, count) => {
   dbData.push(markersJson.id);
-  console.log(markersJson);
+  console.log(dbData);
   // console.log(typeof markersJson.latitude, markersJson.latitude)
   const marker = new google.maps.Marker({
     position: { lat: markersJson.latitude, lng: markersJson.longitude },
@@ -18,7 +17,10 @@ const initializeMarker = (markersJson, count) => {
   marker.addListener('click', function () {
     marker.setMap(null);
     const index = markerArr.indexOf(this);
+    console.log(markerArr.length);
     markDeleteIds.push(dbData[index]);
+    dbData.splice(index, 1, '');
+    console.log(dbData);
     $(`#entry${index}`).remove();
     numDeleted++;
   });
@@ -81,6 +83,7 @@ function clickHandle() {
     };
     formAddRow(markJson);
     markerArr.push(marker);
+    console.log(markerArr.length);
   });
 }
 
@@ -95,8 +98,8 @@ $(document).ready(() => {
     return data;
   }).done(data => {
     // console.log(data);
-    $('#map-title-js').val(data[0].maps_title)
-    $('#map-desc-js').val(data[0].maps_description);
+    $('#map-title-js').val(data[0].maps_title);
+    $('.map-desc-js').val(data[0].maps_description);
     data.forEach((val, index) => {
       initializeMarker(val, index);
     });
@@ -112,11 +115,12 @@ $(document).ready(() => {
     // console.log(markDeleteIds, 'delete ids');
     const formData = $(this).serialize();
     // console.log($(this).serialize());
-    console.log(markDeleteIds);
-    const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}`;
+    // console.log(markDeleteIds);
+    const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}&og_marks=${dbData}`;
     console.log(newData);
-    $.ajax({ method: 'PUT', url: `/api/maps/${mapId}`, data: newData }).success(function () {
-      console.log('success');
+    $.ajax({ method:'PUT', url: `/api/maps/${mapId}`, data: newData }).done(res => {
+      console.log('success', res.url);
+      // window.location.assign(res.url);
     });
 
   });
