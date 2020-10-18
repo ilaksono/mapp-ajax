@@ -87,6 +87,28 @@ module.exports = (db) => {
       .then(response => response.rows[0]);
   }
 
+  const getContributorById = (userId) => {
+    const queryString = `
+    SELECT *
+    FROM contributors
+    JOIN maps ON contributors.map_id=maps.id
+    WHERE user_id = $1;
+    `;
+    return db.query(queryString, [userId])
+      .then(response => response.rows);
+  }
+
+  const getFavouritesById = (userId) => {
+    const queryString = `
+    SELECT *
+    FROM favourites
+    JOIN maps ON favourites.map_id=maps.id
+    WHERE user_id = $1;
+    `;
+    return db.query(queryString, [userId])
+      .then(response => response.rows);
+  }
+
   return {
     fetchLatlngByIP,
     createLocationsArray,
@@ -94,5 +116,7 @@ module.exports = (db) => {
     buildStaticURL,
     createUpdateArray,
     getUserById,
+    getContributorById,
+    getFavouritesById,
   };
 };
