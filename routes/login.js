@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    return res.render('login')
+    return res.render('login', { user: req.session ? req.session.userId : null });
   });
 
   router.post("/", (req, res) => {
@@ -24,8 +24,8 @@ module.exports = (db) => {
       if (dbUser) {
         bcrypt.compare(user.password, dbUser.password, (err, result) => {
           if (result) {
-            res.redirect('maps')
             req.session.userId = dbUser.id;
+            res.redirect('maps');
           } else {
             res.send("Failed to login");
           }
