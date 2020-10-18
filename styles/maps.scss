@@ -3,10 +3,20 @@
 .all-maps-container {
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
+  width: 100%;
 }
 
 a {
-  display: block;
+  @include flexbox(column, flex-start, center);
+  height: 100%;
+  width: 100%;
+  color: $blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: $blue;
 }
 
 .map-card {
@@ -16,6 +26,7 @@ a {
   margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
   background-color: $grey;
   border: 1px solid $darkgrey;
+  display: block;
   border-radius: 15px;
   padding-top: 15px;
   color: $blue;
@@ -25,9 +36,7 @@ a {
 .map-card:hover {
   box-shadow: 7px 10px $darkgrey;
   border: 2px solid $blue;
-  margin: 14px calc((100% - 275px * 3) / 6 - 3px);
-  color: $blue;
-  text-decoration: none;
+  margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
 
 .map-container {

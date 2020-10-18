@@ -7,12 +7,12 @@
         <% if(userId) { %>
           <div class="profile">
             <form action="/users/<%= userId %>" method="GET" class="form-inline">
-              <button class="bttn-stretch bttn-md bttn-default">Your Profile</button>
+              <button class="bttn-unite bttn-md bttn-default">Your Profile</button>
             </form>
           </div>
           <div class="map">
             <form action="/maps/new" method="GET" class="form-inline">
-              <button class="bttn-stretch bttn-md bttn-default">Create Map</button>
+              <button class="bttn-unite bttn-md bttn-default">Create Map</button>
             </form>
           </div>
         <% } %>
@@ -21,19 +21,19 @@
         <% if(!userId) { %>
           <div class="button">
             <form action="/login" method="GET" class="form-inline">
-              <button class="bttn-stretch bttn-md bttn-default">Login</button>
+              <button class="bttn-unite bttn-md bttn-warning">Login</button>
             </form>
           </div>
           <div class="button">
             <form action="/register" method="GET" class="form-inline">
-              <button class="bttn-stretch bttn-md bttn-default">Register</button>
+              <button class="bttn-unite bttn-md bttn-warning">Register</button>
             </form>
           </div>
         <% } else { %>
-          <div class="user"><span class="blue">Welcome back <strong><%= username %></strong></span></div>
+          <div class="user"><span class="darkgrey">Welcome back <strong><%= username %></strong></span></div>
           <div class="button">
             <form action="/logout" method="POST" class="form-inline">
-              <button class="bttn-stretch bttn-md bttn-default">Logout</button>
+              <button class="bttn-unite bttn-md bttn-warning">Logout</button>
             </form>
           </div>
         <% } %>
