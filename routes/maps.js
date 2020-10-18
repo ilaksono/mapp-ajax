@@ -56,7 +56,7 @@ module.exports = (db) => {
     delete datajson.date_created;
     delete datajson.map_title;
     delete datajson.map_desc;
-
+    console.log(datajson);
     const locObj = dbHelpers.createLocationsArray(datajson);
     locObj.dateCreated = dateCreated;
     locObj.mapTitle = mapTitle;
@@ -65,7 +65,7 @@ module.exports = (db) => {
     const query = `INSERT INTO maps (title, description, owner_id, date_created)
     VALUES ($1, $2, $3, $4)
     RETURNING *;`;
-    db.query(query, [locObj.mapTitle, locObj.mapDesc
+    return db.query(query, [locObj.mapTitle, locObj.mapDesc
       , testUserID, locObj.dateCreated])
       .then(res => {
         console.log(res.rows[0]);
@@ -75,11 +75,12 @@ module.exports = (db) => {
         for (const i in locObj.lat) {
           const queryParams = [res.rows[0].id, locObj.lat[i]
             , locObj.lng[i], locObj.title[i], locObj.desc[i], locObj.img[i]];
-          db.query(query2, queryParams);
+          db.query(query2, queryParams).catch(err => console.log(err));
         }
-        res.redirect(`/${res.rows[0].map_id}`);
+        res.redirect(`/maps/${res.rows[0].map_id}`);
       }).catch(err1 => res.json(err1));
   });
+
   router.get('/:id', (req, res) => {
     const templateVars = {};
     return res.render('edit_map', templateVars);

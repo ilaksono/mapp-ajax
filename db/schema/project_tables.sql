@@ -18,7 +18,8 @@ CREATE TABLE maps (
   title VARCHAR(250) NOT NULL,
   description VARCHAR(250),
   owner_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  date_created DATE NOT NULL
+  date_created DATE NOT NULL,
+  deleted BOOLEAN NOT NULL DEFAULT false 
 );
 
 CREATE TABLE favourites (
@@ -40,5 +41,6 @@ CREATE TABLE markers (
   longitude FLOAT8 NOT NULL,
   title VARCHAR(250) NOT NULL,
   description VARCHAR(250),
-  image_url VARCHAR(250)
+  image_url VARCHAR(250),
+  deleted BOOLEAN NOT NULL DEFAULT false
 );

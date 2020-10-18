@@ -12,12 +12,13 @@
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
   <script type="text/javascript" src="/scripts/editMap.js"></script>
-  <!-- <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I&callback=initMap"></script> -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"></script>
 </head>
 
 <body>
   <h1>Edit/Modify Map</h1>
+  <span><h3>Created By: </h3><h2 class='creator'></h2></span>
   <form id='lat-lngs'>
     <div class='title-desc-container'>
       <label>
@@ -26,10 +27,10 @@
       <label>
         Description:
       </label>
-      <input type='text' name='map_desc'>
+      <input type='text' class='map-desc-js' name='map_desc'>
     </div>
     <div id='map'></div>
-    <button type='submit'>Create</button> 
+    <button type='submit'>Submit Changes</button> 
     <span class='err-msg'></span>
     <div class='input-heads'>
       <h3>Title:</h3>
@@ -37,10 +38,10 @@
       <h3>URL:</h3>
     </div>
     <div class='mark-container'>
-
+      
     </div>
   </form>
-
+  
 </body>
 
 </html>
