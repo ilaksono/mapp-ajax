@@ -56,7 +56,6 @@ function clickHandle(map) {
       numDeleted++;
     });
     markersArr.push(marker);
-    // console.log(mapsMouseEvent.latLng.toJSON());
   });
 };
 
@@ -78,7 +77,6 @@ $(document).ready(function () {
     }
     if ($('#map-title-js').val() === '')
       return throwError('MAPTITLE');
-    // console.log($(this));
     console.log($(this));
     const formData = $(this).serialize();
     console.log(formData);

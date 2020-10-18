@@ -69,7 +69,6 @@ function clickHandle() {
     marker.addListener('click', function () {
       marker.setMap(null);
       let index = markerArr.indexOf(this);
-      // markerArr.splice(index, 1);
       $(`#entry${index}`).remove();
       numDeleted++;
     });
@@ -97,7 +96,6 @@ $(document).ready(() => {
     $('.creator').text(data[0].username);
     return data;
   }).done(data => {
-    // console.log(data);
     $('#map-title-js').val(data[0].maps_title);
     $('.map-desc-js').val(data[0].maps_description);
     data.forEach((val, index) => {
@@ -111,16 +109,12 @@ $(document).ready(() => {
   $('form').on('submit', function (event) {
     event.preventDefault();
     const numDeleted = markDeleteIds.length;
-
-    // console.log(markDeleteIds, 'delete ids');
-    const formData = $(this).serialize();
-    // console.log($(this).serialize());
-    // console.log(markDeleteIds);
+    const formData = $(this).serialize();   
     const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}&og_marks=${dbData}`;
     console.log(newData);
     $.ajax({ method:'PUT', url: `/api/maps/${mapId}`, data: newData }).done(res => {
       console.log('success', res.url);
-      // window.location.assign(res.url);
+      window.location.assign(res.url);
     });
 
   });
