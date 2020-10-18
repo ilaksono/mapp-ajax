@@ -18,13 +18,16 @@
 
   <body>
 
-    <h1>Hello <%= user %>!</h1>
-    <p>This is your profile!</p>
-    <h3>Favorites</h3>
-    <p><%= title %></p>
-    <p><%= description %></p>
-    <h3>Contributed to</h3>
-    <p><%= title %></p>
-    <p><%= description %></p>
+    <main>
+      <h1>Hello <%= username %>!</h1>
+      <p>This is your profile!</p>
+      <h3>Favorites</h3>
+      <h3>Contributed to</h3>
+      <% for (const item of allContributed) { %>
+      <p><%= item.title %></p>
+      <p><%= item.description %></p>
+      <img src="<%= item.mapStaticURL %>"/>
+      <% } %>
+    </main>
   </body>
 </html>

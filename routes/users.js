@@ -5,6 +5,7 @@
  * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
  */
 
+const { Template } = require('ejs');
 const express = require('express');
 const router  = express.Router();
 
@@ -12,20 +13,24 @@ module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.get("/:id", (req, res) => {
     console.log(req.params.id);
-    dbHelpers.getUserById(req.params.id)
-    // dbHelpers.getContributorById(req.params.id)
+    const allContributed = []
+    dbHelpers.getContributorById(req.params.id)
     // dbHelpers.getFavouritesById(req.params.id)
     .then(data => {
-      console.log(data)
-      const users = data.username;
-      const title = data.title
-      const description = data.description
-      const templateVars = {
-        user: users,
-        title: title,
-        description: description
-      };
-      res.render('users', templateVars);
+      for (const item of data) {
+        console.log(item)
+        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+          allContributed.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
+      }
+      dbHelpers.getUserById(req.params.id)
+      .then(user => {
+        const templateVars = {
+          allContributed,
+          username: user.username,
+          userId: user.id
+        }
+        res.render('users', templateVars);
+      })
     })
     .catch(err => {
       res
