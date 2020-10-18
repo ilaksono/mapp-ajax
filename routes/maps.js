@@ -72,7 +72,7 @@ module.exports = (db) => {
     VALUES ($1, $2, $3, $4)
     RETURNING *;`;
     db.query(query, [locObj.mapTitle, locObj.mapDesc
-      , testUserID, locObj.dateCreated])
+      , req.session.userId, locObj.dateCreated])
       .then(res1 => {
         console.log(res1.rows[0]);
         const query2 = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
@@ -83,6 +83,11 @@ module.exports = (db) => {
             , locObj.lng[i], locObj.title[i], locObj.desc[i], locObj.img[i]];
           db.query(query2, queryParams).catch(err => console.log(err));
         }
+        const queryContrib = `INSERT INTO contributors
+        (map_id, user_id) VALUES ($1, $2)
+        RETURNING *;`;
+        db.query(queryContrib, [res1.rows[0].id, req.session.userId])
+        .catch(er => console.log(er));
         // console.log(res.rows);
         return res.status(200).json({ url: `/maps/${res1.rows[0].id}` });
       }).catch(err1 => console.log(err1));

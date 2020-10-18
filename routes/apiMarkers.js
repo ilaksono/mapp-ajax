@@ -102,7 +102,33 @@ module.exports = (db) => {
       db.query(insertQuery, queryParams)
         .catch(err => console.log(err, '3'));
     }
+    // contrib table
+    // const exists = dbHelpers.getExistingContributor(req.params.id, testUser)
+    const contribQuery = `SELECT * FROM contributors
+    WHERE map_id = $1 AND user_id = $2;`;
 
+    db.query(contribQuery, [req.params.id, req.session.userId])
+      .then(data => {
+        // console.log(data.rows[0]);
+
+        if (!data.rows[0]) {
+          const contribInsQuery = `INSERT INTO contributors (map_id, user_id)
+      VALUES ($1, $2)
+      RETURNING *;`;
+          db.query(contribInsQuery, [req.params.id, req.session.userId])
+            .catch(er => console.log(er));
+        }
+        return data.rows[0];
+      })
+      .catch(er => console.log(er, 'con'));
+    // console.log(exists);
+    // if (!exists[0]) {
+    //   const contribQuery = `INSERT INTO contributors (map_id, user_id)
+    //   VALUES ($1, $2)
+    //   RETURNING *;`;
+    //   db.query(contribQuery, [req.params.id, req.session.userId])
+    //     .catch(er => console.log(er));
+    // }
     return res.status(200).json({ url: '/maps' });
   });
 
@@ -110,7 +136,7 @@ module.exports = (db) => {
     const favQuery = `SELECT * FROM favourites
     WHERE map_id = $1 AND user_id = $2
     ;`;
-    db.query(favQuery, [req.params.id, testUser])
+    db.query(favQuery, [req.params.id, req.session.userId])
       .then(data => {
         if (data.rows[0]) {
           if (data.rows[0].id) return res.status(200).json({ val: true });
@@ -125,22 +151,22 @@ module.exports = (db) => {
     (user_id, map_id) VALUES ($1, $2)
     RETURNING *;
     `;
-    db.query(favQuery, [testUser, req.params.id])
+    db.query(favQuery, [req.session.userId, req.params.id])
       .then(data => {
         console.log(data.rows[0]);
         return res.status(200).json({ val: 'INSERT' });
-      }).catch(err => console.log(err,'2'));
+      }).catch(err => console.log(err, '2'));
   });
 
   router.delete('/:id/fav', (req, res) => {
     const favQuery = `DELETE FROM favourites 
     WHERE user_id = $1 AND map_id = $2
     RETURNING *;`;
-    db.query(favQuery, [testUser, req.params.id])
+    db.query(favQuery, [req.session.userId, req.params.id])
       .then(data => {
         console.log(data.rows[0]);
         return res.status(200).json({ val: 'DELETE' });
-      }).catch(err => console.log(err,'3'));
+      }).catch(err => console.log(err, '3'));
   });
 
   return router;
