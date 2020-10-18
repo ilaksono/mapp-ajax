@@ -18,29 +18,16 @@ module.exports = (db) => {
           const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description });
         }
+        if (!req.session.userId) {
+          res.render("maps", { loadedMaps, username: null, userId: null });
+        }
         dbHelpers.getUserById(req.session.userId)
         .then(user => {
-          const username = user.username ? user.username : null;
-          const userId = user.id ? user.id : null;
-          const templateVars = { loadedMaps, username, userId };
+          const templateVars = { loadedMaps, username: user.username, userId: user.Id };
           res.render("maps", templateVars);
-        });
+        })
+        .catch(err => console.log(err));
       }).catch(err => console.log(err));
-  });
-
-  router.get("/", (req, res) => {
-    let query = `SELECT * FROM maps`;
-    console.log(query);
-    db.query(query)
-      .then(data => {
-        const maps = data.rows;
-        res.json({ maps });
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
   });
 
   router.get('/new', (req, res) => {
