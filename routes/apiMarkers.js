@@ -73,7 +73,6 @@ module.exports = (db) => {
     //update markers
 
     for (const i in updateObj.latitude) {
-
       let updateQuery;
       updateQuery = `UPDATE markers 
            SET title = $1 WHERE id = $2;`;
@@ -90,7 +89,6 @@ module.exports = (db) => {
       db.query(updateQuery, [updateObj.image_url[i], Number(markerIDs[i])])
         .catch(err => console.log(err, '2-3'));
     }
-
     //insert
     const insertQuery = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
     VALUES ($1, $2, $3, $4, $5, $6)

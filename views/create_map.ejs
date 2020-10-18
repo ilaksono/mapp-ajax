@@ -20,10 +20,10 @@
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I&callback=initMap"></script>
 </head>
-
 <body>
+  <%- include('partials/_navbar') %>
   <div class='page-container'>
-    <form id='lat-lngs'>
+    <form id='lat-lngs' class='map-form'>
       <div class='title-desc-container'>
         <input type='text' id='map-title-js' name='map_title' placeholder='Map Title'>
         <input type='text' name='map_desc' placeholder='Map Description'>

@@ -1,5 +1,5 @@
-const markerArr = [];
 const mapId = Number(window.location.pathname.split('').slice(6).join(''));
+const markerArr = [];
 const dbData = [];
 const markDeleteIds = [];
 let map;

@@ -22,22 +22,21 @@ module.exports = (db) => {
           res.render("maps", { loadedMaps, username: null, userId: null });
         }
         dbHelpers.getUserById(req.session.userId)
-        .then(user => {
-          const templateVars = { loadedMaps, username: user.username, userId: user.id };
-          res.render("maps", templateVars);
-        })
-        .catch(err => console.log(err));
+          .then(user => {
+            const templateVars = { loadedMaps, username: user.username, userId: user.id };
+            res.render("maps", templateVars);
+          })
+          .catch(err => console.log(err));
       }).catch(err => console.log(err));
   });
 
   router.get('/new', (req, res) => {
-    const defaultFrame = dbHelpers.fetchLatlngByIP();
-    console.log(defaultFrame);
-    const templateVars = {
-      user: req.session.userId,
-      defaultFrame
-    };
-    return res.render('create_map', templateVars);
+    dbHelpers.getUserById(req.session.userId)
+      .then(user => {
+        const templateVars = { username: user.username, userId: user.id };
+        return res.render('create_map', templateVars);
+      });
+
   });
 
   router.post('/', (req, res) => {
@@ -74,7 +73,7 @@ module.exports = (db) => {
         (map_id, user_id) VALUES ($1, $2)
         RETURNING *;`;
         db.query(queryContrib, [res1.rows[0].id, req.session.userId])
-        .catch(er => console.log(er));
+          .catch(er => console.log(er));
         // console.log(res.rows);
         return res.status(200).json({ url: `/maps/${res1.rows[0].id}` });
       }).catch(err1 => console.log(err1));
