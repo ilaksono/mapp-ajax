@@ -38,8 +38,8 @@ function clickHandle(map) {
     const $newTitle = $(`<input type='text' class='m-title' name='loc_title${markCntr - 1}' value='title${markCntr}'>`);
     const $newDesc = $(`<input type='text' name='loc_desc${markCntr - 1}' value='desc${markCntr}'>`);
     const $imgURL = $(`<input type='text' name='img_url${markCntr - 1}' value='example.png'>`);
-    const $newDiv = $(`<div id='entry${markCntr - 1}'>`);
-    const $newLabel = $(`<label>`).text(markCntr);
+    const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
+    const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
     // $('#lat-lngs').append($newLat).append($newLng);
     $newLabel.appendTo($newDiv);
     $newLat.appendTo($newDiv);

@@ -8,7 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+  <!-- <link rel="stylesheet" href="/styles/layout.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
   <link rel="stylesheet" href="/styles/create-map.css" type="text/css" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -20,30 +22,26 @@
 </head>
 
 <body>
-  <h1>Create New Map</h1>
-  <form id='lat-lngs'>
-    <div class='title-desc-container'>
-      <label>
-        Title:
-      </label><input type='text' id='map-title-js' name='map_title'>
-      <label>
-        Description:
-      </label>
-      <input type='text' name='map_desc'>
-    </div>
-    <div id='map'></div>
-    <button type='submit'>Create</button>
-    <span class='err-msg'></span>
-    <div class='input-heads'>
-      <h3>Title:</h3>
-      <h3>Description:</h3>
-      <h3>URL:</h3>
-    </div>
-    <div class='mark-container'>
+  <div class='page-container'>
+    <form id='lat-lngs'>
+      <div class='title-desc-container'>
+        <input type='text' id='map-title-js' name='map_title' placeholder='Map Title'>
+        <input type='text' name='map_desc' placeholder='Map Description'>
+      </div>
 
+      <button type='submit'>Create</button>
+      <span class='err-msg'></span>
+      <div class='input-heads'>
+      </div>
+      <div class='mark-container'>
+
+      </div>
+    </form>
+    <div class='map-container'>
+      <h1>Create a New Map</h1>
+      <div id='map'></div>
     </div>
-  </form>
-  
+  </div>
 </body>
 
 </html>

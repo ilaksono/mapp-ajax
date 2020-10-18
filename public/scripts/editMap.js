@@ -36,8 +36,8 @@ function formAddRow(mJson) {
   const $newTitle = $(`<input type='text' name='loc_title${markCntr - 1}' value='${mJson.title}'>`);
   const $newDesc = $(`<input type='text' name='loc_desc${markCntr - 1}' value='${mJson.description}'>`);
   const $imgURL = $(`<input type='text' name='img_url${markCntr - 1}' value='${mJson.image_url}'>`);
-  const $newDiv = $(`<div id='entry${markCntr - 1}'>`);
-  const $newLabel = $(`<label>`).text(markCntr);
+  const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
+  const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
 
   $newLabel.appendTo($newDiv);
   $newLat.appendTo($newDiv);
