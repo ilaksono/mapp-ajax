@@ -90,7 +90,7 @@ function clickHandle() {
 $(document).ready(() => {
 
   $.get(`/api/maps/${mapId}`, data => {
-    console.log(data);
+    // console.log(data);
     center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length;
     center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length;
     initMap(center);
@@ -110,13 +110,34 @@ $(document).ready(() => {
   $('form').on('submit', function (event) {
     event.preventDefault();
     const numDeleted = markDeleteIds.length;
-    const formData = $(this).serialize();   
+    const formData = $(this).serialize();
     const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}&og_marks=${dbData}`;
     console.log(newData);
-    $.ajax({ method:'PUT', url: `/api/maps/${mapId}`, data: newData }).done(res => {
+    $.ajax({ method: 'PUT', url: `/api/maps/${mapId}`, data: newData }).done(res => {
       console.log('success', res.url);
       window.location.assign(res.url);
     });
+  });
 
+  $.get(`/api/maps/${mapId}/fav`, data => {
+    if (data.val) $('.fav-icon').addClass('fav-icon-like');
+    else $('.fav-icon').addClass('fav-icon-not');
+  });
+
+  $('.fav-icon').on('click', (event) => {
+    if ($('.fav-icon').hasClass('fav-icon-not')) {
+      $.ajax({ method: 'POST', url: `/api/maps/${mapId}/fav`, data: `` })
+        .done(res => {
+          $('.fav-icon').removeClass('fav-icon-not')
+            .addClass('fav-icon-like');
+        }).fail(err => console.log(err));
+
+    } else if ($('.fav-icon').hasClass('fav-icon-like')) {
+      $.ajax({ method: 'DELETE', url: `/api/maps/${mapId}/fav`, data: `` })
+        .done(res => {
+          $('.fav-icon').removeClass('fav-icon-like')
+            .addClass('fav-icon-not');
+        }).fail(err => console.log(err));
+    }
   });
 });
