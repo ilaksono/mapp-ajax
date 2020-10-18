@@ -21,7 +21,8 @@ module.exports = (db) => {
         dbHelpers.getUserById(req.session.userId)
         .then(user => {
           const username = user.username ? user.username : null;
-          const templateVars = { loadedMaps, user: username };
+          const userId = user.id ? user.id : null;
+          const templateVars = { loadedMaps, username, userId };
           res.render("maps", templateVars);
         });
       }).catch(err => console.log(err));

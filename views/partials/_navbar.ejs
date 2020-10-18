@@ -4,9 +4,9 @@
       <div class="left-container">
         <a class="logo" href="/">mapp</a>
         <i class="fas fa-map-marked-alt"></i>
-        <% if(user) { %>
+        <% if(userId) { %>
           <div class="profile">
-            <form action="/users/:id" method="GET" class="form-inline">
+            <form action="/users/<%= userId %>" method="GET" class="form-inline">
               <button class="bttn-stretch bttn-md bttn-default">Your Profile</button>
             </form>
           </div>
@@ -18,7 +18,7 @@
         <% } %>
       </div>
       <div class="right-container">
-        <% if(!user) { %>
+        <% if(!userId) { %>
           <div class="button">
             <form action="/login" method="GET" class="form-inline">
               <button class="bttn-stretch bttn-md bttn-default">Login</button>
@@ -30,7 +30,7 @@
             </form>
           </div>
         <% } else { %>
-          <div class="user"><span class="blue">Welcome back <strong><%= user %></strong></span></div>
+          <div class="user"><span class="blue">Welcome back <strong><%= username %></strong></span></div>
           <div class="button">
             <form action="/logout" method="POST" class="form-inline">
               <button class="bttn-stretch bttn-md bttn-default">Logout</button>
