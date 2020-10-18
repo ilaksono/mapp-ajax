@@ -16,7 +16,8 @@ module.exports = (db) => {
     WHERE email = $1
     `
     if (user.email === "" || user.password === "") {
-      return res.send('Please enter email and password')
+      err_msg = 'Please enter email and password';
+      return res.render('login', { err_msg: err_msg } );
     }
     db.query(query, [user.email])
     .then(response => {
@@ -27,11 +28,13 @@ module.exports = (db) => {
             res.redirect('maps')
             req.session.userId = dbUser.id;
           } else {
-            res.send("Failed to login");
+            err_msg = 'Failed to login';
+            return res.render('login', { err_msg: err_msg } );
           }
         })
       } else {
-        res.send("Failed to login");
+        err_msg = 'Failed to login';
+        return res.render('login', { err_msg: err_msg } );
       }
     })
   });
