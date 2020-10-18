@@ -84,6 +84,7 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     const templateVars = {};
+    
     return res.render('edit_map', templateVars);
   });
 
