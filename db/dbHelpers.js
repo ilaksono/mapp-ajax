@@ -4,7 +4,7 @@ const defaultLatlng = { latitude: '49.27670', longitude: '-123.13000' };
 module.exports = (db) => {
   const loadAllMaps = function () {
     const queryString = `
-    SELECT maps.id, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT maps.id, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description
     FROM maps
     JOIN markers ON map_id = maps.id
     GROUP BY maps.id
@@ -52,8 +52,8 @@ module.exports = (db) => {
 
   return {
     fetchLatlngByIP,
-    createLocationsArray, 
-    loadAllMaps, 
+    createLocationsArray,
+    loadAllMaps,
     buildStaticURL
   };
 };

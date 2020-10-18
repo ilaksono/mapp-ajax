@@ -9,6 +9,7 @@ const bodyParser = require("body-parser");
 const sass       = require("node-sass-middleware");
 const app        = express();
 const morgan     = require('morgan');
+const cookieSession = require("cookie-session");
 
 // PG database client/connection setup
 const { Pool } = require('pg');
@@ -30,12 +31,18 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}));
 
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const mapsRoutes = require("./routes/maps");
 const registerRoutes = require("./routes/register")
+const loginRoutes = require("./routes/login")
+const logoutRoutes = require("./routes/logout")
 
 // const markersRoutes = require('./routes/apiMarkers');
 // Mount all resource routes
@@ -43,6 +50,8 @@ const registerRoutes = require("./routes/register")
 app.use("/users", usersRoutes(db));
 app.use("/maps", mapsRoutes(db));
 app.use("/register", registerRoutes(db));
+app.use("/login", loginRoutes(db));
+app.use("/logout", logoutRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // marker API
