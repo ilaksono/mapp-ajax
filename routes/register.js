@@ -7,7 +7,7 @@ const salt = bcrypt.genSaltSync(10);
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
-    return res.render('register', { user: req.session ? req.session.userId : null });
+    return res.render('register', { username: null, userId: null });
   });
 
   router.post("/", (req, res) => {
