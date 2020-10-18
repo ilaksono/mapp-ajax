@@ -93,6 +93,6 @@ module.exports = (db) => {
     loadAllMaps,
     buildStaticURL,
     createUpdateArray,
-    getUserById
+    getUserById,
   };
 };
