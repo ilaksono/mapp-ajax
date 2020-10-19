@@ -13,7 +13,7 @@ body {
   @include flexbox(column, flex-start, center);
 
   main {
-    width: 1000px;
+    width: 100%;
     margin-top: 100px;
     @include flexbox(column, flex-start, center);
 

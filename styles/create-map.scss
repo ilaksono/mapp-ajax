@@ -8,20 +8,18 @@
 .title-desc-container {
   display: flex;
   flex-direction: column;
+  width: 300px;
 }
 .map-container {
-  // flex-grow: 2;
-  border-top: 2px solid $darkgrey;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 70%;
-  background-color: #C3ECB2;
+  align-items: flex-start;
+  width: 60%;
 }
 
-
 h1 {
-  align-self: center;
+  align-self: flex-start;
+  color: $blue;
   font-family: $font-stack;
 }
 .map-head {
@@ -31,52 +29,53 @@ h1 {
   width: 100%;
 }
 .map-form {
-  background-color: #AADAFF;
-  display: flex;
   font-family: $font-stack;
-  flex-direction: column;
-  float: left;
+  margin-top: 142px;
+  @include flexbox(column, flex-start, flex-end);
   overflow-y: auto;
-  height: 84.25vh;
-  width: 30%;
+  height: 72vh;
+  width: calc(40% / 2);
   left: 0px;
-  flex-grow: 1;
-  border: 2px solid rgb(99, 99, 141);
   // position: absolute;
 }
+
 .group-card {
+  width: calc(100% - 30px);
   background-color: $grey;
   margin: 10px;
   border-radius: 15px;
-  border: $darkgrey solid;
+  border: 1px solid $darkgrey;
+  padding-bottom: 8px;
 
 }
 .icon-label{
   height: 25px;
   width: 25px;
-  float: right;
-  margin-top: 25px;
+  float: left;
+  margin-top: 5px;
   border: solid 1px black;
-  margin-right: 25px;
+  margin-left: 5px;
   box-sizing: border-box;
   border-radius: 50%;
   text-align: center;
   padding-top: 1%;
   background-color: rgb(245, 92, 92);
 }
-.map-form button {
+button {
   width: 100px;
   font-family: $font-stack;
-  align-self: center;
+  align-self: flex-start;
   cursor:pointer;
+  margin-top: 15px;
   border: solid 1px $blue;
   border-radius: 11px;
 }
 
 .map-form input {
-  margin: 10px;
+  width: calc(100% - 20px);
+  margin: 5px 10px 5px 10px;
   border: none;
-  border-bottom: 3px solid black;
+  border-bottom: 1px solid $blue;
   background-color: $grey;
   font-family: $font-stack;
 
@@ -91,8 +90,10 @@ h1 {
   flex-direction: row;
   align-items: flex-start;
   margin-top: 100px;
+  width: 100%;
   // justify-content: space-between;
 }
+
 i {
   height: 16px;
 }
@@ -101,7 +102,6 @@ i {
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
 
 .err-msg {
@@ -119,6 +119,15 @@ i {
   cursor: pointer;
 }
 .blend-form {
-  background-color: #AADAFF;
-  border: none;
+  border-bottom: 1px solid $darkgrey;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+.blend-form:focus {
+  color: $blue;
+  border-bottom: 1px solid $blue;
 }
