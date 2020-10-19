@@ -37,7 +37,7 @@ function clickHandle(map) {
     const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(lngVal);
     const $newTitle = $(`<input type='text' class='m-title marker-title-input' name='loc_title${markCntr - 1}' value='title${markCntr}'>`);
     const $newDesc = $(`<input type='text' class='marker-input' name='loc_desc${markCntr - 1}' value='desc${markCntr}'>`);
-    const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' value='example.png'>`);
+    const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' value='https://humanesociety.org/sites/default/files/styles/1441x612/public/2018/08/kitten-440379.jpg?h=c8d00152&itok=HVqvfhtg'>`);
     const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
     const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
     // $('#lat-lngs').append($newLat).append($newLng);
