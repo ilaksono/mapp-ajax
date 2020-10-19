@@ -81,6 +81,9 @@ img {
   .map-card:hover {
     margin: 14px calc((100% - 275px * 2) / 4 - 2px);
   }
+  .all-maps-container {
+    width: 800px;
+  }
 }
 
 @media only screen and (max-width: 800px) {
@@ -91,4 +94,5 @@ img {
   .map-card:hover {
     margin: 14px calc((100% - 275px * 1) / 2 - 1px);
   }
+
 }
