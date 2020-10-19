@@ -55,14 +55,14 @@
 .section-container {
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
-  width: 1500px;
+  width: 1000px;
 }
 
 .map-card {
   @include flexbox(column, flex-start, center);
   height: 350px;
   width: 275px;
-  margin: 15px calc(((100% - 275px * 5) / 10) - 5px);
+  margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
   background-color: $grey;
   border: 1px solid $darkgrey;
   display: block;
@@ -73,9 +73,11 @@
 }
 
 .map-card:hover {
-  box-shadow: 7px 10px $darkgrey;
+  -webkit-box-shadow:7px 7px 5px #d3d3d3;
+  -moz-box-shadow:7px 7px 5px #d3d3d3;
+  box-shadow:7px 7px 5px #d3d3d3;
   border: 2px solid $blue;
-  margin: 14px calc((100% - 275px * 5) / 10 - 6px);
+  margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
 
 .map-container {

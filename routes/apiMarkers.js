@@ -173,8 +173,8 @@ module.exports = (db) => {
     WHERE id = $1;`;
     db.query(query, [Number(req.params.id)])
       .then(data => {
-        console.log(data.rows);
-        res.json(data.rows[0])
+        // console.log(data.rows);
+        res.status(200).json(data.rows[0])
         })
       .catch(err => console.log(err));
   });
