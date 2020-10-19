@@ -22,15 +22,15 @@
     <%- include('partials/_navbar') %>
     <main>
       <div class="page-container">
-        <div class="sub-nav">
-          <span>Hello <%= username %>!</span>
-          <span id="all">All</span>
-          <span id="favourites1">Favourites</span>
-          <span id="contributed1">Contributed</span>
-        </div>
+        <div class="sub-nav-container">
+          <div class="sub-nav">
+            <div>Hello <%= username %>!</div>
+            <div id="favourites1" class="sub-nav-active sub-nav-button" >Favourites</div>
+            <div id="contributed1" class="sub-nav-button">Contributed</div>
+          </div>
+      </div>
 
-        <div id="favourites2">
-          <h3>Favourites</h3>
+        <div id="favourites2" >
             <div class="section-container">
               <% for (const item of allFavourited) { %>
                 <div class="map-card">
@@ -48,8 +48,7 @@
           </div>
         </div>
 
-        <div id="contributed2">
-          <h3>Contributed</h3>
+        <div id="contributed2" class="hide">
             <div class="section-container">
               <% for (const item of allContributed) { %>
                 <div class="map-card">
@@ -66,6 +65,7 @@
             <% } %>
           </div>
         </div>
+
       </div>
     </main>
   </body>
