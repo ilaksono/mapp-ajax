@@ -63,7 +63,7 @@
 
 h1 {
   align-self: flex-start;
-  color: $blue;
+  color: $darkgrey;
   font-family: $font-stack;
 }
 .map-head {
@@ -74,7 +74,9 @@ h1 {
 }
 
 .group-card {
-  width: calc(100% - 30px);
+  @include flexbox(row, flex-start, center);
+  flex-wrap: wrap;
+  width: calc(100% - 20px);
   background-color: $grey;
   margin: 10px;
   -webkit-box-shadow: 0px 0px 2px 2px #d3d3d3;
@@ -86,10 +88,6 @@ h1 {
 
 }
 
-.marker-label-container {
-  @include flexbox(row, flex-start, center);
-  width: 100%;
-}
 .icon-label{
   height: 25px;
   width: 25px;
@@ -116,11 +114,19 @@ h1 {
   border-radius: 4px;
 }
 
+.marker-title-input {
+  width: calc(100% - 50px);
+  margin: 5px 10px 5px 10px;
+  border: none;
+  border-bottom: 1px solid $darkgrey;
+  background-color: $grey;
+  font-family: $font-stack;
+}
 .marker-input {
   width: calc(100% - 20px);
   margin: 5px 10px 5px 10px;
   border: none;
-  border-bottom: 1px solid $blue;
+  border-bottom: 1px solid $darkgrey;
   background-color: $grey;
   font-family: $font-stack;
 }
@@ -129,7 +135,7 @@ h1 {
   width: calc(100% - 20px);
   margin: 5px 10px 5px 10px;
   border: none;
-  border-bottom: 1px solid $blue;
+  border-bottom: 1px solid $darkgrey;
   background-color: $white;
   font-family: $font-stack;
 }
@@ -180,6 +186,6 @@ i {
 }
 
 .blend-form:focus {
-  color: $blue;
-  border-bottom: 1px solid $blue;
+  color: $darkgrey;
+  border-bottom: 1px solid $darkgrey;
 }
