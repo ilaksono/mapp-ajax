@@ -168,5 +168,16 @@ module.exports = (db) => {
       }).catch(err => console.log(err, '3'));
   });
 
+  router.get('/images/:id', (req, res) => {
+    const query = `SELECT image_url FROM markers 
+    WHERE id = $1;`;
+    db.query(query, [Number(req.params.id)])
+      .then(data => {
+        console.log(data.rows);
+        res.json(data.rows[0])
+        })
+      .catch(err => console.log(err));
+  });
+
   return router;
 };

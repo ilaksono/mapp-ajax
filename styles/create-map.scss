@@ -73,6 +73,7 @@ h1 {
   width: 100%;
 }
 
+
 .group-card {
   @include flexbox(row, flex-start, center);
   flex-wrap: wrap;
@@ -174,4 +175,18 @@ i {
 }
 .fav-icon:hover {
   cursor: pointer;
+}
+
+.img-container {
+  position: fixed;
+  width: 110px;
+  height: 85px;
+  right: 8%;
+  bottom: 3%;
+  z-index: 3;
+  border: none;
+}
+.loc-img {
+  width: 100%;
+  height: 100%;
 }
