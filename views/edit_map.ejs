@@ -7,10 +7,12 @@
   <title>Create New Map</title>
   <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <!-- <link rel="stylesheet" href="/styles/layout.css" type="text/css" /> -->
   <link rel="stylesheet" href="/styles/create-map.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
 
@@ -20,27 +22,33 @@
 </head>
 
 <body>
-    <%- include('partials/_navbar') %>
+  <%- include('partials/_navbar') %>
+  <main>
+    <div class='page-container'>
+      <div class="map-form-scroll-container">
+        <div class="map-form-container">
+          <form id='lat-lngs' class='map-form'>
+            <div class="create-button-container">
+              <button type='submit' class='button-create'>Create</button>
+            </div>
+            <span class='err-msg'></span>
+            <div class='title-desc-container'>
+              <input type='text' id='map-title-js' name='map_title' placeholder='Map Title' class='blend-form-title map-input'>
+              <input type='text' name='map_desc' placeholder='Map Description' class='map-desc-js blend-form-title map-input'>
+            </div>
+            <div class='input-heads'></div>
+            <div class='mark-container'>
 
-  <div class='page-container'>
-  <form id='lat-lngs' class='map-form'>
-    <div class='title-desc-container'>
-     <input type='text' id='map-title-js' name='map_title'>
-      <input type='text' class='map-desc-js' name='map_desc'>      
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class='map-container'>
+        <div class='map-head'><i class="fas fa-heart fav-icon"></i><h1>Edit/Modify Map</h1><h3>Created By: <span class='creator'></span></h3></div>
+      <div id='map'></div>
+      </div>
     </div>
-    <button type='submit'>Submit Changes</button> 
-    <span class='err-msg'></span>
-    <div class='input-heads'>
-    </div>
-    <div class='mark-container'>
-    </div>
-  </form>
-  <div class='map-container'>
-    
-    <div class='map-head'><i class="fas fa-heart fav-icon"></i><h1>Edit/Modify Map</h1><h3>Created By: <span class='creator'></span></h3></div>
-    <div id='map'></div>
-  </div>
-</div>
+  </main>
 </body>
 
 </html>

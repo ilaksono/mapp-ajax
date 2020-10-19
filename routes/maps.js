@@ -19,11 +19,11 @@ module.exports = (db) => {
           loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description });
         }
         if (!req.session.userId) {
-          res.render("maps", { loadedMaps, username: null, userId: null });
+          res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
         }
         dbHelpers.getUserById(req.session.userId)
           .then(user => {
-            const templateVars = { loadedMaps, username: user.username, userId: user.id };
+            const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
             res.render("maps", templateVars);
           })
           .catch(err => console.log(err));
@@ -33,7 +33,7 @@ module.exports = (db) => {
   router.get('/new', (req, res) => {
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
-        const templateVars = { username: user.username, userId: user.id };
+        const templateVars = { username: user.username, userId: user.id, active: "new-map" };
         return res.render('create_map', templateVars);
       });
 
@@ -84,7 +84,7 @@ module.exports = (db) => {
   router.get('/:id', (req, res) => {
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
-        const templateVars = { username: user.username, userId: user.id };
+        const templateVars = { username: user.username, userId: user.id, active: null };
         return res.render('edit_map', templateVars);
       });
 

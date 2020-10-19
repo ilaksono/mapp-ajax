@@ -4,36 +4,43 @@
       <div class="left-container">
         <a class="logo" href="/">mapp</a>
         <i class="fas fa-map-marked-alt"></i>
+      </div>
+      <div class="center-container">
+        <div class="all-maps">
+          <form action="/maps/" method="GET" class="form-inline<% if(active === 'maps') { %> active<%}%>">
+            <button class="button-default">ALL MAPS</button>
+          </form>
+        </div>
         <% if(userId) { %>
-          <div class="profile">
-            <form action="/users/<%= userId %>" method="GET" class="form-inline">
-              <button class="bttn-unite bttn-md bttn-default">Your Profile</button>
-            </form>
-          </div>
-          <div class="map">
-            <form action="/maps/new" method="GET" class="form-inline">
-              <button class="bttn-unite bttn-md bttn-default">Create Map</button>
-            </form>
-          </div>
+        <div class="map">
+          <form action="/maps/new" method="GET" class="form-inline<% if(active === 'new-map') { %> active<%}%>">
+            <button class="button-new"><strong>+ CREATE A NEW MAP</strong></button>
+          </form>
+        </div>
         <% } %>
       </div>
       <div class="right-container">
         <% if(!userId) { %>
-          <div class="button">
-            <form action="/login" method="GET" class="form-inline">
-              <button class="bttn-unite bttn-md bttn-warning">Login</button>
+          <div class="button-box-s">
+            <form action="/login" method="GET" class="form-inline<% if(active === 'login') { %> active<%}%>">
+              <button class="button-default">LOGIN</button>
             </form>
           </div>
-          <div class="button">
-            <form action="/register" method="GET" class="form-inline">
-              <button class="bttn-unite bttn-md bttn-warning">Register</button>
+          <div class="button-box-s">
+            <form action="/register" method="GET" class="form-inline<% if(active === 'register') { %> active<%}%>">
+              <button class="button-default">REGISTER</button>
             </form>
           </div>
         <% } else { %>
-          <div class="user"><span class="darkgrey">Welcome back <strong><%= username %></strong></span></div>
-          <div class="button">
+          <div class="user"><span class="darkgrey">Welcome <strong><%= username %></strong></span></div>
+          <div class="button-box-l">
+            <form action="/users/<%= userId %>" method="GET" class="form-inline<% if(active === 'your-map') { %> active<%}%>">
+              <button class="button-default">YOUR MAPS</button>
+            </form>
+          </div>
+          <div class="button-box-s">
             <form action="/logout" method="POST" class="form-inline">
-              <button class="bttn-unite bttn-md bttn-warning">Logout</button>
+              <button class="button-default">LOGOUT</button>
             </form>
           </div>
         <% } %>

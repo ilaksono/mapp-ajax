@@ -1,9 +1,66 @@
 @import 'helper';
 
-.all-maps-container {
+.sub-nav {
+  color: red;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: $white;
+  color: #4b4b4b;
+}
+
+.section-container {
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
-  width: 1000px;
+  width: 100%;
+}
+
+.map-card {
+  @include flexbox(column, flex-start, center);
+  height: 350px;
+  width: 275px;
+  margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
+  background-color: $grey;
+  border: 1px solid $darkgrey;
+  display: block;
+  border-radius: 15px;
+  padding-top: 15px;
+  color: $blue;
+  box-sizing: content-box
+}
+
+.map-card:hover {
+  box-shadow: 7px 10px $darkgrey;
+  border: 2px solid $blue;
+  margin: 14px calc((100% - 275px * 3) / 6 - 4px);
+}
+
+.map-container {
+  @include flexbox(column, center, center);
+  height: 250px;
+  width: 250px;
+}
+
+.description-container {
+  @include flexbox(column, flex-start, flex-start);
+  width: 100%;
+  margin-left: 35px;
+}
+
+img {
+  border: 0px solid $grey;
+  border-radius: 15px;
+}
+
+.title {
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 20px;
+}
+
+.description {
+  font-size: 16px;
 }
 
 a {
@@ -19,52 +76,18 @@ a:hover {
   color: $blue;
 }
 
-.map-card {
-  @include flexbox(column, flex-start, center);
-  height: 350px;
-  width: 275px;
-  margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
-  background-color: $white;
-  border: 1px solid $darkgrey;
-  display: block;
-  border-radius: 15px;
-  padding-top: 15px;
-  color: $blue;
-  box-sizing: content-box;
+.hide {
+  display: none;
 }
 
-.map-card:hover {
-  -webkit-box-shadow:7px 7px 5px #d3d3d3;
-  -moz-box-shadow:7px 7px 5px #d3d3d3;
-  box-shadow:7px 7px 5px #d3d3d3;
-  border: 2px solid $blue;
-  margin: 14px calc((100% - 275px * 3) / 6 - 4px);
-}
-
-.map-container {
-  @include flexbox(column, center, center);
-  height: 250px;
-  width: 250px;
-}
-
-img {
-  border: 0px solid $grey;
-  border-radius: 15px;
-}
-
-.description-container {
-  @include flexbox(column, flex-start, flex-start);
-  width: 100%;
-  margin-left: 35px;
-}
-
-.title {
+#favourites1:hover {
   font-weight: bold;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  font-size: 20px;
 }
 
-.description {
-  font-size: 16px;
+#contributed1:hover {
+  font-weight: bold;
+}
+
+#all:hover {
+  font-weight: bold;
 }
