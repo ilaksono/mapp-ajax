@@ -107,7 +107,7 @@ $(document).ready(() => {
   // map_id: mapId, deleted ids: markDeleteIds
   // numNew = numTotal-numDeleted(markDeleteIds.length)
   //  
-  $('form').on('submit', function (event) {
+  $('#lat-lngs').on('submit', function (event) {
     event.preventDefault();
     const numDeleted = markDeleteIds.length;
     const formData = $(this).serialize();
