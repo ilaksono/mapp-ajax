@@ -3,14 +3,18 @@
 .page-container {
   height: 100%;
   width: 100%;
-  @include flexbox(column, flex-start, center)
+  @include flexbox(column, flex-start, center);
+  font-size: 14px;
 }
 
 .sub-nav-container {
   width: 100%;
   height: 50px;
   background-color: $white;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #ececec;
+  -webkit-box-shadow:0px 1px 5px #ececec;
+  -moz-box-shadow:0px 1px 5px #ececec;
+  box-shadow:0px 1px 5px #ececec;
   @include flexbox(row, center, center)
 }
 
@@ -22,13 +26,28 @@
   width: 400px;
   height: 100%;
 }
+
+.darkgrey {
+  color: $darkgrey;
+}
+
+.username {
+  font-size: 16px;
+  color: #4b4b4b;
+}
+
+.sub-nav-button:hover {
+  border-bottom: 2px solid $darkgrey;
+}
+
 .sub-nav-button {
   height: 100%;
   display: flex;
   align-items: center;
+  border-bottom: 2px solid transparent;
 }
 
-.sub-nav-active {
+.sub-nav > .sub-nav-active {
   border-bottom: 2px solid $red;
   color: $red;
 }
