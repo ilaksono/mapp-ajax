@@ -8,7 +8,7 @@ module.exports = (db) => {
     FROM maps
     JOIN markers ON map_id = maps.id
     GROUP BY maps.id
-    LIMIT 5;
+    LIMIT 6;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
@@ -95,10 +95,12 @@ module.exports = (db) => {
 
   const getContributorById = (userId) => {
     const queryString = `
-    SELECT *
+    SELECT contributors.*, maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM contributors
     JOIN maps ON contributors.map_id=maps.id
-    WHERE user_id = $1;
+    JOIN markers ON markers.map_id = maps.id
+    WHERE contributors.user_id = $1
+    GROUP BY maps.id, contributors.id;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -106,10 +108,12 @@ module.exports = (db) => {
 
   const getFavouritesById = (userId) => {
     const queryString = `
-    SELECT *
+    SELECT favourites.*, maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM favourites
     JOIN maps ON favourites.map_id=maps.id
-    WHERE user_id = $1;
+    JOIN markers ON markers.map_id = maps.id
+    WHERE favourites.user_id = $1
+    GROUP BY maps.id, favourites.id;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
