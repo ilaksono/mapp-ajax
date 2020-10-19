@@ -16,12 +16,10 @@
 
 .sub-nav {
   color: red;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
   background-color: $white;
   color: #4b4b4b;;
-  width: 500px;
+  width: 400px;
   height: 100%;
 }
 .sub-nav-button {
@@ -116,4 +114,24 @@ a:hover {
   cursor: pointer;
 }
 
+@media only screen and (max-width: 1024px) {
+  .map-card {
+    margin: 15px calc(((100% - 275px * 2) / 4) - 2px);
+  }
 
+  .map-card:hover {
+    margin: 14px calc((100% - 275px * 2) / 4 - 2px);
+  }
+
+}
+
+@media only screen and (max-width: 800px) {
+  .map-card {
+    margin: 15px calc(((100% - 275px * 1) / 2) - 1px);
+  }
+
+  .map-card:hover {
+    margin: 14px calc((100% - 275px * 1) / 2 - 1px);
+  }
+
+}
