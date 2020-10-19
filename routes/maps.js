@@ -83,6 +83,9 @@ module.exports = (db) => {
   });
 
   router.get('/:id', (req, res) => {
+    if (!req.session.userId) {
+      return res.render('edit_map', {username: null, userId: null, active: null });
+    }
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
         const templateVars = { username: user.username, userId: user.id, active: null };
