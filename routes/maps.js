@@ -40,7 +40,9 @@ module.exports = (db) => {
   });
 
   router.post('/', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body, 'here');
+    if (req.body.hasOwnProperty('map_error')) return res.status(400).json({error: 'Map title cannot be empty!'})
+    if (req.body.hasOwnProperty('mark_error')) return res.status(400).json({error: 'Location title fields cannot be empty!'})
     const datajson = req.body;
     const dateCreated = datajson.date_created;
     const mapTitle = datajson.map_title;
@@ -48,7 +50,7 @@ module.exports = (db) => {
     delete datajson.date_created;
     delete datajson.map_title;
     delete datajson.map_desc;
-    console.log(datajson);
+    // console.log(datajson);
     const locObj = dbHelpers.createLocationsArray(datajson);
     locObj.dateCreated = dateCreated;
     locObj.mapTitle = mapTitle;

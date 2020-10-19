@@ -4,7 +4,10 @@ $(document).ready(function() {
     const $fav = $("#favourites1")
 
     $fav.on("click", function(event) {
-      $("#contributed2").addClass("hide");
+      $("#favourites2").removeClass("hide")
+      $("#contributed2").addClass("hide")
+      $("#contributed1").removeClass("sub-nav-active")
+      $("#favourites1").addClass("sub-nav-active")
     })
   })
 
@@ -12,15 +15,10 @@ $(document).ready(function() {
     const $contribute = $("#contributed1")
 
     $contribute.on("click", function(event) {
-      $("#favourites2").addClass("hide");
-    })
-  })
-
-  $(function() {
-    const $all = $("#all")
-
-    $all.on("click", function(event) {
-      location.reload()
+      $("#contributed2").removeClass("hide")
+      $("#favourites2").addClass("hide")
+      $("#favourites1").removeClass("sub-nav-active")
+      $("#contributed1").addClass("sub-nav-active")
     })
   })
 })
