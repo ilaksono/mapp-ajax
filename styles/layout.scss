@@ -18,13 +18,19 @@ body {
   height: 100%;
   width: 100%;
   @include flexbox(column, flex-start, center);
+}
+main {
+  width: 100%;
+  margin-top: 65px;
+  height: 100%;
+  @include flexbox(column, flex-start, center);
+  h1 {
+    color: #244751;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 361px) {
   main {
-    width: 100%;
-    margin-top: 65px;
-    height: 100%;
-    @include flexbox(column, flex-start, center);
-    h1 {
-      color: #244751;
-    }
+    margin-top: calc(3 * 50px);
   }
 }
