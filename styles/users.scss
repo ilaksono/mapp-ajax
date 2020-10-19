@@ -9,6 +9,7 @@
 .sub-nav-container {
   width: 100%;
   height: 50px;
+  background-color: $white;
   border-bottom: 1px solid black;
   @include flexbox(row, center, center)
 }
