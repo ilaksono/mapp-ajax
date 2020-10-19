@@ -1,5 +1,4 @@
 @import 'helper';
-
 html {
   box-sizing: border-box;
   margin: 0;
@@ -11,7 +10,6 @@ html {
 *, *:before, *:after {
   box-sizing: inherit;
 }
-
 body {
   background-color: $grey;
   font-family: $font-stack;
@@ -20,16 +18,13 @@ body {
   height: 100%;
   width: 100%;
   @include flexbox(column, flex-start, center);
-
   main {
     width: 100%;
     margin-top: 65px;
     height: 100%;
     @include flexbox(column, flex-start, center);
-
     h1 {
       color: #244751;
     }
   }
 }
-

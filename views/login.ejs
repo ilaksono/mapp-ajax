@@ -8,25 +8,32 @@
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
     <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/login.css" type="text/css" />
 
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+
   </head>
 
   <body>
     <%- include('partials/_navbar') %>
-
     <main>
-    <h3> Login </h3>
+      <div class="page-container">
+      <div class="login-container">
+
+      <h3> Login </h3>
 
     <form action="/login" method="POST">
-
-      <label for="email">Email:</label>
-      <input type="email" name="email">
-      <br>
-      <label for="password">Password:</label>
-      <input type="password" name="password">
+      <div>
+        <label for="email">Email:</label>
+        <br>
+        <input type="email" name="email">
+        <br>
+        <label for="password">Password:</label>
+        <br>
+        <input type="password" name="password">
+      </div>
       <br>
       <button type="submit">Login</button>
 
@@ -37,7 +44,8 @@
       <div class="alert alert-danger" role="alert"><%= err_msg %></div>
       <% } %>
 
-
+    </div>
+  </div>
   </main>
   </body>
 </html>
