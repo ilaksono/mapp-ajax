@@ -35,7 +35,8 @@ module.exports = (db) => {
     const descArr = [];
     const imgArr = [];
     for (let i = 0; i < Object.keys(datajson).length; i += 5) {
-      const index = Number(Object.keys(datajson)[i][3]);
+      // const index = Number(Object.keys(datajson)[i][3]);
+      const index = getNumberFromStrEnd(Object.keys(datajson)[i]);
       latArr.push(Number(datajson[`lat${index}`]));
       lngArr.push(Number(datajson[`lng${index}`]));
       titleArr.push(datajson[`loc_title${index}`]);
@@ -48,6 +49,10 @@ module.exports = (db) => {
       , desc: descArr, img: imgArr
     };
   };
+  const getNumberFromStrEnd = str => {
+    const arr = [...str];
+    return Number(arr.slice(3).join(''));
+  };
 
   const createUpdateArray = (json, num) => {
     const latArr = [];
@@ -56,7 +61,8 @@ module.exports = (db) => {
     const descArr = [];
     const imgArr = [];
     for (let i = 0; i < num; i++) {
-      const index = Number(Object.keys(json)[0][3]);
+      // const index = Number(Object.keys(json)[0][3]);
+      const index = getNumberFromStrEnd(Object.keys(json)[0]);
       latArr.push(Number(json[`lat${index}`]));
       lngArr.push(Number(json[`lng${index}`]));
       titleArr.push(json[`loc_title${index}`]);
@@ -85,7 +91,7 @@ module.exports = (db) => {
     const queryParams = [userId];
     return db.query(queryString, queryParams)
       .then(response => response.rows[0]);
-  }
+  };
 
   const getContributorById = (userId) => {
     const queryString = `
@@ -96,7 +102,7 @@ module.exports = (db) => {
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
-  }
+  };
 
   const getFavouritesById = (userId) => {
     const queryString = `
@@ -107,7 +113,7 @@ module.exports = (db) => {
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
-  }
+  };
 
   return {
     fetchLatlngByIP,
@@ -118,5 +124,6 @@ module.exports = (db) => {
     getUserById,
     getContributorById,
     getFavouritesById,
+    getNumberFromStrEnd
   };
 };
