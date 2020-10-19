@@ -35,6 +35,7 @@ module.exports = (db) => {
         i--;
       }
     }
+    console.log(dataJson);
     delete dataJson.deleted;
     delete dataJson.og_len;
     delete dataJson.map_title;
