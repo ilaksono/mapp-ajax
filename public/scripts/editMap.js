@@ -26,7 +26,7 @@ const initializeMarker = (markersJson, count) => {
   });
   marker.addListener('mouseover', function() {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
-      // console.log(data);
+      console.log(data);
       $('.img-container').show();
       $('.loc-img').attr('src', data.image_url);
     });
@@ -37,7 +37,6 @@ const initializeMarker = (markersJson, count) => {
       $('.img-container').hide();
     });
   })
-
 
   formAddRow(markersJson);
   markerArr.push(marker);
