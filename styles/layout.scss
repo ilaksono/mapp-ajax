@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background-color: $white;
+  background-color: $grey;
   font-family: $font-stack;
   @include flexbox(column, flex-start, center);
 
