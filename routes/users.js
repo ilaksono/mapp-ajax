@@ -35,7 +35,8 @@ module.exports = (db) => {
           allFavourited,
           allContributed,
           username: user.username,
-          userId: user.id
+          userId: user.id,
+          active: "your-map"
         }
         res.render('users', templateVars);
       })
