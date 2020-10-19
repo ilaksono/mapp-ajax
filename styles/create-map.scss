@@ -79,7 +79,7 @@ h1 {
   margin: 10px;
   border: none;
   border-bottom: 3px solid black;
-  background-color: $grey;
+  // background-color: $grey;
   font-family: $font-stack;
 
 }
@@ -120,7 +120,8 @@ i {
 .fav-icon:hover {
   cursor: pointer;
 }
-.blend-form {
-  background-color: #AADAFF;
-  border: none;
+
+.text-error {
+  background-color: $red !important;
+  border: 2.5px solid red !important;
 }

@@ -61,10 +61,20 @@ function clickHandle(map) {
 
 function throwError(element) {
   $('.err-msg').hide();
-  if (element === 'MARKTITLE')
-    $('.err-msg').text('Location title fields cannot be empty!').show();
-  else if (element === 'MAPTITLE')
-    $('.err-msg').text('Map title cannot be empty!').show();
+  if (element === 'MAPTITLE') {
+    $.ajax({ method: 'POST', data: `map_error`, url: `/maps` })
+      .fail(res => {
+        // console.log(res);
+        $('.err-msg').text(res.responseJSON.error).show();
+        $('.map_title').addClass('text-error');
+      });
+  }
+  else if (element === 'MARKTITLE')
+    $.ajax({ method: 'POST', data: `mark_error`, url: `/maps` })
+      .fail(res => {
+        $('.err-msg').text(res.responseJSON.error).show();
+        $(element).addClass('text-error');
+      });
   return;
 }
 
