@@ -175,21 +175,3 @@ i {
 .fav-icon:hover {
   cursor: pointer;
 }
-
-.text-error {
-  background-color: $red !important;
-  border: 2.5px solid red !important;
-}
-.blend-form {
-  border-bottom: 1px solid $darkgrey;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  margin-bottom: 15px;
-  outline: none;
-}
-
-.blend-form:focus {
-  color: $darkgrey;
-  border-bottom: 1px solid $darkgrey;
-}
