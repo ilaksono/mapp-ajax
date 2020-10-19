@@ -141,7 +141,9 @@ a:hover {
   .map-card:hover {
     margin: 14px calc((100% - 275px * 2) / 4 - 2px);
   }
-
+  .section-container {
+    width: 100%;
+  }
 }
 
 @media only screen and (max-width: 800px) {
