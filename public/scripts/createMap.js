@@ -40,8 +40,11 @@ function clickHandle(map) {
     const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' value='example.png'>`);
     const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
     const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
+    const $labelTitleDiv = $(`<div class="marker-label-container"></div>`);
+    $newLabel.appendTo($labelTitleDiv);
+    $newTitle.appendTo($labelTitleDiv);
     // $('#lat-lngs').append($newLat).append($newLng);
-    $newLabel.appendTo($newDiv);
+    $labelTitleDiv.appendTo($newDiv);
     $newLat.appendTo($newDiv);
     $newLng.appendTo($newDiv);
     $newTitle.appendTo($newDiv);

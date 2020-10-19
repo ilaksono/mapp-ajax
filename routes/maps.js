@@ -82,7 +82,7 @@ module.exports = (db) => {
   router.get('/:id', (req, res) => {
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
-        const templateVars = { username: user.username, userId: user.id };
+        const templateVars = { username: user.username, userId: user.id, active: null };
         return res.render('edit_map', templateVars);
       });
 
