@@ -130,6 +130,14 @@ h1 {
   background-color: $grey;
   font-family: $font-stack;
 }
+.marker-input {
+  width: calc(100% - 20px);
+  margin: 5px 10px 5px 10px;
+  border: none;
+  border-bottom: 1px solid $darkgrey;
+  background-color: $grey;
+  font-family: $font-stack;
+}
 
 .map-input {
   width: calc(100% - 20px);
@@ -180,4 +188,17 @@ i {
 .text-error {
   background-color: $red !important;
   border: 2.5px solid red !important;
+}
+.blend-form {
+  border-bottom: 1px solid $darkgrey;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+.blend-form:focus {
+  color: $darkgrey;
+  border-bottom: 1px solid $darkgrey;
 }
