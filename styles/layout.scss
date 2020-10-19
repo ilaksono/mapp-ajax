@@ -10,11 +10,14 @@ html {
 body {
   background-color: $grey;
   font-family: $font-stack;
+  height: 100%;
+  margin: 0;
   @include flexbox(column, flex-start, center);
 
   main {
     width: 100%;
-    margin-top: 100px;
+    margin-top: 65px;
+    height: 100%;
     @include flexbox(column, flex-start, center);
 
     h1 {

@@ -23,24 +23,28 @@
 </head>
 <body>
   <%- include('partials/_navbar') %>
-  <div class='page-container'>
-    <form id='lat-lngs' class='map-form'>
-      <div class='title-desc-container'>
-        <input type='text' id='map-title-js' name='map_title' placeholder='Map Title' class='blend-form'>
-        <input type='text' name='map_desc' placeholder='Map Description' class='blend-form'>
+  <main>
+    <div class='page-container'>
+      <div class="map-form-container">
+        <form id='lat-lngs' class='map-form'>
+          <div class='title-desc-container'>
+            <input type='text' id='map-title-js' name='map_title' placeholder='Map Title' class='blend-form'>
+            <input type='text' name='map_desc' placeholder='Map Description' class='blend-form'>
+          </div>
+          <span class='err-msg'></span>
+          <div class='input-heads'></div>
+          <div class='mark-container'>
+
+          </div>
+          <button type='submit' class='button-create'>Create</button>
+        </form>
       </div>
-      <span class='err-msg'></span>
-      <div class='input-heads'></div>
-      <div class='mark-container'>
+      <div class='map-container'>
+        <div id='map'></div>
 
       </div>
-      <button type='submit' class='button-create'>Create</button>
-    </form>
-    <div class='map-container'>
-      <div id='map'></div>
-
     </div>
-  </div>
+  </main>
 </body>
 
 </html>

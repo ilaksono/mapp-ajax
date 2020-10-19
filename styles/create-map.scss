@@ -3,18 +3,51 @@
 #map {
   height: 71.5vh;
   width: 100%;
-  border: 1px solid green;
 }
+
+.page-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  // justify-content: space-between;
+}
+
 .title-desc-container {
   display: flex;
   flex-direction: column;
   width: 300px;
 }
+
+.map-form-container {
+  height: 85vh;
+}
+
+.map-form {
+  font-family: $font-stack;
+  @include flexbox(column, flex-start, flex-end);
+  margin-left: 30px;
+  margin-top: 65px;
+  overflow-y: auto;
+  background-color: $white;
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  left: 0px;
+  z-index: 1;
+  -webkit-box-shadow: 0px 0px 2px 2px #d3d3d3;
+  -moz-box-shadow: 0px 0px 2px 2px #d3d3d3;
+  box-shadow: 0px 0px 2px 2px #d3d3d3;
+  // position: absolute;
+}
+
 .map-container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  width: 60%;
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
@@ -27,16 +60,6 @@ h1 {
   align-items: center;
   justify-content: space-around;
   width: 100%;
-}
-.map-form {
-  font-family: $font-stack;
-  margin-top: 142px;
-  @include flexbox(column, flex-start, flex-end);
-  overflow-y: auto;
-  height: 72vh;
-  width: calc(40% / 2);
-  left: 0px;
-  // position: absolute;
 }
 
 .group-card {
@@ -85,14 +108,6 @@ h1 {
   display: flex;
   flex-direction: column;
   // width: 100%;
-}
-.page-container {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
-  margin-top: 100px;
-  width: 100%;
-  // justify-content: space-between;
 }
 
 i {
