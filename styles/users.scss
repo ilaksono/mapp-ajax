@@ -1,8 +1,12 @@
 @import 'helper';
 
-h1 {
+.sub-nav {
+  color: red;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: $white;
+  color: #4b4b4b;
 }
 
 .section-container {
@@ -70,4 +74,20 @@ a {
 a:hover {
   text-decoration: none;
   color: $blue;
+}
+
+.hide {
+  display: none;
+}
+
+#favourites1:hover {
+  font-weight: bold;
+}
+
+#contributed1:hover {
+  font-weight: bold;
+}
+
+#all:hover {
+  font-weight: bold;
 }
