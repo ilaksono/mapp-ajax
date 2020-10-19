@@ -6,6 +6,10 @@
   width: 1000px;
 }
 
+h2 {
+  color: $darkgrey;
+  padding-top: 10px;
+}
 a {
   @include flexbox(column, flex-start, center);
   height: 100%;
