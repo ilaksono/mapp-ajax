@@ -20,41 +20,43 @@
   <body>
     <%- include('partials/_navbar') %>
     <main>
-      <h1>Hello <%= username %>!</h1>
-      <p>This is your profile!</p>
+      <div class="page-container">
+        <h1>Hello <%= username %>!</h1>
+        <p>This is your profile!</p>
 
-      <h3>Favourites</h3>
-        <div class="section-container">
-          <% for (const item of allFavourited) { %>
-            <div class="map-card">
-              <a href="/maps/<%= item.id %>">
-                <div class="map-container">
-                  <img src="<%= item.mapStaticURL %>"/>
+        <h3 class="section">Favourites</h3>
+          <div class="section-container">
+            <% for (const item of allFavourited) { %>
+              <div class="map-card">
+                <a href="/maps/<%= item.id %>">
+                  <div class="map-container">
+                    <img src="<%= item.mapStaticURL %>"/>
+                  </div>
+                <div class="description-container">
+                  <span class="title">Title: <%= item.title %></span>
+                  <span class="description">Description: <%= item.description %></span>
                 </div>
-              <div class="description-container">
-                <span class="title">Title: <%= item.title %></span>
-                <span class="description">Description: <%= item.description %></span>
+                </a>
               </div>
+            <% } %>
+        </div>
+
+        <h3>Contributed to</h3>
+          <div class="section-container">
+            <% for (const item of allContributed) { %>
+              <div class="map-card">
+                <a href="/maps/<%= item.id %>">
+                  <div class="map-container">
+                    <img src="<%= item.mapStaticURL %>"/>
+                  </div>
+                <div class="description-container">
+                  <span class="title">Title: <%= item.title %></span>
+                  <span class="description">Description: <%= item.description %></span>
+                </div>
               </a>
             </div>
           <% } %>
-      </div>
-
-      <h3>Contributed to</h3>
-        <div class="section-container">
-          <% for (const item of allContributed) { %>
-            <div class="map-card">
-              <a href="/maps/<%= item.id %>">
-                <div class="map-container">
-                  <img src="<%= item.mapStaticURL %>"/>
-                </div>
-              <div class="description-container">
-                <span class="title">Title: <%= item.title %></span>
-                <span class="description">Description: <%= item.description %></span>
-              </div>
-            </a>
-          </div>
-        <% } %>
+        </div>
       </div>
     </main>
   </body>
