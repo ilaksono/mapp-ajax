@@ -158,7 +158,7 @@ i {
 
 .mark-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  
   align-items: center;
 }
 
@@ -180,13 +180,17 @@ i {
 .img-container {
   position: fixed;
   // width: 135px;
-  height: 85px;
+  height: 15%;
   right: 8%;
   bottom: 3%;
   z-index: 3;
   border: none;
+  display: flex;
+  align-items: center;
 }
 .loc-img {
+  display: flex;
+  align-items: center;
   // width: 100%;
   height: 100%;
 }

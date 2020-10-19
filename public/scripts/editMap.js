@@ -23,6 +23,7 @@ const initializeMarker = (markersJson, count) => {
     // console.log(dbData);
     $(`#entry${index}`).remove();
     numDeleted++;
+    $('.img-container').hide();
   });
   marker.addListener('mouseover', function() {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
