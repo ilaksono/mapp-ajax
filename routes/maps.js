@@ -62,7 +62,7 @@ module.exports = (db) => {
     db.query(query, [locObj.mapTitle, locObj.mapDesc
       , req.session.userId, locObj.dateCreated])
       .then(res1 => {
-        console.log(res1.rows[0]);
+        // console.log(res1.rows[0]);
         const query2 = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;`;

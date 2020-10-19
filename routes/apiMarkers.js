@@ -174,7 +174,7 @@ module.exports = (db) => {
     db.query(query, [Number(req.params.id)])
       .then(data => {
         // console.log(data.rows);
-        res.json(data.rows[0])
+        res.status(200).json(data.rows[0])
         })
       .catch(err => console.log(err));
   });
