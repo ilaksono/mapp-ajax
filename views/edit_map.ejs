@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Create New Map</title>
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -43,9 +42,15 @@
           </form>
         </div>
       </div>
+      <div class='img-container' hidden>
+        <img class='loc-img'>
+      </div>
       <div class='map-container'>
-        <div class='map-head'><i class="fas fa-heart fav-icon"></i><h1>Edit/Modify Map</h1><h3>Created By: <span class='creator'></span></h3></div>
-      <div id='map'></div>
+        <div class='map-head'><i class="fas fa-heart fav-icon"></i>
+          <h1>Edit/Modify Map</h1>
+          <h3>Created By: <span class='creator'></span></h3>
+        </div>
+        <div id='map'></div>
       </div>
     </div>
   </main>
