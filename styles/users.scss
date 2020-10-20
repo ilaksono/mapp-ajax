@@ -63,7 +63,7 @@
   height: 350px;
   width: 275px;
   margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
-  background-color: $grey;
+  background-color: $white;
   border: 1px solid $darkgrey;
   display: block;
   border-radius: 15px;
@@ -82,6 +82,7 @@
 
 .map-container {
   @include flexbox(column, center, center);
+  margin-top: 10px;
   height: 250px;
   width: 250px;
 }
