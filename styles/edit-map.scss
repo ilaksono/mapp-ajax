@@ -55,6 +55,7 @@
 }
 
 .map-form {
+  z-index: 1;
   @include flexbox(column, flex-start, center);
   overflow: visible;
   width: 100%;

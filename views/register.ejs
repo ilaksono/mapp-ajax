@@ -13,6 +13,7 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/nav.js"></script>
   </head>
 
   <body>
@@ -23,27 +24,36 @@
       <div class="page-container">
       <div class="register-container">
 
-      <h3> Register </h3>
+      <% if(!userId) { %>
+        <h3> Register </h3>
+      <% } else { %>
+        <h3> Modify Account </h3>
+      <% } %>
 
       <form action="/register" method="POST">
         <div>
-          <label for="username">Username:</label>
-          <br>
-          <input type="username" name="username">
-          <br>
-          <label for="email">Email:</label>
-          <br>
-          <input type="email" name="email">
-          <br>
-          <label for="password">Password:</label>
-          <br>
-          <input type="password" name="password">
+          <% if(!userId) { %>
+            <label for="username">Username:</label><br>
+            <input type="username" name="username"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" name="email"><br>
+            <label for="password">Password:</label><br>
+            <input type="password" name="password">
+          <% } else { %>
+            <label for="username">Change your username:</label><br>
+            <input type="username" name="username" value="<%= username %>"><br>
+            <label for="email">Change your email:</label><br>
+            <input type="email" name="email" value="<%= email %>"><br>
+            <label for="password">Change your password:</label><br>
+            <input type="password" name="password">
+          <% } %>
         </div>
         <br>
-        <div class="my-button">
-        <button class="register-button" type="submit">Register</button>
-        </div>
-
+        <% if(!userId) { %>
+          <button class="register-button" type="submit">Register</button>
+        <% } else { %>
+          <button class="register-button" type="submit">Submit Changes</button>
+        <% } %>
       </form>
       <br>
       </div>
