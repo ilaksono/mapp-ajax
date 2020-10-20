@@ -68,6 +68,16 @@
             <% } %>
           </div>
         </div>
+
+        <% if (allFavourited = []) { %>
+          <div id="no-fav" class="error-hide">You have not favourited any maps</div>
+        <% } %>
+
+        <% if (allContributed = []) { %>
+          <div id="no-contribute" class="error-hide">You have not contributed to any maps</div>
+        <% } %>
+
+
       </div>
     </main>
   </body>

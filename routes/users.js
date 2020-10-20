@@ -14,8 +14,10 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     const allContributed = []
     const allFavourited = []
+    console.log("All fav", allFavourited)
     dbHelpers.getFavouritesById(req.params.id)
     .then(fav => {
+
       for (const item of fav) {
         const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });

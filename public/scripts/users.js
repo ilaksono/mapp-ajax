@@ -1,5 +1,7 @@
 $(document).ready(function() {
 
+  $("#no-fav").removeClass("error-hide")
+
   $(function() {
     const $fav = $("#favourites1")
 
@@ -8,6 +10,8 @@ $(document).ready(function() {
       $("#contributed2").addClass("hide")
       $("#contributed1").removeClass("sub-nav-active")
       $("#favourites1").addClass("sub-nav-active")
+      $("#no-contribute").addClass("error-hide")
+      $("#no-fav").removeClass("error-hide")
     })
   })
 
@@ -19,8 +23,11 @@ $(document).ready(function() {
       $("#favourites2").addClass("hide")
       $("#favourites1").removeClass("sub-nav-active")
       $("#contributed1").addClass("sub-nav-active")
+      $("#no-fav").addClass("error-hide")
+      $("#no-contribute").removeClass("error-hide")
     })
   })
+
 
   $(function () {
     const $heart = $(".heart-div")
