@@ -6,14 +6,18 @@ const ipify = 'https://api.ipify.org/?format=json';
 module.exports = (db) => {
   const loadAllMaps = function () {
     const queryString = `
-    SELECT maps.id, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description
+    SELECT maps.id,MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description
     FROM maps
     JOIN markers ON map_id = maps.id
-    GROUP BY maps.id;
+    GROUP BY maps.id
+    ORDER BY date_created DESC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
-      .then(response => response.rows);
+      .then(response => {
+        console.log(response.rows);
+        return response.rows
+      });
   };
 
   const buildStaticURL = function (lat, long, zoom, height, width, apiKey) {
@@ -90,7 +94,6 @@ module.exports = (db) => {
   };
 
   const getUserById = (userId) => {
-    console.log(userId);
     const queryString = `
     SELECT *
     FROM users

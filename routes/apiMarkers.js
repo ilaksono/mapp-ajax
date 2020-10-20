@@ -166,7 +166,7 @@ module.exports = (db) => {
       .catch(err => console.log(err));
   });
 
-  // router.get('/authorize', (req, res) => {
+  // router.get('/authorize/auth', (req, res) => {
 
   //   if (!req.session.userId)
   //     return res.json({ login: false });
