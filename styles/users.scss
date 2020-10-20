@@ -95,6 +95,7 @@
 img {
   border: 0px solid $grey;
   border-radius: 15px;
+  margin-left: 25px;
 }
 
 .title {
@@ -132,6 +133,17 @@ a:hover {
 #contributed1:hover {
   cursor: pointer;
 }
+
+.heart-div {
+  align-self: flex-end;
+  justify-self: right;
+  color: $darkgrey;
+}
+
+.heart-div:hover {
+  color:red;
+}
+
 
 @media only screen and (max-width: 1024px) {
   .map-card {
