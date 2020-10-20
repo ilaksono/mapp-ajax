@@ -4,6 +4,7 @@
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
   width: 1000px;
+  padding-top: 20px;
 }
 
 h2 {
@@ -52,6 +53,7 @@ a:hover {
 
 .map-container {
   @include flexbox(column, center, center);
+  margin-top: 10px;
   height: 250px;
   width: 250px;
 }
