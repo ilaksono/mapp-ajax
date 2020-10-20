@@ -19,14 +19,15 @@ module.exports = (db) => {
           loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description });
         }
         if (!req.session.userId) {
-          res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
-        }
-        dbHelpers.getUserById(req.session.userId)
-          .then(user => {
-            const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
-            res.render("maps", templateVars);
-          })
-          .catch(err => console.log(err));
+          return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
+        } else {
+          dbHelpers.getUserById(req.session.userId)
+            .then(user => {
+              const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
+              return res.render("maps", templateVars);
+            })
+            .catch(err => console.log(err));
+          }
       }).catch(err => console.log(err));
   });
 
