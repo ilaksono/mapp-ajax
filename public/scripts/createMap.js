@@ -50,7 +50,7 @@ function clickHandle(map) {
     });
     const $newLat = $(`<input type="text" name='lat${markCntr - 1}' hidden>`).val(latVal);
     const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(lngVal);
-    const $newTitle = $(`<input type='text' class='m-title marker-title-input' name='loc_title${markCntr - 1}' placeholder='Marker Title'>`);
+    const $newTitle = $(`<input type='text' class='m-title marker-title-input' name='loc_title${markCntr - 1}' placeholder='Marker Title*'>`);
     const $newDesc = $(`<input type='text' class='marker-input' name='loc_desc${markCntr - 1}' placeholder='Marker Description'>`);
     const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' placeholder='Marker Image URL'>`);
     const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
