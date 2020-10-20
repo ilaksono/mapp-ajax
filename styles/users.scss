@@ -174,6 +174,11 @@ a:hover {
   color: $darkgrey;
 }
 
+#hamburger {
+  display: none;
+}
+
+
 @media only screen and (max-width: 1024px) {
   .map-card {
     margin: 15px calc(((100% - 275px * 2) / 4) - 2px);
@@ -211,5 +216,10 @@ a:hover {
 }
 
 @media only screen and (max-width: 450) {
-
+  .username {
+    display: none;
+  }
+  #hamburger {
+    display: block;
+  }
 }
