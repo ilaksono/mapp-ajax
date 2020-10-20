@@ -130,6 +130,18 @@ module.exports = (db) => {
       .then(response => response.rows);
   };
 
+  const getCreatedById = (userId) => {
+    const queryString = `
+    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    FROM maps
+    JOIN markers ON markers.map_id = maps.id
+    WHERE maps.owner_id = $1
+    GROUP BY maps.id
+    `;
+    return db.query(queryString, [userId])
+      .then(response => response.rows);
+  }
+
   return {
     fetchLatlngByIP,
     createLocationsArray,
@@ -139,6 +151,7 @@ module.exports = (db) => {
     getUserById,
     getContributorById,
     getFavouritesById,
-    getNumberFromStrEnd
+    getNumberFromStrEnd,
+    getCreatedById
   };
 };

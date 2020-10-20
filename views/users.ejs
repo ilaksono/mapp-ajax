@@ -28,10 +28,29 @@
         <div class="sub-nav-container">
           <div class="sub-nav">
             <div class="username"><strong><%= username %></strong></div>
+            <div id="created1" class="sub-nav-button darkgrey">CREATED BY YOU</div>
             <div id="favourites1" class="sub-nav-active sub-nav-button darkgrey" >FAVOURITES</div>
             <div id="contributed1" class="sub-nav-button darkgrey">CONTRIBUTED TO</div>
           </div>
       </div>
+
+      <div id="created2" >
+        <div class="section-container">
+          <% for (const item of allCreated) { %>
+            <div class="map-card">
+                <div class="map-container">
+                  <a href="/maps/<%= item.id %>">
+                  <img src="<%= item.mapStaticURL %>"/>
+                </a>
+                </div>
+              <div class="description-container">
+                <span class="title"><%= item.title %></span>
+                <span class="description"><%= item.description %></span>
+              </div>
+            </div>
+          <% } %>
+      </div>
+    </div>
 
       <% if (allFavourited.length === 0) { %>
         <div id="no-fav" class="error-hide">You have not favourited any maps</div>

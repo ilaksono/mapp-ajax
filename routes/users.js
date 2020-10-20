@@ -14,6 +14,15 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     const allContributed = []
     const allFavourited = []
+    const allCreated = []
+    console.log("userID", req.params.id)
+    dbHelpers.getCreatedById(req.params.id)
+    .then(created => {
+      for (const item of created) {
+        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+        allCreated.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
+      }
+    })
     dbHelpers.getFavouritesById(req.params.id)
     .then(fav => {
 
@@ -30,8 +39,9 @@ module.exports = (db) => {
       }
       dbHelpers.getUserById(req.params.id)
       .then(user => {
-        console.log("All contribute", allContributed)
+        console.log("allCreated", allCreated)
         const templateVars = {
+          allCreated,
           allFavourited,
           allContributed,
           username: user.username,
