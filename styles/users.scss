@@ -3,34 +3,51 @@
 .page-container {
   height: 100%;
   width: 100%;
-  @include flexbox(column, flex-start, center)
+  @include flexbox(column, flex-start, center);
+  font-size: 14px;
 }
 
 .sub-nav-container {
   width: 100%;
   height: 50px;
   background-color: $white;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #ececec;
+  -webkit-box-shadow:0px 1px 5px #ececec;
+  -moz-box-shadow:0px 1px 5px #ececec;
+  box-shadow:0px 1px 5px #ececec;
   @include flexbox(row, center, center)
 }
 
 .sub-nav {
   color: red;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flexbox(row, space-between, center);
   background-color: $white;
   color: #4b4b4b;;
-  width: 300px;
+  width: 400px;
   height: 100%;
 }
+
+.darkgrey {
+  color: $darkgrey;
+}
+
+.username {
+  font-size: 16px;
+  color: #4b4b4b;
+}
+
+.sub-nav-button:hover {
+  border-bottom: 2px solid $darkgrey;
+}
+
 .sub-nav-button {
   height: 100%;
   display: flex;
   align-items: center;
+  border-bottom: 2px solid transparent;
 }
 
-.sub-nav-active {
+.sub-nav > .sub-nav-active {
   border-bottom: 2px solid $red;
   color: $red;
 }
@@ -38,14 +55,14 @@
 .section-container {
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
-  width: 1500px;
+  width: 1000px;
 }
 
 .map-card {
   @include flexbox(column, flex-start, center);
   height: 350px;
   width: 275px;
-  margin: 15px calc(((100% - 275px * 5) / 10) - 5px);
+  margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
   background-color: $grey;
   border: 1px solid $darkgrey;
   display: block;
@@ -56,9 +73,11 @@
 }
 
 .map-card:hover {
-  box-shadow: 7px 10px $darkgrey;
+  -webkit-box-shadow:7px 7px 5px #d3d3d3;
+  -moz-box-shadow:7px 7px 5px #d3d3d3;
+  box-shadow:7px 7px 5px #d3d3d3;
   border: 2px solid $blue;
-  margin: 14px calc((100% - 275px * 5) / 10 - 6px);
+  margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
 
 .map-container {
@@ -114,4 +133,26 @@ a:hover {
   cursor: pointer;
 }
 
+@media only screen and (max-width: 1024px) {
+  .map-card {
+    margin: 15px calc(((100% - 275px * 2) / 4) - 2px);
+  }
 
+  .map-card:hover {
+    margin: 14px calc((100% - 275px * 2) / 4 - 2px);
+  }
+  .section-container {
+    width: 800px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .map-card {
+    margin: 15px calc(((100% - 275px * 1) / 2) - 1px);
+  }
+
+  .map-card:hover {
+    margin: 14px calc((100% - 275px * 1) / 2 - 1px);
+  }
+
+}

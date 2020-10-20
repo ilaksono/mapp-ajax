@@ -15,6 +15,8 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/users.js"></script>
+
+
   </head>
 
 
@@ -24,9 +26,9 @@
       <div class="page-container">
         <div class="sub-nav-container">
           <div class="sub-nav">
-            <div>Hello <%= username %>!</div>
-            <div id="favourites1" class="sub-nav-active sub-nav-button" >Favourites</div>
-            <div id="contributed1" class="sub-nav-button">Contributed</div>
+            <div class="username"><strong><%= username %></strong></div>
+            <div id="favourites1" class="sub-nav-active sub-nav-button darkgrey" >FAVOURITES</div>
+            <div id="contributed1" class="sub-nav-button darkgrey">CONTRIBUTED TO</div>
           </div>
       </div>
 

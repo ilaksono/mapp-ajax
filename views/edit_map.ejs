@@ -4,13 +4,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Create New Map</title>
+  <title>Edit Map</title>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I"></script>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <!-- <link rel="stylesheet" href="/styles/layout.css" type="text/css" /> -->
-  <link rel="stylesheet" href="/styles/create-map.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/edit-map.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <script src="https://kit.fontawesome.com/a076d05399.js"></script>
   <link rel="stylesheet" href="/styles/navbar.css" type="text/css" />
@@ -27,18 +27,20 @@
       <div class="map-form-scroll-container">
         <div class="map-form-container">
           <form id='lat-lngs' class='map-form'>
-            <div class="create-button-container">
-              <button type='submit' class='button-create'>Create</button>
-            </div>
             <span class='err-msg'></span>
             <div class='title-desc-container'>
-              <input type='text' id='map-title-js' name='map_title' placeholder='Map Title' class='map-input'>
-              <input type='text' name='map_desc' placeholder='Map Description' class='map-desc-js map-input'>
+              <input type='text' id='map-title-js' name='map_title' placeholder='Map Title' class='map-input' disabled='disabled'>
+              <input type='text' id='map-desc-js' name='map_desc' placeholder='Map Description' class='map-input' disabled='disabled'>
             </div>
             <div class='input-heads'></div>
             <div class='mark-container'>
 
             </div>
+            <% if(userId) { %>
+              <div class="create-button-container">
+                <button id="button-create" type='submit' class='button-create' disabled="disabled">Submit Changes</button>
+              </div>
+            <% } %>
           </form>
         </div>
       </div>
@@ -46,9 +48,25 @@
         <img class='loc-img' alt='Map Location'>
       </div>
       <div class='map-container'>
-        <div class='map-head'><i class="fas fa-heart fav-icon"></i>
-          <h1>Edit/Modify Map</h1>
-          <h3>Created By: <span class='creator'></span></h3>
+        <div class='map-head'>
+          <div id="map-title-container" class="map-title-container">
+            <div class="map-detail">
+              <div class="text-data-pair">
+                Created by:  <div class='creator'></div>
+              </div>
+              <div class="text-data-pair">
+                Created on:  <div class='creation-date'></div>
+              </div>
+            </div>
+            <i class="fas fa-heart fav-icon tooltip">
+              <span class="tooltiptext red">Favourite</span>
+            </i>
+            <% if(userId) { %>
+              <i id="button-edit" class="fas fa-lock button-edit tooltip">
+                <span id="button-edit-tooltip" class="tooltiptext darkgrey">Edit</span>
+              </i>
+            <% } %>
+          </div>
         </div>
         <div id='map'></div>
       </div>

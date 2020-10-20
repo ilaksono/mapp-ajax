@@ -13,7 +13,7 @@
   top: 0px;
   left: 0px;
   z-index: 1;
-  font-size: 15px;
+  font-size: 16px;
   border-bottom: 1px solid #d3d3d3;
   -webkit-box-shadow:0px 1px 5px #d3d3d3;
   -moz-box-shadow:0px 1px 5px #d3d3d3;
@@ -27,8 +27,8 @@
 }
 
 .left-container {
-  @include flexbox(row, center, center);
-  width: 160px;
+  @include flexbox(row, flex-start, center);
+  width: 350px;
   height: 100%;
 }
 
@@ -37,12 +37,19 @@
   height: 100%;
 }
 
-.right-container {
-  @include flexbox(row, space-between, center);
+.right-container-logged {
+  @include flexbox(row, flex-end, center);
   margin-right: 20px;
+  width: 350px;
   height: 100%;
 }
 
+.right-container-not-logged {
+  @include flexbox(row, flex-end, center);
+  margin-right: 20px;
+  width: 350px;
+  height: 100%;
+}
 
 .button-box-s {
   @include flexbox(row, center, center);
@@ -77,7 +84,7 @@
 .map {
   @include flexbox(row, center, center);
   height: 100%;
-  width: 180px;
+  width: 200px;
   margin-left: 10px;
 }
 
@@ -113,8 +120,17 @@
   height: 100%;
 }
 
-.active {
+.button-default:hover {
   border-bottom: 2px solid $darkgrey;
+}
+
+.active > .button-default {
+  border-bottom: 2px solid $red;
+  color: $red;
+}
+
+.map > .active {
+  border-bottom: 2px solid $red;
 }
 
 .button-default {
@@ -123,6 +139,7 @@
   cursor: pointer;
   color: $darkgrey;
   height: 100%;
+  border-bottom: 2px solid transparent;
 }
 
 .button-new {
@@ -132,4 +149,62 @@
   color: $white;
   height: 30px;
   border-radius: 4px;
+}
+
+.button-new:hover {
+  -webkit-box-shadow:0px 1px 5px $red;
+  -moz-box-shadow:0px 1px 5px $red;
+  box-shadow:0px 1px 5px $red;
+}
+
+@media (max-width: 1024px) and (min-width: 361px) {
+  .outer-container {
+    height: calc(3 * 50px);
+  }
+  .inner-container {
+    @include flexbox(column, flex-start, center);
+    height: calc(3 * 50px);
+  }
+  .left-container {
+    @include flexbox(row, center, center);
+  }
+  .logo {
+    margin: 0;
+  }
+  .right-container-logged {
+    margin: 0;
+  }
+  .right-container-not-logged {
+    width: 155px;
+    margin: 0;
+  }
+  .button-default {
+    height: 99%;
+  }
+}
+
+@media (max-width: 360px) {
+  * {
+    font-size: 12px;
+  }
+  .outer-container {
+    height: calc(3 * 50px);
+  }
+  .inner-container {
+    @include flexbox(column, flex-start, center);
+    height: calc(3 * 50px);
+  }
+  .left-container {
+    @include flexbox(row, center, center);
+  }
+  .logo {
+    margin: 0;
+  }
+  .right-container-logged {
+    margin: 0;
+    width: 310px;
+  }
+  .center-container {
+    width: 260px;
+  }
 }
