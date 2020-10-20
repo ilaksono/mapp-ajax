@@ -7,8 +7,13 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     const query = `
+<<<<<<< HEAD
     SELECT markers.id, latitude, longitude, markers.title, markers.description
     ,image_url,maps.title as maps_title, maps.date_created as maps_date_created, maps.description as maps_description, users.username
+=======
+    SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
+    ,image_url,maps.title as maps_title, maps.description as maps_description, users.username 
+>>>>>>> view-page
     FROM markers JOIN maps ON (map_id = maps.id)
     JOIN users ON (owner_id = users.id)
     WHERE map_id = $1 AND markers.deleted = false;`;
@@ -174,10 +179,31 @@ module.exports = (db) => {
     db.query(query, [Number(req.params.id)])
       .then(data => {
         // console.log(data.rows);
-        return res.status(200).json(data.rows[0])
-        })
+        return res.status(200).json(data.rows[0]);
+      })
       .catch(err => console.log(err));
   });
+
+  router.get('/authorize', (req, res) => {
+
+    if (!req.session.userId)
+      return res.json({ login: false });
+    dbHelpers.getUserById(req.session.userId)
+      .then(user => {
+        if (user)
+          return res.status(200).json({ login: true });
+        else
+          return res.json({ login: false });
+      }).catch(err => console.log(err));
+  });
+
+  router.get('/fav', (req, res) => {
+
+    query = `SELECT id from maps
+    WHERE deleted = false;
+    `
+
+  })
 
   return router;
 };

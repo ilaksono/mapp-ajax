@@ -4,6 +4,8 @@ const dbData = [];
 const markDeleteIds = [];
 let map;
 let mapTitle;
+let userIsTrue = false;
+let errorPresent = false;
 let center = {};
 let numDeleted = 0;
 const initializeMarker = (markersJson, count) => {
@@ -15,19 +17,31 @@ const initializeMarker = (markersJson, count) => {
     map,
     icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|FE6256|000000`
   });
-  marker.addListener('mouseover', function() {
+  marker.addListener('click', function () {
+    marker.setMap(null);
+    const index = markerArr.indexOf(this);
+    // console.log(markerArr.length);
+    markDeleteIds.push(dbData[index]);
+    dbData.splice(index, 1, '');
+    // console.log(dbData);
+    $(`#entry${index}`).remove();
+    numDeleted++;
+    $('.img-container').hide();
+  });
+
+  marker.addListener('mouseover', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
-      console.log(data);
+      // console.log(data);
       $('.img-container').show();
       $('.loc-img').attr('src', data.image_url);
     });
-  })
-  marker.addListener('mouseout', function() {
+  });
+  marker.addListener('mouseout', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
       // console.log(data);
       $('.img-container').hide();
     });
-  })
+  });
 
   formAddRow(markersJson);
   markerArr.push(marker);
@@ -51,6 +65,10 @@ function formAddRow(mJson) {
   $newDesc.appendTo($newDiv);
   $imgURL.appendTo($newDiv);
   $newDiv.appendTo($('.mark-container'));
+  $(':input').on('change', event => {
+    $(event.target).removeClass('text-error');
+    $('.err-msg').hide();
+  });
 
 };
 
@@ -60,6 +78,7 @@ function initMap(center) {
     center
   };
   map = new google.maps.Map(document.getElementById('map'), options);
+  hoverHandle(map);
 }
 
 function clickHandle() {
@@ -87,14 +106,47 @@ function clickHandle() {
     };
     formAddRow(markJson);
     markerArr.push(marker);
-    console.log(markerArr.length);
+    // console.log(markerArr.length);
   });
 }
+function hoverHandle(map) {
+  map.addListener('mousemove', (mapEvent) => {
+    $('.display-gps-js').show();
+    const latVal = mapEvent.latLng.toJSON().lat;
+    const lngVal = mapEvent.latLng.toJSON().lng;
+    $('.lat-gps').text(`lat: ${latVal.toFixed(4)}`);
+    $('.lng-gps').text(`lng: ${lngVal.toFixed(4)}`);
+  });
+  map.addListener('mouseout', (event) => {
+    $('.display-gps-js').hide();
+  });
+}
+function throwError(element) {
+  // console.log(element.children[3].value);
+  $('.err-msg').hide();
+  if (element === 'MAPTITLE') {
+    $.ajax({ method: 'POST', data: `map_error`, url: `/maps` })
+      .fail(res => {
+        // console.log(res);
+        $('.err-msg').text(res.responseJSON.error).show();
+        $('#map-title-js').addClass('text-error');
+      });
+  }
+  else if (!element.children[3].value)
+    $.ajax({ method: 'POST', data: `mark_error`, url: `/maps` })
+      .fail(res => {
+        $('.err-msg').text(res.responseJSON.error).show();
+        console.log($(element.children[3])[0]);
+        $(element.children[3]).addClass('text-error');
+      });
+  return;
+}
+
 
 $(document).ready(() => {
 
   $.get(`/api/maps/${mapId}`, data => {
-    // console.log(data);
+    console.log(data);
     center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length;
     center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length;
     initMap(center);
@@ -137,7 +189,20 @@ $(document).ready(() => {
   // numNew = numTotal-numDeleted(markDeleteIds.length)
   //
   $('#lat-lngs').on('submit', function (event) {
+    errorPresent = false;
     event.preventDefault();
+    for (const $elem of $('.mark-container').children()) {
+      if (!$($elem).children()[3].value) {
+        throwError($elem);
+        errorPresent = true;
+      }
+    }
+    if ($('#map-title-js').val() === '') {
+      throwError('MAPTITLE');
+      errorPresent = true;
+    }
+    if (errorPresent)
+      return;
     const numDeleted = markDeleteIds.length;
     const formData = $(this).serialize();
     const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}&og_marks=${dbData}`;
@@ -147,6 +212,12 @@ $(document).ready(() => {
       window.location.assign(res.url);
     });
   });
+  $.get('/api/maps/authorize', data => {
+    if (data.login)
+      userIsTrue = true;
+    else
+      userIsTrue = false;
+  }).then();
 
   $.get(`/api/maps/${mapId}/fav`, data => {
     if (data.val) $('.fav-icon').addClass('fav-icon-like');

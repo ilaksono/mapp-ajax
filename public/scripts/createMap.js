@@ -1,3 +1,4 @@
+let errorPresent = false;
 
 function initMap() {
   const myLatlng = { lat: 43.6532, lng: -79.3832 };
@@ -7,10 +8,24 @@ function initMap() {
   };
   const map = new google.maps.Map(document.getElementById('map'), options);
   clickHandle(map);
+  hoverHandle(map);
 }
 const markersArr = [];
 const formArr = [];
 let numDeleted = 0;
+
+function hoverHandle(map) {
+  map.addListener('mousemove', (mapEvent) => {
+    $('.display-gps-js').show();
+    const latVal = mapEvent.latLng.toJSON().lat;
+    const lngVal = mapEvent.latLng.toJSON().lng;
+    $('.lat-gps').text(`lat: ${latVal.toFixed(4)}`);
+    $('.lng-gps').text(`lng:${lngVal.toFixed(4)}`);
+  });
+  map.addListener('mouseout', (event) => {
+    $('.display-gps-js').hide();
+  });
+}
 
 function clickHandle(map) {
   // let infoWindow = new google.maps.InfoWindow({
@@ -56,11 +71,15 @@ function clickHandle(map) {
       numDeleted++;
     });
     markersArr.push(marker);
+    $(':input').on('change', event => {
+      $(event.target).removeClass('text-error');
+      $('.err-msg').hide();
+    });
   });
 };
 
 function throwError(element) {
-  console.log(element);
+  // console.log(element.children[3].value);
   $('.err-msg').hide();
   if (element === 'MAPTITLE') {
     $.ajax({ method: 'POST', data: `map_error`, url: `/maps` })
@@ -70,28 +89,33 @@ function throwError(element) {
         $('#map-title-js').addClass('text-error');
       });
   }
-  else if (!element.children[3].value) {
+  else if (!element.children[3].value)
     $.ajax({ method: 'POST', data: `mark_error`, url: `/maps` })
-    .fail(res => {
-          $('.err-msg').text(res.responseJSON.error).show();
-          $(element).addClass('text-error');
-          $(element.children[3].value).addClass('input-error');
-        });
-  }
+      .fail(res => {
+        $('.err-msg').text(res.responseJSON.error).show();
+        console.log($(element.children[3])[0]);
+        $(element.children[3]).addClass('text-error');
+      });
   return;
 }
 
 $(document).ready(function () {
-  $(':input').on('change', event => $(event.target).removeClass('text-error'));
+
   $('#lat-lngs').on('submit', function (event) {
+    errorPresent = false;
     event.preventDefault();
     for (const $elem of $('.mark-container').children()) {
       if (!$($elem).children()[3].value) {
-        return throwError($elem);
+        throwError($elem);
+        errorPresent = true;
       }
     }
-    if ($('#map-title-js').val() === '')
-      return throwError('MAPTITLE');
+    if ($('#map-title-js').val() === '') {
+      throwError('MAPTITLE');
+      errorPresent = true;
+    }
+    if (errorPresent)
+      return;
     // console.log($(this));
     const formData = $(this).serialize();
     // console.log(formData);
