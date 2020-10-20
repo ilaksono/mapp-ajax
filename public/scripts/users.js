@@ -1,6 +1,8 @@
 $(document).ready(function() {
 
-  $("#no-fav").removeClass("error-hide")
+  $("#no-create").removeClass("error-hide")
+  $("#contributed2").addClass("hide")
+  $("#favourites2").addClass("hide")
 
   $(function() {
     const $created = $("#created1")
@@ -13,7 +15,8 @@ $(document).ready(function() {
       $("#favourites1").removeClass("sub-nav-active")
       $("#contributed1").removeClass("sub-nav-active")
       $("#no-contribute").addClass("error-hide")
-      $("#no-fav").removeClass("error-hide")
+      $("#no-fav").addClass("error-hide")
+      $("#no-create").removeClass("error-hide")
     })
   })
 
@@ -28,6 +31,7 @@ $(document).ready(function() {
       $("#created1").removeClass("sub-nav-active")
       $("#favourites1").addClass("sub-nav-active")
       $("#no-contribute").addClass("error-hide")
+      $("#no-create").addClass("error-hide")
       $("#no-fav").removeClass("error-hide")
     })
   })
@@ -43,6 +47,7 @@ $(document).ready(function() {
       $("#favourites1").removeClass("sub-nav-active")
       $("#created1").removeClass("sub-nav-active")
       $("#no-fav").addClass("error-hide")
+      $("#no-create").addClass("error-hide")
       $("#no-contribute").removeClass("error-hide")
     })
   })

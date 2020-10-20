@@ -28,11 +28,15 @@
         <div class="sub-nav-container">
           <div class="sub-nav">
             <div class="username"><strong><%= username %></strong></div>
-            <div id="created1" class="sub-nav-button darkgrey">CREATED BY YOU</div>
-            <div id="favourites1" class="sub-nav-active sub-nav-button darkgrey" >FAVOURITES</div>
+            <div id="created1" class="sub-nav-active sub-nav-button darkgrey">CREATED BY YOU</div>
+            <div id="favourites1" class="sub-nav-button darkgrey" >FAVOURITES</div>
             <div id="contributed1" class="sub-nav-button darkgrey">CONTRIBUTED TO</div>
           </div>
       </div>
+
+      <% if (allCreated.length === 0) { %>
+        <div id="no-create" class="error-hide">You have not created any maps</div>
+      <% } %>
 
       <div id="created2" >
         <div class="section-container">
