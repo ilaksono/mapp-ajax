@@ -12,7 +12,6 @@ module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
 
   router.get("/", (req, res) => {
-    console.log('there', req.session.userId)
     if(req.session.userId) {
       dbHelpers.getUserById(req.session.userId)
       .then(user => {
@@ -30,7 +29,6 @@ module.exports = (db) => {
   });
 
   router.post("/", (req, res) => {
-    console.log("session id", req.session.userId);
     const user = req.body
     // WHY AM I DOING THIS, you'll remember
     const insertQuery = `
@@ -69,23 +67,18 @@ module.exports = (db) => {
       db.query(dbCheckQuery, [user.email])
       .then(response => {
         const dbUser = response.rows[0];
-        console.log("session id is", req.session.userId);
-        console.log("dbUser Is", dbUser);
         if (req.session.userId) {
           db.query(alterQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt), req.session.userId])
           .then(response => {
-            console.log("ALTER")
             req.session.userId = response.rows[0].id;
             res.redirect('maps');
           })
         } else if (dbUser) {
-          console.log("EEE");
           err_msg = 'This email is already associated with an account';
           return res.status(400).render('register', { err_msg: err_msg, username: null, userId: null, active: 'register' } );
         } else {
           db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
           .then(response => {
-            console.log("INSERT")
             req.session.userId = response.rows[0].id;
             res.redirect('maps');
           })
