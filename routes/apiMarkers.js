@@ -1,6 +1,6 @@
 const express = require('express');
+const { request } = require('express');
 const router = express.Router();
-const testUser = 3;
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
@@ -198,6 +198,14 @@ module.exports = (db) => {
   //   `
 
   // })
+
+  router.get('/center', (req, res) => {
+    dbHelpers.fetchLatlngByIP()
+    .then(data => {
+      res.json(data);
+    }).catch(err => console.log(err, '10'));
+    
+  })
 
   return router;
 };

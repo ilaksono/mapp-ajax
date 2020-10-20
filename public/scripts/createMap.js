@@ -1,4 +1,5 @@
 let errorPresent = false;
+let centerLocation;
 
 function initMap() {
   const myLatlng = { lat: 43.6532, lng: -79.3832 };
@@ -100,6 +101,10 @@ function throwError(element) {
 }
 
 $(document).ready(function () {
+
+  $.get('/api/maps/center', (data) => {
+    console.log(data, 'hi');
+  })
 
   $('#lat-lngs').on('submit', function (event) {
     errorPresent = false;
