@@ -1,10 +1,15 @@
 @import 'helper';
 
 .page-container {
+  @include flexbox(column, flex-start, center);
   height: 100%;
   width: 100%;
-  @include flexbox(column, flex-start, center);
   font-size: 14px;
+}
+.section-container {
+  @include flexbox(row, flex-start, flex-start);
+  flex-wrap: wrap;
+  width: 1000px;
 }
 
 .sub-nav-container {
@@ -52,18 +57,14 @@
   color: $red;
 }
 
-.section-container {
-  @include flexbox(row, flex-start, flex-start);
-  flex-wrap: wrap;
-  width: 1000px;
-}
+
 
 .map-card {
   @include flexbox(column, flex-start, center);
   height: 350px;
   width: 275px;
   margin: 15px calc(((100% - 275px * 3) / 6) - 3px);
-  background-color: $grey;
+  background-color: $white;
   border: 1px solid $darkgrey;
   display: block;
   border-radius: 10px;
@@ -153,7 +154,7 @@ a:hover {
 }
 
 .heart-div:hover {
-  color:red;
+  color: $red;
 }
 
 #no-fav {
@@ -180,7 +181,7 @@ a:hover {
   }
 
   .map-card:hover {
-    margin: 14px calc((100% - 275px * 2) / 4 - 2px);
+    margin: 14px calc((100% - 275px * 2) / 4 - 3px);
   }
   .section-container {
     width: 800px;
@@ -193,7 +194,7 @@ a:hover {
   }
 
   .map-card:hover {
-    margin: 14px calc((100% - 275px * 1) / 2 - 1px);
+    margin: 14px calc((100% - 275px * 1) / 2 - 2px);
   }
 
 }

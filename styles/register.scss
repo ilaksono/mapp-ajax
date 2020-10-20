@@ -54,3 +54,17 @@ label {
 	background-color:#dfdfdf;
 }
 
+#close-message {
+  font-size: 17px;
+  float: right;
+  font-weight: bold;
+}
+
+#close-message:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+.my-button {
+  display: flex;
+  justify-content: center;
+}

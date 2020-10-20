@@ -55,3 +55,14 @@ label {
 	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
 	background-color:#dfdfdf;
 }
+
+#close-message {
+  font-size: 17px;
+  float: right;
+  font-weight: bold;
+}
+
+#close-message:hover {
+  cursor: pointer;
+  text-decoration: none;
+}

@@ -5,7 +5,8 @@ const router  = express.Router();
 module.exports = (db) => {
   router.post("/", (req, res) => {
     req.session = null;
-    res.redirect('login')
+    success_msg = "You have succesfully logged out"
+    return res.render('login', { success: success_msg, username: null, userId: null, active: "login" } );
   })
 return router;
 }

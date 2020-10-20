@@ -14,6 +14,9 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/nav.js"></script>
+    <script type="text/javascript" src="/scripts/login.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   </head>
 
@@ -21,7 +24,9 @@
     <%- include('partials/_navbar') %>
     <main>
       <div class="page-container">
+
       <div class="login-container">
+
 
       <h3> Login </h3>
 
@@ -44,7 +49,14 @@
 
     </div>
     <% if(locals.err_msg) { %>
-      <div class="alert alert-danger" role="alert"><%= err_msg %></div>
+      <div id="hidden" class="alert alert-danger" role="alert"><%= err_msg %>
+        <span id="close-message">&times;</span>
+      </div>
+    <% } %>
+    <% if(locals.success) { %>
+      <div id="hidden" class="alert alert-success" role="alert"><%= success_msg %>
+        <span id="close-message">&times;</span>
+      </div>
     <% } %>
   </main>
   </body>

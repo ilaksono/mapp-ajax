@@ -14,6 +14,9 @@
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/nav.js"></script>
+    <script type="text/javascript" src="/scripts/register.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
 
   <body>
@@ -50,15 +53,21 @@
         </div>
         <br>
         <% if(!userId) { %>
+          <div class="my-button">
           <button class="register-button" type="submit">Register</button>
+          </div>
         <% } else { %>
+          <div class="my-button">
           <button class="register-button" type="submit">Submit Changes</button>
+          </div>
         <% } %>
       </form>
       <br>
       </div>
       <% if(locals.err_msg) { %>
-        <div class="alert alert-danger" role="alert"><%= err_msg %></div>
+        <div id="hidden" class="alert alert-danger" role="alert"><%= err_msg %>
+          <span id="close-message">&times;</span>
+        </div>
       <% } %>
       </div>
     </main>
