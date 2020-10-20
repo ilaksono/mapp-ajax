@@ -12,12 +12,10 @@ const router  = express.Router();
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.get("/:id", (req, res) => {
-    console.log(req.params.id);
     const allContributed = []
     const allFavourited = []
     dbHelpers.getFavouritesById(req.params.id)
     .then(fav => {
-      console.log(fav)
       for (const item of fav) {
         const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
