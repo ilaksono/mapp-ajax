@@ -10,4 +10,15 @@
   border: 1px solid $darkgrey;
   padding: 10px 15px;
   border-radius: 15px;
+  color: $darkgrey
+}
+input {
+  border: 0;
+  background-color: $grey;
+  border-bottom: 1px solid $darkgrey;
+}
+
+label {
+  margin: 0;
+  margin-top: 10px;
 }
