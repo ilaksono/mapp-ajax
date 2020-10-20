@@ -39,6 +39,10 @@
         <% } else { %>
           <div class="right-container-logged">
             <div class="user"><span class="darkgrey">Welcome <strong><%= username %></strong></span></div>
+            <div class="button-box-xs">
+              <button class="profile-button">
+                <%= username[0].toUpperCase() %>
+              </div>
             <div class="button-box-l">
               <form action="/users/<%= userId %>" method="GET" class="form-inline<% if(active === 'your-map') { %> active<%}%>">
                 <button class="button-default">YOUR MAPS</button>

@@ -63,11 +63,33 @@
   height: 100%;
 }
 
+.button-box-xs {
+  @include flexbox(row, center, center);
+  width: 50px;
+  height: 100%;
+}
+
 .button-box-l {
   @include flexbox(row, center, center);
   width: 110px;
   margin-left: 5px;
   height: 100%;
+}
+
+.profile-button {
+  @include flexbox(row, center, center);
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
+  background-color: $red;
+  font-size: 20px;
+  font-weight: bold;
+  color: $white;
+  border-radius: 50%;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  border: none;
 }
 
 .user {
