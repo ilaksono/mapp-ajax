@@ -32,7 +32,12 @@
   height: 100%;
 }
 
-.center-container {
+.center-container-logged {
+  @include flexbox(row, space-between, center);
+  height: 100%;
+}
+
+.center-container-not-logged {
   @include flexbox(row, space-between, center);
   height: 100%;
 }
@@ -202,9 +207,13 @@
   }
   .right-container-logged {
     margin: 0;
-    width: 310px;
+    width: 300px;
   }
-  .center-container {
-    width: 260px;
+  .right-container-not-logged {
+    margin: 0;
+    width: 140px;
+  }
+  .center-container-logged {
+    width: 230px;
   }
 }

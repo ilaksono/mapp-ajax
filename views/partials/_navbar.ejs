@@ -5,20 +5,24 @@
         <a class="logo" href="/">mApp</a>
         <i class="fas fa-map-marked-alt"></i>
       </div>
-      <div class="center-container">
-        <div class="all-maps">
-          <form action="/maps/" method="GET" class="form-inline<% if(active === 'maps') { %> active<%}%>">
-            <button class="button-default">ALL MAPS</button>
-          </form>
+      <% if(!userId) { %>
+        <div class="center-container-not-logged">
+      <% } else { %>
+        <div class="center-container-logged">
+      <% } %>
+           <div class="all-maps">
+            <form action="/maps/" method="GET" class="form-inline<% if(active === 'maps') { %> active<%}%>">
+              <button class="button-default">ALL MAPS</button>
+            </form>
+          </div>
+          <% if(userId) { %>
+          <div class="map">
+            <form action="/maps/new" method="GET" class="form-inline<% if(active === 'new-map') { %> active<%}%>">
+              <button class="button-new"><strong>+ CREATE A NEW MAP</strong></button>
+            </form>
+          </div>
+          <% } %>
         </div>
-        <% if(userId) { %>
-        <div class="map">
-          <form action="/maps/new" method="GET" class="form-inline<% if(active === 'new-map') { %> active<%}%>">
-            <button class="button-new"><strong>+ CREATE A NEW MAP</strong></button>
-          </form>
-        </div>
-        <% } %>
-      </div>
       <% if(!userId) { %>
         <div class="right-container-not-logged">
           <div class="button-box-s">
