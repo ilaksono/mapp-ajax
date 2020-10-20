@@ -8,12 +8,7 @@ const addFavourites = (mapsContainer) => {
 }
 
 $(document).ready(() => {
-<<<<<<< HEAD
-
-  // $.get('/api/maps/fav')
-=======
   $.get('/api/maps/fav')
->>>>>>> feature/heart-profile
   addFavourites($('.map-container'));
 
 });
