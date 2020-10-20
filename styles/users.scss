@@ -1,10 +1,15 @@
 @import 'helper';
 
 .page-container {
+  @include flexbox(column, flex-start, center);
   height: 100%;
   width: 100%;
-  @include flexbox(column, flex-start, center);
   font-size: 14px;
+}
+.section-container {
+  @include flexbox(row, flex-start, flex-start);
+  flex-wrap: wrap;
+  width: 1000px;
 }
 
 .sub-nav-container {
@@ -52,11 +57,7 @@
   color: $red;
 }
 
-.section-container {
-  @include flexbox(row, flex-start, flex-start);
-  flex-wrap: wrap;
-  width: 1000px;
-}
+
 
 .map-card {
   @include flexbox(column, flex-start, center);
