@@ -10,4 +10,11 @@
   border: 1px solid $darkgrey;
   padding: 10px 15px;
   border-radius: 15px;
+  color: $darkgrey
+}
+.login {
+  border: 0;
+  background-color: $grey;
+  margin: 2px;
+  border-bottom: 1px solid $darkgrey;
 }
