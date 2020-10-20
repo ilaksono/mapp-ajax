@@ -2,7 +2,7 @@
 
 .page-container {
   padding-top: 150px;
-  width: 16%;
+  width: 300px;
 }
 
 .login-container {
@@ -12,18 +12,26 @@
   margin-bottom: 10px;
   padding: 10px 15px;
   border-radius: 15px;
-  color: $darkgrey
+  color: $darkgrey;
+  background-color: $white;
+  width: 100%;
 }
 
 input {
   border: 0;
-  background-color: $grey;
+  background-color: $white;
   border-bottom: 1px solid $darkgrey;
+  width: 100%;
 }
 
 label {
   margin: 0;
   margin-top: 10px;
+}
+
+.my-button {
+  display: flex;
+  justify-content: center;
 }
 
 .login-button {
