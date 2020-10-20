@@ -185,6 +185,20 @@ $(document).ready(() => {
     $('.marker-input').removeAttr("disabled");
     $('.button-create').removeAttr("disabled");
     clickHandle();
+    $('#button-edit').off('mouseover');
+    $('#button-edit').off('mouseout');
+    $('#button-create').removeAttr('hidden');
+  });
+
+  $('#button-edit').on('mouseover', function (event) {
+    if ($('.fa-lock')[0]) {
+      $('#button-edit').removeClass("fa-lock").addClass("fa-lock-open");
+    }
+  });
+  $('#button-edit').on('mouseout', function (event) {
+    if ($('.fa-lock-open')[0]) {
+      $('#button-edit').removeClass("fa-lock-open").addClass("fa-lock");
+    }
   });
   // map_id: mapId, deleted ids: markDeleteIds
   // numNew = numTotal-numDeleted(markDeleteIds.length)

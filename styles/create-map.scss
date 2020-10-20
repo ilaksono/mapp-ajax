@@ -30,9 +30,9 @@
   display: flex;
   flex-direction: column;
   left: 220px;
-  top: 12.5%;
-  color: $darkgrey;
-  // background-color: white;
+  top: 80px;
+  color: #4b4b4b;
+  background-color: rgba(255, 255, 255, 0.4);
   font-size: 0.9em;
 
 }
@@ -130,7 +130,7 @@
   width: calc(100% - 50px);
   margin: 5px 10px 5px 10px;
   border: none;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #dfdfdf;
   background-color: $grey;
   font-family: $font-stack;
 }
@@ -138,7 +138,7 @@
   width: calc(100% - 20px);
   margin: 5px 10px 5px 10px;
   border: none;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #dfdfdf;
   background-color: $grey;
   font-family: $font-stack;
 }
@@ -146,7 +146,7 @@
   width: calc(100% - 20px);
   margin: 5px 10px 5px 10px;
   border: none;
-  border-bottom: 1px solid #cfcfcf;
+  border-bottom: 1px solid #dfdfdf;
   background-color: $white;
   font-family: $font-stack;
 }
@@ -192,6 +192,5 @@
 }
 
 .text-error {
-  background-color: rgb(219, 183, 183);
-  border: 2px solid red;
+  border-bottom: 2px solid red;
 }
