@@ -7,8 +7,7 @@ module.exports = (db) => {
     SELECT maps.id, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description
     FROM maps
     JOIN markers ON map_id = maps.id
-    GROUP BY maps.id
-    LIMIT 6;
+    GROUP BY maps.id;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)

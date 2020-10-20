@@ -25,19 +25,23 @@
   <%- include('partials/_navbar') %>
   <main>
     <div class='page-container'>
+      <div class='display-gps-js display-gps' hidden>
+        <span class='lat-gps'></span>
+        <span class='lng-gps'></span>
+      </div>
       <div class="map-form-scroll-container">
         <div class="map-form-container">
           <form id='lat-lngs' class='map-form'>
-            <div class="create-button-container">
-              <button type='submit' class='button-create'>Create</button>
-            </div>
-            <span class='err-msg'></span>
             <div class='title-desc-container'>
               <input type='text' id='map-title-js' name='map_title' placeholder='Map Title' class='map-input'>
               <input type='text' name='map_desc' placeholder='Map Description' class='map-input'>
             </div>
             <div class='input-heads'></div>
             <div class='mark-container'>
+            </div>
+            <div class="create-button-container">
+              <button type='submit' class='button-create'>Create</button>
+              <span class='err-msg'></span>
             </div>
           </form>
         </div>

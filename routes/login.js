@@ -17,7 +17,7 @@ module.exports = (db) => {
     `;
     if (user.email === "" || user.password === "") {
       err_msg = 'Please enter valid email and password';
-      return res.render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
+      return res.status(400).render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
     }
     db.query(query, [user.email])
     .then(response => {
@@ -29,12 +29,12 @@ module.exports = (db) => {
             res.redirect('maps');
           } else {
             err_msg = 'Failed to login';
-            return res.render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
+            return res.status(400).render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
           }
         })
       } else {
         err_msg = 'Failed to login';
-        return res.render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
+        return res.status(400).render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
       }
     })
   });
