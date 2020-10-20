@@ -1,15 +1,18 @@
 let errorPresent = false;
-let centerLocation;
+let center;
 
 function initMap() {
-  const myLatlng = { lat: 43.6532, lng: -79.3832 };
-  var options = {
-    zoom: 8,
-    center: myLatlng
-  };
-  const map = new google.maps.Map(document.getElementById('map'), options);
-  clickHandle(map);
-  hoverHandle(map);
+  $.get('/api/maps/center/center', (data) => {
+    center = { lat: Number(JSON.parse(data).data.latitude), lng: Number(JSON.parse(data).data.longitude) } || { lat: 43.6532, lng: -79.3832 };
+    var options = {
+      zoom: 8,
+      center
+    };
+    const map = new google.maps.Map(document.getElementById('map'), options);
+    clickHandle(map);
+    hoverHandle(map);
+  });
+
 }
 const markersArr = [];
 const formArr = [];
@@ -80,12 +83,10 @@ function clickHandle(map) {
 };
 
 function throwError(element) {
-  // console.log(element.children[3].value);
   $('.err-msg').hide();
   if (element === 'MAPTITLE') {
     $.ajax({ method: 'POST', data: `map_error`, url: `/maps` })
       .fail(res => {
-        // console.log(res);
         $('.err-msg').text(res.responseJSON.error).show();
         $('#map-title-js').addClass('text-error');
       });
@@ -102,9 +103,7 @@ function throwError(element) {
 
 $(document).ready(function () {
 
-  $.get('/api/maps/center', (data) => {
-    console.log(data, 'hi');
-  })
+
 
   $('#lat-lngs').on('submit', function (event) {
     errorPresent = false;
@@ -121,15 +120,13 @@ $(document).ready(function () {
     }
     if (errorPresent)
       return;
-    // console.log($(this));
     const formData = $(this).serialize();
-    // console.log(formData);
     const dateCreated = new Date().toISOString().slice(0, 10).replace('T', ' ');
     const newData = formData + `&date_created=${dateCreated}`;
     console.log(newData);
     $.ajax({ method: 'POST', url: `/maps`, data: newData })
       .done(res => {
-        window.location.assign(res.url);
+        return window.location.assign(res.url);
       });
   });
 });

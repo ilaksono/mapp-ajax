@@ -34,7 +34,7 @@ module.exports = (db) => {
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
         const templateVars = { username: user.username, userId: user.id, active: "new-map" };
-        return res.render('create_map', templateVars);
+        return res.status(200).render('create_map', templateVars);
       });
 
   });

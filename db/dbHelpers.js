@@ -1,7 +1,7 @@
 const userIP = '162.245.144.188';
 const defaultLatlng = { latitude: '49.27670', longitude: '-123.13000' };
-const request = require('request');
-const ipify = 'https://api.ipify.org/?format=json'
+const request = require('request-promise-native');
+const ipify = 'https://api.ipify.org/?format=json';
 
 module.exports = (db) => {
   const loadAllMaps = function () {
@@ -26,18 +26,14 @@ module.exports = (db) => {
   };
 
   const fetchLatlngByIP = () => {
-    return new Promise((res,rej) => {
-      request(ipify, (err, response, body) => {
-        console.log(body, response);
-        
-        if(!err)
-          res(JSON.parse(body).ip)
-        else rej('error');  
-      })
-
-    })
-    // return defaultLatlng;
+    return request(ipify)
+      .then(body => {
+        const ip = JSON.parse(body).ip;
+        return request('https://ipvigilante.com/' + ip);
+      });
   };
+  // return defaultLatlng;
+
   const createLocationsArray = (datajson) => {
 
     const latArr = [];
@@ -94,6 +90,7 @@ module.exports = (db) => {
   };
 
   const getUserById = (userId) => {
+    console.log(userId);
     const queryString = `
     SELECT *
     FROM users

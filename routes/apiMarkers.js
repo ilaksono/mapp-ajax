@@ -5,20 +5,7 @@ const router = express.Router();
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
 
-  router.get('/:id', (req, res) => {
-    const query = `
-    SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
-    ,image_url,maps.title as maps_title,date_created as maps_date_created, maps.description as maps_description, users.username 
-    FROM markers JOIN maps ON (map_id = maps.id)
-    JOIN users ON (owner_id = users.id)
-    WHERE map_id = $1 AND markers.deleted = false;`;
-    return db.query(query, [Number(req.params.id)])
-      .then(data => {
-        // console.log(data.rows);
-        return res.json(data.rows);
-      })
-      .catch(err => console.log(err));
-  });
+  
   router.put('/:id', (req, res) => {
     console.log(req.body, 'req');
     const dataJson = req.body;
@@ -199,13 +186,27 @@ module.exports = (db) => {
 
   // })
 
-  router.get('/center', (req, res) => {
-    dbHelpers.fetchLatlngByIP()
+  router.get('/center/center', (req, res) => {
+    return dbHelpers.fetchLatlngByIP()
     .then(data => {
-      res.json(data);
+      return res.json(data);
     }).catch(err => console.log(err, '10'));
-    
   })
+
+  router.get('/:id', (req, res) => {
+    const query = `
+    SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
+    ,image_url,maps.title as maps_title,date_created as maps_date_created, maps.description as maps_description, users.username 
+    FROM markers JOIN maps ON (map_id = maps.id)
+    JOIN users ON (owner_id = users.id)
+    WHERE map_id = $1 AND markers.deleted = false;`;
+    return db.query(query, [req.params.id])
+      .then(data => {
+        // console.log(data.rows);
+        return res.json(data.rows);
+      })
+      .catch(err => console.log(err, '123'));
+  });
 
   return router;
 };
