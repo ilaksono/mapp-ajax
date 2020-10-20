@@ -33,6 +33,10 @@
           </div>
       </div>
 
+      <% if (allFavourited.length === 0) { %>
+        <div id="no-fav" class="error-hide">You have not favourited any maps</div>
+      <% } %>
+
         <div id="favourites2" >
             <div class="section-container">
               <% for (const item of allFavourited) { %>
@@ -51,6 +55,10 @@
           </div>
         </div>
 
+        <% if (allContributed.length === 0) { %>
+          <div id="no-contribute" class="error-hide">You have not contributed to any maps</div>
+        <% } %>
+
         <div id="contributed2" class="hide">
             <div class="section-container">
               <% for (const item of allContributed) { %>
@@ -68,15 +76,6 @@
             <% } %>
           </div>
         </div>
-
-        <% if (allFavourited = []) { %>
-          <div id="no-fav" class="error-hide">You have not favourited any maps</div>
-        <% } %>
-
-        <% if (allContributed = []) { %>
-          <div id="no-contribute" class="error-hide">You have not contributed to any maps</div>
-        <% } %>
-
 
       </div>
     </main>

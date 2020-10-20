@@ -14,7 +14,6 @@ module.exports = (db) => {
   router.get("/:id", (req, res) => {
     const allContributed = []
     const allFavourited = []
-    console.log("All fav", allFavourited)
     dbHelpers.getFavouritesById(req.params.id)
     .then(fav => {
 
@@ -31,6 +30,7 @@ module.exports = (db) => {
       }
       dbHelpers.getUserById(req.params.id)
       .then(user => {
+        console.log("All contribute", allContributed)
         const templateVars = {
           allFavourited,
           allContributed,
