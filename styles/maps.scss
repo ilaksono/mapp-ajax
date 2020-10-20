@@ -40,6 +40,11 @@ a:hover {
   border: 2px solid $blue;
   margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
+.heart-div {
+  align-self: flex-end;
+  justify-self: right;
+  color: $darkgrey;
+}
 
 .map-container {
   @include flexbox(column, center, center);
@@ -63,8 +68,17 @@ img {
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 20px;
+  width: 90%;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+
 }
 
 .description {
   font-size: 16px;
+  width: 90%;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
