@@ -43,23 +43,21 @@
               <button class="profile-button" id="profile-button">
                 <%= username[0].toUpperCase() %>
               </div>
-
-
-            <div id="profile-modal" class="profile-modal" hidden>
-              <div class="modal-content">
-                <div class="modal-close-container">
-                  <span class="close">&times;</span>
-                </div>
-                  <form action="/users/<%= userId %>" method="GET" class="form-inline<% if(active === 'your-map') { %> active<%}%>">
-                    <button class="modal-button">View Your Maps</button>
-                  </form>
-                  <form action="/register" method="GET" class="form-inline<% if(active === 'your-map') { %> active<%}%>">
-                    <button class="modal-button">Manage Your Account</button>
-                  </form>
-                  <form action="/logout" method="POST" class="form-inline">
-                    <button class="modal-button">Logout</button>
-                  </form>
+          </div>
+          <div id="profile-modal" class="profile-modal" hidden>
+            <div class="modal-content">
+              <div class="modal-close-container">
+                <span class="close">&times;</span>
               </div>
+                <form action="/users/<%= userId %>" method="GET" class="form-inline<% if(active === 'your-map') { %> active<%}%>">
+                  <button class="modal-button">View Your Maps</button>
+                </form>
+                <form action="/register" method="GET" class="form-inline<% if(active === 'your-map') { %> active<%}%>">
+                  <button class="modal-button">Manage Your Account</button>
+                </form>
+                <form action="/logout" method="POST" class="form-inline">
+                  <button class="modal-button">Logout</button>
+                </form>
             </div>
           </div>
         <% } %>

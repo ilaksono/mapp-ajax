@@ -109,17 +109,6 @@
   overflow: auto; /* Enable scroll if needed */
 }
 
-.profile-modal::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  z-index: 5;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: transparent transparent black transparent;
-}
 /* Modal Content */
 .modal-content {
   @include flexbox(column, center, center);
@@ -282,7 +271,13 @@
     margin: 0;
   }
   .right-container-logged {
+    @include flexbox(row, center, center);
     margin: 0;
+    width: 300px;
+  }
+  .profile-modal {
+    margin-top: 150px; /* Location of the box */
+    right: 40%;
   }
   .right-container-not-logged {
     width: 155px;
@@ -311,8 +306,20 @@
     margin: 0;
   }
   .right-container-logged {
+    @include flexbox(row, center, center);
     margin: 0;
-    width: 300px;
+    width: 170px;
+  }
+  .modal-content {
+    height: 100px;
+    width: 170px;
+  }
+  .modal-button {
+    height: 25px;
+  }
+  .profile-modal {
+    margin-top: 150px; /* Location of the box */
+    right: 25%;
   }
   .right-container-not-logged {
     margin: 0;
@@ -320,5 +327,8 @@
   }
   .center-container-logged {
     width: 230px;
+  }
+  .form-inline {
+    height: 25px;
   }
 }
