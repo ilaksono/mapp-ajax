@@ -68,30 +68,27 @@ module.exports = (db) => {
     } else {
       db.query(dbCheckQuery, [user.email])
       .then(response => {
-
         const dbUser = response.rows[0];
         console.log("session id is", req.session.userId);
         console.log("dbUser Is", dbUser);
-        if (dbUser) {
+        if (req.session.userId) {
+          db.query(alterQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt), req.session.userId])
+          .then(response => {
+            console.log("ALTER")
+            req.session.userId = response.rows[0].id;
+            res.redirect('maps');
+          })
+        } else if (dbUser) {
           console.log("EEE");
           err_msg = 'This email is already associated with an account';
           return res.status(400).render('register', { err_msg: err_msg, username: null, userId: null, active: 'register' } );
         } else {
-          if (req.session.userId) {
-            db.query(alterQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt), req.session.userId])
-            .then(response => {
-              console.log("ALTER")
-              req.session.userId = response.rows[0].id;
-              res.redirect('maps');
-            })
-          } else {
-            db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
-            .then(response => {
-              console.log("INSERT")
-              req.session.userId = response.rows[0].id;
-              res.redirect('maps');
-            })
-          }
+          db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
+          .then(response => {
+            console.log("INSERT")
+            req.session.userId = response.rows[0].id;
+            res.redirect('maps');
+          })
         }
       });
     }
