@@ -11,6 +11,7 @@ const router  = express.Router();
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
+
   router.get("/:id", (req, res) => {
     const allContributed = []
     const allFavourited = []
