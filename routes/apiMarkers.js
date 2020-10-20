@@ -7,13 +7,8 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     const query = `
-<<<<<<< HEAD
-    SELECT markers.id, latitude, longitude, markers.title, markers.description
-    ,image_url,maps.title as maps_title, maps.date_created as maps_date_created, maps.description as maps_description, users.username
-=======
     SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
-    ,image_url,maps.title as maps_title, maps.description as maps_description, users.username 
->>>>>>> view-page
+    ,image_url,maps.title as maps_title,date_created as maps_date_created, maps.description as maps_description, users.username 
     FROM markers JOIN maps ON (map_id = maps.id)
     JOIN users ON (owner_id = users.id)
     WHERE map_id = $1 AND markers.deleted = false;`;
@@ -56,8 +51,8 @@ module.exports = (db) => {
     console.log(insertObj, 'insert');
 
     //delete
-    const deleteQuery = `UPDATE markers
-    SET deleted = true WHERE id = $1
+    const deleteQuery = `UPDATE markers 
+    SET deleted = true WHERE id = $1 
     RETURNING *;`;
     for (const id of delArr) {
       db.query(deleteQuery, [Number(id)])
@@ -80,16 +75,16 @@ module.exports = (db) => {
 
     for (const i in updateObj.latitude) {
       let updateQuery;
-      updateQuery = `UPDATE markers
+      updateQuery = `UPDATE markers 
            SET title = $1 WHERE id = $2;`;
       db.query(updateQuery, [updateObj.title[i], Number(markerIDs[i])])
         .catch(err => console.log(err, '2-1'));
-      updateQuery = `UPDATE markers
+      updateQuery = `UPDATE markers 
             SET description = $1 WHERE id = $2
            ;`;
       db.query(updateQuery, [updateObj.description[i], Number(markerIDs[i])])
         .catch(err => console.log(err, '2-2'));
-      updateQuery = `UPDATE markers
+      updateQuery = `UPDATE markers 
             SET image_url = $1 WHERE id = $2
            ;`;
       db.query(updateQuery, [updateObj.image_url[i], Number(markerIDs[i])])
@@ -163,7 +158,7 @@ module.exports = (db) => {
   });
 
   router.delete('/:id/fav', (req, res) => {
-    const favQuery = `DELETE FROM favourites
+    const favQuery = `DELETE FROM favourites 
     WHERE user_id = $1 AND map_id = $2
     RETURNING *;`;
     db.query(favQuery, [req.session.userId, req.params.id])
@@ -174,7 +169,7 @@ module.exports = (db) => {
   });
 
   router.get('/images/:id', (req, res) => {
-    const query = `SELECT image_url FROM markers
+    const query = `SELECT image_url FROM markers 
     WHERE id = $1;`;
     db.query(query, [Number(req.params.id)])
       .then(data => {
@@ -184,26 +179,25 @@ module.exports = (db) => {
       .catch(err => console.log(err));
   });
 
-  router.get('/authorize', (req, res) => {
+  // router.get('/authorize', (req, res) => {
 
-    if (!req.session.userId)
-      return res.json({ login: false });
-    dbHelpers.getUserById(req.session.userId)
-      .then(user => {
-        if (user)
-          return res.status(200).json({ login: true });
-        else
-          return res.json({ login: false });
-      }).catch(err => console.log(err));
-  });
+  //   if (!req.session.userId)
+  //     return res.json({ login: false });
+  //   dbHelpers.getUserById(req.session.userId)
+  //     .then(user => {
+  //       if (user)
+  //         return res.status(200).json({ login: true });
+  //       else
+  //         return res.json({ login: false });
+  //     }).catch(err => console.log(err));
+  // });
 
-  router.get('/fav', (req, res) => {
+  // router.get('/fav', (req, res) => {
 
-    query = `SELECT id from maps
-    WHERE deleted = false;
-    `
+  //   query = `
+  //   `
 
-  })
+  // })
 
   return router;
 };

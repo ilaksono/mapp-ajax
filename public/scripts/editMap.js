@@ -17,17 +17,17 @@ const initializeMarker = (markersJson, count) => {
     map,
     icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|FE6256|000000`
   });
-  marker.addListener('click', function () {
-    marker.setMap(null);
-    const index = markerArr.indexOf(this);
-    // console.log(markerArr.length);
-    markDeleteIds.push(dbData[index]);
-    dbData.splice(index, 1, '');
-    // console.log(dbData);
-    $(`#entry${index}`).remove();
-    numDeleted++;
-    $('.img-container').hide();
-  });
+  // marker.addListener('click', function () {
+  //   marker.setMap(null);
+  //   const index = markerArr.indexOf(this);
+  //   // console.log(markerArr.length);
+  //   markDeleteIds.push(dbData[index]);
+  //   dbData.splice(index, 1, '');
+  //   // console.log(dbData);
+  //   $(`#entry${index}`).remove();
+  //   numDeleted++;
+  //   $('.img-container').hide();
+  // });
 
   marker.addListener('mouseover', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
@@ -46,6 +46,19 @@ const initializeMarker = (markersJson, count) => {
   formAddRow(markersJson);
   markerArr.push(marker);
 };
+
+function hoverHandle(map) {
+  map.addListener('mousemove', (mapEvent) => {
+    $('.display-gps-js').show();
+    const latVal = mapEvent.latLng.toJSON().lat;
+    const lngVal = mapEvent.latLng.toJSON().lng;
+    $('.lat-gps').text(`lat: ${latVal.toFixed(4)}`);
+    $('.lng-gps').text(`lng:${lngVal.toFixed(4)}`);
+  });
+  map.addListener('mouseout', (event) => {
+    $('.display-gps-js').hide();
+  });
+}
 
 function formAddRow(mJson) {
 
@@ -107,18 +120,6 @@ function clickHandle() {
     formAddRow(markJson);
     markerArr.push(marker);
     // console.log(markerArr.length);
-  });
-}
-function hoverHandle(map) {
-  map.addListener('mousemove', (mapEvent) => {
-    $('.display-gps-js').show();
-    const latVal = mapEvent.latLng.toJSON().lat;
-    const lngVal = mapEvent.latLng.toJSON().lng;
-    $('.lat-gps').text(`lat: ${latVal.toFixed(4)}`);
-    $('.lng-gps').text(`lng: ${lngVal.toFixed(4)}`);
-  });
-  map.addListener('mouseout', (event) => {
-    $('.display-gps-js').hide();
   });
 }
 function throwError(element) {
@@ -212,12 +213,12 @@ $(document).ready(() => {
       window.location.assign(res.url);
     });
   });
-  $.get('/api/maps/authorize', data => {
-    if (data.login)
-      userIsTrue = true;
-    else
-      userIsTrue = false;
-  }).then();
+  // $.get('/api/maps/authorize', data => {
+  //   if (data.login)
+  //     userIsTrue = true;
+  //   else
+  //     userIsTrue = false;
+  // }).then();
 
   $.get(`/api/maps/${mapId}/fav`, data => {
     if (data.val) $('.fav-icon').addClass('fav-icon-like');
