@@ -12,6 +12,7 @@
   flex-wrap: wrap;
   width: 1000px;
 }
+
 h2 {
   color: $darkgrey;
   padding-top: 10px;
@@ -110,9 +111,6 @@ img {
   .section-container {
     width: 750px;
   }
-  .sub-nav-container{
-    width: 100%;
-  }
 }
 
 @media only screen and (max-width: 750px) {
@@ -123,14 +121,8 @@ img {
   .map-card:hover {
     margin: 14px calc((100% - 275px * 1) / 2 - 2px);
   }
-
   .section-container {
     width: 400px;
-  }
-  .sub-nav-container{
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 10px;
   }
 
 }

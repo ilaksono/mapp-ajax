@@ -23,22 +23,24 @@
   <body>
     <%- include('partials/_navbar') %>
     <main>
-      <div class="all-maps-container">
-        <% for (const map of loadedMaps) { %>
-          <div class="map-card">
-            <a href="/maps/<%= map.id %>">
-              <div class="map-container">
-                <img src="<%= map.mapStaticURL %>" />
-              </div>
-              <div class="description-container">
-                <div class="title"><%= map.title %></div>
-                <div class="description"><%= map.description %></div>
-                <div class="created_data"><%= map.date_created %><%= map.user %></div>
-                <div class="favourited"></div>
-              </div>
-            </a>
-          </div>
-        <% } %>
+        <div class="all-maps-container">
+          <div class="section-container">
+          <% for (const map of loadedMaps) { %>
+            <div class="map-card">
+              <a href="/maps/<%= map.id %>">
+                <div class="map-container">
+                  <img src="<%= map.mapStaticURL %>" />
+                </div>
+                <div class="description-container">
+                  <div class="title"><%= map.title %></div>
+                  <div class="description"><%= map.description %></div>
+                  <div class="created_data"><%= map.date_created %><%= map.user %></div>
+                  <div class="favourited"></div>
+                </div>
+              </a>
+            </div>
+          <% } %>
+        </div>
       </div>
     </main>
   </body>
