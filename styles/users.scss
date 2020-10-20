@@ -66,10 +66,9 @@
   background-color: $grey;
   border: 1px solid $darkgrey;
   display: block;
-  border-radius: 15px;
-  padding-top: 15px;
-  color: $blue;
-  box-sizing: content-box
+  border-radius: 10px;
+  color: #4b4b4b;
+  box-sizing: content-box;
 }
 
 .map-card:hover {
@@ -82,20 +81,23 @@
 
 .map-container {
   @include flexbox(column, center, center);
-  height: 250px;
+  height: 220px;
   width: 250px;
+  margin-left: calc((100% - 250px) / 2);
+  margin-top: 10px;
 }
 
 .description-container {
   @include flexbox(column, flex-start, flex-start);
   width: 100%;
-  margin-left: 35px;
+  margin-left: 20px;
 }
 
 img {
+  height: 100%;
+  width: 100%;
   border: 0px solid $grey;
-  border-radius: 15px;
-  margin-left: 25px;
+  border-radius: 10px;
 }
 
 .title {

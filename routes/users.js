@@ -20,7 +20,7 @@ module.exports = (db) => {
     dbHelpers.getCreatedById(req.params.id)
     .then(created => {
       for (const item of created) {
-        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
         allCreated.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
       }
     })
@@ -28,14 +28,14 @@ module.exports = (db) => {
     .then(fav => {
 
       for (const item of fav) {
-        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
       }
     })
     dbHelpers.getContributorById(req.params.id)
     .then(data => {
       for (const item of data) {
-        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           allContributed.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
       }
       dbHelpers.getUserById(req.params.id)

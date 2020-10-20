@@ -13,9 +13,10 @@ h2 {
 }
 a {
   @include flexbox(column, flex-start, center);
-  height: 100%;
-  width: 100%;
+  height: 220px;
+  width: 250px;
   color: $blue;
+  margin-left: calc((100% - 250px) / 2);
   text-decoration: none;
 }
 
@@ -33,7 +34,7 @@ a:hover {
   border: 1px solid $darkgrey;
   display: block;
   border-radius: 15px;
-  padding-top: 15px;
+  padding-top: 10px;
   color: $blue;
   box-sizing: content-box;
 }
@@ -53,7 +54,6 @@ a:hover {
 
 .map-container {
   @include flexbox(column, center, center);
-  margin-top: 10px;
   height: 250px;
   width: 250px;
 }
@@ -66,7 +66,8 @@ img {
 .description-container {
   @include flexbox(column, flex-start, flex-start);
   width: 100%;
-  margin-left: 35px;
+  margin-left: 10px;
+  font-size: 14px;
 }
 
 .title {
@@ -74,7 +75,7 @@ img {
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 20px;
-  width: 90%;
+  width: 100%;
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
@@ -83,10 +84,14 @@ img {
 
 .description {
   font-size: 16px;
-  width: 90%;
+  width: 100%;
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
+}
+
+.created_data {
+  width: 100%;
 }
 
 @media only screen and (max-width: 1024px) {

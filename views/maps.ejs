@@ -12,7 +12,6 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
-    <script type="text/javascript" src="/scripts/mapCards.js"></script>
     <script type="text/javascript" src="/scripts/nav.js"></script>
 
     <!-- PAGE SPECIFIC INCLUSIONS -->
@@ -30,8 +29,10 @@
                 <img src="<%= map.mapStaticURL %>" />
               </div>
               <div class="description-container">
-                <span class="title"><%= map.title %></span>
-                <span class="description"><%= map.description %></span>
+                <div class="title"><%= map.title %></div>
+                <div class="description"><%= map.description %></div>
+                <div class="created_data"><%= map.date_created %><%= map.user %></div>
+                <div class="favourited"></div>
               </div>
             </a>
           </div>

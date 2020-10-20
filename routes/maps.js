@@ -17,20 +17,22 @@ module.exports = (db) => {
         for (const map of maps) {
           const zoomIndex = 16 - Math.floor(((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5 * 5)**0.38 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07);
           console.log(zoomIndex);
-          const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-          loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description });
+          const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+          // query to see if req.session.id is in favourited maps for this map -> if true
+          loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description, date_created: map.date_created, user: map.username });
         }
         if (!req.session.userId) {
           return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
         } else {
-          dbHelpers.getUserById(req.session.userId)
-            .then(user => {
-              const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
-              return res.render("maps", templateVars);
-            })
-            .catch(err => console.log(err));
-          }
-      }).catch(err => console.log(err));
+            dbHelpers.getUserById(req.session.userId)
+              .then(user => {
+                const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
+                return res.render("maps", templateVars);
+              })
+              .catch(err3 => console.log(err3));
+        }
+      })
+      .catch(err => console.log(err));
   });
 
   router.get('/new', (req, res) => {

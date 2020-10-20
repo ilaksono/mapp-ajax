@@ -16,7 +16,6 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/users.js"></script>
     <script type="text/javascript" src="/scripts/nav.js"></script>
-    <script type="text/javascript" src="/scripts/mapCards.js"></script>
 
 
   </head>
@@ -46,11 +45,12 @@
                 <div class="map-container">
                   <a href="/maps/<%= item.id %>">
                   <img src="<%= item.mapStaticURL %>"/>
-                </a>
+                  </a>
                 </div>
               <div class="description-container">
                 <span class="title"><%= item.title %></span>
                 <span class="description"><%= item.description %></span>
+                <i class="fas fa-heart fav-icon"></i>
               </div>
             </div>
           <% } %>

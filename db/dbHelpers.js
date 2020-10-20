@@ -6,20 +6,32 @@ const ipify = 'https://api.ipify.org/?format=json';
 module.exports = (db) => {
   const loadAllMaps = function () {
     const queryString = `
-    SELECT maps.id,MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description
+    SELECT maps.id,MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description, maps.date_created, users.username
     FROM maps
     JOIN markers ON map_id = maps.id
-    GROUP BY maps.id
+    JOIN users ON users.id = maps.owner_id
+    GROUP BY maps.id, users.id
     ORDER BY date_created DESC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
       .then(response => {
-        console.log(response.rows);
         return response.rows
       });
   };
 
+  const checkIfMapFavourited = function(userId, mapId) {
+    const queryString = `
+    SELECT *
+    FROM favourites
+    WHERE user_id = $1 AND map_id = $2;
+    `;
+    const queryParams = [userId, mapId];
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      });
+  }
   const buildStaticURL = function (lat, long, zoom, height, width, apiKey) {
     let staticURL = `https://maps.googleapis.com/maps/api/staticmap?`;
     const center = `center=${lat},${long}`;
@@ -132,9 +144,14 @@ module.exports = (db) => {
 
   const getCreatedById = (userId) => {
     const queryString = `
-    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude,
+      CASE
+        WHEN favourites.user_id = maps.id THEN 'true'
+        ELSE 'false'
+      END AS favourited_own
     FROM maps
     JOIN markers ON markers.map_id = maps.id
+    JOIN favourites ON favourites.map_id = maps.id
     WHERE maps.owner_id = $1
     GROUP BY maps.id
     `;
@@ -152,6 +169,7 @@ module.exports = (db) => {
     getContributorById,
     getFavouritesById,
     getNumberFromStrEnd,
-    getCreatedById
+    getCreatedById,
+    checkIfMapFavourited
   };
 };

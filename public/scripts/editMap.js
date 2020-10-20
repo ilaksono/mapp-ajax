@@ -164,9 +164,7 @@ function throwError(element) {
   return;
 }
 
-
 $(document).ready(() => {
-
   $.get(`/api/maps/${mapId}`, data => {
     console.log(data);
     center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length;
