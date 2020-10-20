@@ -19,7 +19,7 @@
 }
 
 .sub-nav {
-  color: red;
+  color: $red;
   @include flexbox(row, space-between, center);
   background-color: $white;
   color: #4b4b4b;

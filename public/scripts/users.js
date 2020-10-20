@@ -21,4 +21,12 @@ $(document).ready(function() {
       $("#contributed1").addClass("sub-nav-active")
     })
   })
+
+  $(function () {
+    const $heart = $(".heart-div")
+
+    $heart.on("click", function(event){
+      console.log("banana")
+    })
+  })
 })
