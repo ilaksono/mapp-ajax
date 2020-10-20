@@ -8,7 +8,8 @@ const addFavourites = (mapsContainer) => {
 }
 
 $(document).ready(() => {
-  $.get('/api/maps/fav')
+
+  // $.get('/api/maps/fav')
   addFavourites($('.map-container'));
 
 });

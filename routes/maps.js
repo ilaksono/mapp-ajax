@@ -15,7 +15,9 @@ module.exports = (db) => {
     dbHelpers.loadAllMaps()
       .then(maps => {
         for (const map of maps) {
-          const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, 6, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
+          const zoomIndex = 16 - Math.floor(((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5 * 5)**0.38 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07);
+          console.log(zoomIndex);
+          const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex, 250, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description });
         }
         if (!req.session.userId) {
@@ -41,8 +43,8 @@ module.exports = (db) => {
 
   router.post('/', (req, res) => {
     // console.log(req.body, 'here');
-    if (req.body.hasOwnProperty('map_error')) return res.status(400).json({error: 'Map Title field cannot be empty!'})
-    if (req.body.hasOwnProperty('mark_error')) return res.status(400).json({error: 'Marker Title field cannot be empty!'})
+    if (req.body.hasOwnProperty('map_error')) return res.status(400).json({ error: 'Map Title field cannot be empty!' });
+    if (req.body.hasOwnProperty('mark_error')) return res.status(400).json({ error: 'Marker Title field cannot be empty!' });
     const datajson = req.body;
     const dateCreated = datajson.date_created;
     const mapTitle = datajson.map_title;
@@ -84,7 +86,7 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     if (!req.session.userId) {
-      return res.render('edit_map', {username: null, userId: null, active: null });
+      return res.render('edit_map', { username: null, userId: null, active: null });
     }
     dbHelpers.getUserById(req.session.userId)
       .then(user => {

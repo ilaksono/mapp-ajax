@@ -12,7 +12,6 @@ function initMap() {
     clickHandle(map);
     hoverHandle(map);
   });
-
 }
 const markersArr = [];
 const formArr = [];
