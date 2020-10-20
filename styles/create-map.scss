@@ -125,11 +125,11 @@
   border: 0;
   width: 100px;
   font-family: $font-stack;
-  align-self: flex-start;
+  align-self: center;
   background-color: $green;
   color: $white;
   cursor: pointer;
-  margin-top: 15px;
+  margin-top: 10px;
   border-radius: 4px;
 }
 
@@ -159,11 +159,10 @@
 }
 
 .create-button-container {
-  @include flexbox(row, center, center);
-  align-self: center;
+  @include flexbox(column, space-between, center);
   width: 100%;
+  text-align: center;
   margin-bottom: 10px;
-  margin-left: 25px;
 }
 
 .input-heads {
@@ -180,6 +179,7 @@
 .err-msg {
   width: 100%;
   color: $red;
+  margin-top: 10px;
   font-weight: bold;
 }
 
