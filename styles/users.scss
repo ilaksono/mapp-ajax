@@ -19,7 +19,7 @@
 }
 
 .sub-nav {
-  color: red;
+  color: $red;
   @include flexbox(row, space-between, center);
   background-color: $white;
   color: #4b4b4b;
@@ -95,6 +95,7 @@
 img {
   border: 0px solid $grey;
   border-radius: 15px;
+  margin-left: 25px;
 }
 
 .title {
@@ -132,6 +133,18 @@ a:hover {
 #contributed1:hover {
   cursor: pointer;
 }
+
+.heart-div {
+  align-self: flex-end;
+  justify-self: right;
+  color: $darkgrey;
+  margin-top: 5px;
+}
+
+.heart-div:hover {
+  color:red;
+}
+
 
 @media only screen and (max-width: 1024px) {
   .map-card {

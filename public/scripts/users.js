@@ -21,4 +21,18 @@ $(document).ready(function() {
       $("#contributed1").addClass("sub-nav-active")
     })
   })
+
+  $(function () {
+    const $heart = $(".heart-div")
+
+    $heart.on("click", function(event){
+      console.log("banana")
+    })
+  })
+
+  // $.get(`/api/users/${mapId}/fav`, data => {
+  //   console.log("DATA", data)
+  //   if (data.val) $('.heart-div').addClass('fav-icon-like');
+  //   else $('.heart-div').addClass('fav-icon-not');
+  // });
 })
