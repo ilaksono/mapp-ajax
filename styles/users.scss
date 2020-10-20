@@ -22,7 +22,7 @@
   color: red;
   @include flexbox(row, space-between, center);
   background-color: $white;
-  color: #4b4b4b;;
+  color: #4b4b4b;
   width: 400px;
   height: 100%;
 }

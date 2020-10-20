@@ -41,8 +41,8 @@ module.exports = (db) => {
 
   router.post('/', (req, res) => {
     // console.log(req.body, 'here');
-    if (req.body.hasOwnProperty('map_error')) return res.status(400).json({error: 'Map title cannot be empty!'})
-    if (req.body.hasOwnProperty('mark_error')) return res.status(400).json({error: 'Location title fields cannot be empty!'})
+    if (req.body.hasOwnProperty('map_error')) return res.status(400).json({error: 'Map Title field cannot be empty!'})
+    if (req.body.hasOwnProperty('mark_error')) return res.status(400).json({error: 'Marker Title field cannot be empty!'})
     const datajson = req.body;
     const dateCreated = datajson.date_created;
     const mapTitle = datajson.map_title;

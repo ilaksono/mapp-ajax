@@ -85,6 +85,10 @@
   width: 100%;
 }
 
+.map-input:focus, .marker-input:focus, .marker-title-input:focus{
+  border-bottom: 1px solid $blue;
+}
+
 .group-card {
   @include flexbox(row, flex-start, center);
   flex-wrap: wrap;
@@ -192,5 +196,5 @@
 }
 
 .text-error {
-  border-bottom: 2px solid red;
+  border-bottom: 1px solid red;
 }
