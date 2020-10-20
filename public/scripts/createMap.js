@@ -35,9 +35,9 @@ function clickHandle(map) {
     });
     const $newLat = $(`<input type="text" name='lat${markCntr - 1}' hidden>`).val(latVal);
     const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(lngVal);
-    const $newTitle = $(`<input type='text' class='m-title marker-title-input' name='loc_title${markCntr - 1}' value='title${markCntr}'>`);
-    const $newDesc = $(`<input type='text' class='marker-input' name='loc_desc${markCntr - 1}' value='desc${markCntr}'>`);
-    const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' value='https://humanesociety.org/sites/default/files/styles/1441x612/public/2018/08/kitten-440379.jpg?h=c8d00152&itok=HVqvfhtg'>`);
+    const $newTitle = $(`<input type='text' class='m-title marker-title-input' name='loc_title${markCntr - 1}' placeholder='Marker Title'>`);
+    const $newDesc = $(`<input type='text' class='marker-input' name='loc_desc${markCntr - 1}' placeholder='Marker Description'>`);
+    const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' placeholder='Marker Image URL'>`);
     const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
     const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
     // $('#lat-lngs').append($newLat).append($newLng);
@@ -70,12 +70,14 @@ function throwError(element) {
         $('#map-title-js').addClass('text-error');
       });
   }
-  else if (element === 'MARKTITLE')
-  $.ajax({ method: 'POST', data: `mark_error`, url: `/maps` })
-  .fail(res => {
-        $('.err-msg').text(res.responseJSON.error).show();
-        $(element).addClass('text-error');
-      });
+  else if (!element.children[3].value) {
+    $.ajax({ method: 'POST', data: `mark_error`, url: `/maps` })
+    .fail(res => {
+          $('.err-msg').text(res.responseJSON.error).show();
+          $(element).addClass('text-error');
+          $(element.children[3].value).addClass('input-error');
+        });
+  }
   return;
 }
 
@@ -84,8 +86,9 @@ $(document).ready(function () {
   $('#lat-lngs').on('submit', function (event) {
     event.preventDefault();
     for (const $elem of $('.mark-container').children()) {
-      if (!$($elem).children()[3].value)
+      if (!$($elem).children()[3].value) {
         return throwError($elem);
+      }
     }
     if ($('#map-title-js').val() === '')
       return throwError('MAPTITLE');
