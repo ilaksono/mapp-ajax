@@ -64,9 +64,9 @@ function formAddRowEditDisabled(mJson) {
   const markCntr = $('.mark-container').children().length + 1 + numDeleted;
   const $newLat = $(`<input type="text" name='lat${markCntr - 1}' hidden>`).val(mJson.latitude);
   const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(mJson.longitude);
-  const $newTitle = $(`<input type='text' class='m-title marker-title-input' disabled='disabled' name='loc_title${markCntr - 1}' placeholder='Marker Title*' value='${mJson.title}'>`);
-  const $newDesc = $(`<input type='text' class='marker-input' disabled='disabled' name='loc_desc${markCntr - 1}' placeholder='Marker Description' value='${mJson.description}'>`);
-  const $imgURL = $(`<input type='text' class='marker-input' disabled='disabled' name='img_url${markCntr - 1}' placeholder='Marker Image URL' value='${mJson.image_url}'>`);
+  const $newTitle = $(`<input type='text' class='m-title marker-title-input text-overflow-ellipses' disabled='disabled' name='loc_title${markCntr - 1}' placeholder='Marker Title*' value='${mJson.title}'>`);
+  const $newDesc = $(`<input type='text' class='marker-input text-overflow-ellipses' disabled='disabled' name='loc_desc${markCntr - 1}' placeholder='Marker Description' value='${mJson.description}'>`);
+  const $imgURL = $(`<input type='text' class='marker-input text-overflow-ellipses' disabled='disabled' name='img_url${markCntr - 1}' placeholder='Marker Image URL' value='${mJson.image_url}'>`);
   const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
   const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
 
@@ -194,13 +194,13 @@ $(document).ready(() => {
         numDeleted++;
       });
     }
-    $('#map-title-js').removeAttr("disabled");
-    $('#map-desc-js').removeAttr("disabled");
+    $('#map-title-js').removeAttr("disabled").removeClass("text-overflow-ellipses");
+    $('#map-desc-js').removeAttr("disabled").removeClass("text-overflow-ellipses");
     $('#button-edit-tooltip').remove();
     $('#button-edit').removeClass("fa-lock").addClass("fa-lock-open");
-    $('.marker-title-input').removeAttr("disabled");
-    $('.marker-input').removeAttr("disabled");
-    $('.button-create').removeAttr("disabled");
+    $('.marker-title-input').removeAttr("disabled").removeClass("text-overflow-ellipses");
+    $('.marker-input').removeAttr("disabled").removeClass("text-overflow-ellipses");
+    $('.button-create').removeAttr("disabled").removeClass("text-overflow-ellipses");
     clickHandle();
     $('#button-edit').off('mouseover');
     $('#button-edit').off('mouseout');
