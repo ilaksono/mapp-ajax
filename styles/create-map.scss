@@ -211,20 +211,14 @@
   border-bottom: 1px solid red;
 }
 
-.mediaquery-form-container {
-  display: none;
-  margin-top: 3px;
-  height: 30%;
-  width: 100%;
-  background-color: $white;
-}
-
 @media only screen and (max-width: 1024px) {
-  .map-form-scroll-container {
-    display: none;
+
+  .page-container {
+    display: flex;
+    flex-direction: column-reverse;
   }
   #map {
-    height: 70%;
+    height: 100%;
     width: 100%;
   }
 
@@ -232,11 +226,11 @@
     position: absolute;
     margin-top: 86px;
   }
-  .mediaquery-form-container {
-    display: flex;
-  }
-  .mark-container {
-    width: 35%;
+  .map-form-scroll-container {
+    position: relative;
+    height: 50%;
+    width: 100%;
+    margin: 0;
   }
 }
 
