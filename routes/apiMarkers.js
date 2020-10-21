@@ -216,10 +216,14 @@ module.exports = (db) => {
     }
   })
   router.delete('/:id', (req, res) => {
-    query = `UPDATE maps
+    const query1 = `UPDATE maps
     SET deleted = true
     WHERE id = $1;`;
+    const query2 = `UPDATE markers
+    SET deleted = true
+    WHERE map_id = $1;`;
     return db.query(query, [req.params.id])
+    .then(() => db.query(query2, [req.params.id]))
     .then(() => res.json({url: '/maps'}))
     .catch(er => console.log(er));
   })
