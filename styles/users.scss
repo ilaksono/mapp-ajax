@@ -10,7 +10,7 @@
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
   width: 1000px;
-  padding-top: 20px;
+  padding-top: 20px
 }
 
 .sub-nav-container {
@@ -58,8 +58,6 @@
   color: $red;
 }
 
-
-
 .map-card {
   @include flexbox(column, flex-start, center);
   height: 350px;
@@ -69,8 +67,8 @@
   border: 1px solid $darkgrey;
   display: block;
   border-radius: 15px;
-  padding-top: 15px;
-  color: $blue;
+  padding-top: 10px;
+  color: #4b4b4b;
   box-sizing: content-box;
   -webkit-box-shadow:7px 7px 5px #d6d6d6;
   -moz-box-shadow:7px 7px 5px #d6d6d6;
@@ -87,21 +85,20 @@
 
 .map-container {
   @include flexbox(column, center, center);
-  margin-top: 10px;
   height: 250px;
   width: 250px;
 }
 
 .description-container {
   @include flexbox(column, flex-start, flex-start);
-  width: 100%;
-  margin-left: 35px;
+  width: 90%;
+  margin-left: 15px;
+  font-size: 14px;
 }
 
 img {
   border: 0px solid $grey;
   border-radius: 15px;
-  margin-left: 25px;
 }
 
 .title {
@@ -109,17 +106,46 @@ img {
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: 20px;
+  width: 100%;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
 }
 
 .description {
-  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  word-wrap: break-word;
+  overflow: hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  border-bottom: 1px solid #d3d3d3;
+}
+
+.created-owner-data {
+  @include flexbox(column, center, flex-start);
+  width: 60%;
+}
+
+.created-container {
+  font-size: 13px;
+  height: 50px;
+  @include flexbox(row, space-between, center);
+  width: 100%;
+}
+
+.favourited-container {
+  @include flexbox(row, flex-end, center);
+  width: 40%;
+  margin-right: 10px;
 }
 
 a {
   @include flexbox(column, flex-start, center);
-  height: 100%;
-  width: 100%;
+  height: 220px;
+  width: 250px;
   color: $blue;
+  margin-left: calc((100% - 250px) / 2);
   text-decoration: none;
 }
 

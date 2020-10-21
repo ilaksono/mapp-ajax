@@ -131,12 +131,13 @@ module.exports = (db) => {
 
   const getContributorById = (userId) => {
     const queryString = `
-    SELECT contributors.*, maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT contributors.*, maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM contributors
     JOIN maps ON contributors.map_id=maps.id
     JOIN markers ON markers.map_id = maps.id
-    WHERE contributors.user_id = $1
-    GROUP BY maps.id, contributors.id;
+    JOIN users ON users.id = maps.owner_id
+    WHERE contributors.user_id = $1 AND maps.owner_id <> $1
+    GROUP BY maps.id, contributors.id, users.id;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -144,12 +145,13 @@ module.exports = (db) => {
 
   const getFavouritesById = (userId) => {
     const queryString = `
-    SELECT favourites.*, maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT favourites.*, maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM favourites
     JOIN maps ON favourites.map_id=maps.id
     JOIN markers ON markers.map_id = maps.id
+    JOIN users ON users.id = maps.owner_id
     WHERE favourites.user_id = $1
-    GROUP BY maps.id, favourites.id;
+    GROUP BY maps.id, favourites.id, users.id;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -157,11 +159,12 @@ module.exports = (db) => {
 
   const getCreatedById = (userId) => {
     const queryString = `
-    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM maps
     JOIN markers ON markers.map_id = maps.id
+    JOIN users ON users.id = maps.owner_id
     WHERE maps.owner_id = $1
-    GROUP BY maps.id
+    GROUP BY maps.id, users.id
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);

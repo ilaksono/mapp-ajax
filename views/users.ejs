@@ -44,15 +44,21 @@
         <div class="section-container">
           <% for (const item of allCreated) { %>
             <div class="map-card">
+              <a href="/maps/<%= item.id %>">
                 <div class="map-container">
-                  <a href="/maps/<%= item.id %>">
                   <img src="<%= item.mapStaticURL %>"/>
-                  </a>
                 </div>
+              </a>
               <div class="description-container">
-                <span class="title"><%= item.title %></span>
-                <span class="description"><%= item.description %></span>
-                <i class="fas fa-heart fav-icon"></i>
+                <div class="title"><%= item.title %></div>
+                <div class="description"><%= item.description %></div>
+                <div class="created-container">
+                  <div class="created-owner-data">
+                    <div class="created-data">Created on: <%= new Date(item.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
+                    <div class="created-data">Created by: <strong><%= item.user %></strong></div>
+                  </div>
+                  <div class="favourited-container"></div>
+                </div>
               </div>
             </div>
           <% } %>
@@ -67,15 +73,22 @@
             <div class="section-container">
               <% for (const item of allFavourited) { %>
                 <div class="map-card">
+                  <a href="/maps/<%= item.id %>">
                     <div class="map-container">
-                      <a href="/maps/<%= item.id %>">
                       <img src="<%= item.mapStaticURL %>"/>
-                    </a>
                     </div>
+                  </a>
                   <div class="description-container">
-                    <span class="title"><%= item.title %></span>
-                    <span class="description"><%= item.description %></span>
-                    <i class="fas fa-heart fav-icon"></i>
+                    <div class="title"><%= item.title %></div>
+                    <div class="description"><%= item.description %></div>
+                    <div class="created-container">
+                      <div class="created-owner-data">
+                        <div class="created-data">Created on: <%= new Date(item.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
+                        <div class="created-data">Created by: <strong><%= item.user %></strong></div>
+                      </div>
+                      <div class="favourited-container">
+                      </div>
+                    </div>
                   </div>
                 </div>
               <% } %>
@@ -90,15 +103,22 @@
             <div class="section-container">
               <% for (const item of allContributed) { %>
                 <div class="map-card">
-                  <div class="map-container">
                   <a href="/maps/<%= item.id %>">
+                    <div class="map-container">
                       <img src="<%= item.mapStaticURL %>"/>
-                    </a>
                     </div>
+                  </a>
                   <div class="description-container">
-                    <span class="title"><%= item.title %></span>
-                    <span class="description"><%= item.description %></span>
-                    <i class="fas fa-heart fav-icon"></i>
+                    <div class="title"><%= item.title %></div>
+                    <div class="description"><%= item.description %></div>
+                    <div class="created-container">
+                      <div class="created-owner-data">
+                        <div class="created-data">Created on: <%= new Date(item.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
+                        <div class="created-data">Created by: <strong><%= item.user %></strong></div>
+                      </div>
+                      <div class="favourited-container">
+                      </div>
+                    </div>
                   </div>
               </div>
             <% } %>

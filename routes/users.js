@@ -20,23 +20,53 @@ module.exports = (db) => {
     dbHelpers.getCreatedById(req.params.id)
     .then(created => {
       for (const item of created) {
-        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-        allCreated.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
+        const markerArr = [];
+        dbHelpers.getMarkersByMapID(item.id)
+        .then(markers => {
+          for (const marker of markers) {
+            markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
+          }
+          return markerArr;
+        })
+        .then(markerArray => {
+          const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+          allCreated.push({ id: item.id, mapStaticURL, title: item.title, description: item.description, date_created: item.date_created, user: item.username });
+        });
       }
     })
     dbHelpers.getFavouritesById(req.params.id)
     .then(fav => {
 
       for (const item of fav) {
-        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-          allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
+        const markerArr = [];
+        dbHelpers.getMarkersByMapID(item.id)
+        .then(markers => {
+          for (const marker of markers) {
+            markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
+          }
+          return markerArr;
+        })
+        .then(markerArray => {
+          const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+          allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description, date_created: item.date_created, user: item.username });
+        });
       }
     })
     dbHelpers.getContributorById(req.params.id)
     .then(data => {
       for (const item of data) {
-        const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
-          allContributed.push({ id: item.id, mapStaticURL, title: item.title, description: item.description });
+        const markerArr = [];
+        dbHelpers.getMarkersByMapID(item.id)
+        .then(markers => {
+          for (const marker of markers) {
+            markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
+          }
+          return markerArr;
+        })
+        .then(markerArray => {
+          const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+          allContributed.push({ id: item.id, mapStaticURL, title: item.title, description: item.description, date_created: item.date_created, user: item.username });
+        });
       }
       dbHelpers.getUserById(req.params.id)
       .then(user => {
