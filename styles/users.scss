@@ -10,6 +10,7 @@
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
   width: 1000px;
+  padding-top: 20px;
 }
 
 .sub-nav-container {
