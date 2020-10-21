@@ -89,7 +89,7 @@ module.exports = (db) => {
       .then(user => {
         return dbHelpers.userIsOwner(user.id, req.params.id)
           .then(data => {
-            console.log(data);
+            // console.log(data);
             let templateVars;
             if (data.length) templateVars = { username: user.username, userId: user.id, active: null, isOwner: true };
             else templateVars = { username: user.username, userId: user.id, active: null, isOwner: false };

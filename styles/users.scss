@@ -10,7 +10,6 @@
   @include flexbox(row, flex-start, flex-start);
   flex-wrap: wrap;
   width: 1000px;
-  padding-top: 20px
 }
 
 .sub-nav-container {
@@ -31,6 +30,7 @@
   color: #4b4b4b;
   width: 400px;
   height: 100%;
+  visibility: visible;
 }
 
 .darkgrey {
@@ -163,6 +163,10 @@ a:hover {
 }
 
 
+#created1:hover {
+  cursor: pointer;
+}
+
 #favourites1:hover {
   cursor: pointer;
 }
@@ -171,8 +175,19 @@ a:hover {
   cursor: pointer;
 }
 
-#created1:hover {
+#ham-created:hover {
   cursor: pointer;
+  color: $red;
+}
+
+#ham-fav:hover {
+  cursor: pointer;
+  color: $red;
+}
+
+#ham-contributed:hover {
+  cursor: pointer;
+  color: $red;
 }
 
 
@@ -218,6 +233,36 @@ a:hover {
   display: none;
 }
 
+.fa-bars {
+  color: $darkgrey;
+  font-size: 20px;
+  height: 10px;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.hamburger-menu {
+  visibility: hidden;
+  width: 100%;
+  background-color: $white;
+  border-bottom: 1px solid #ececec;
+  -webkit-box-shadow:0px 1px 5px #ececec;
+  -moz-box-shadow:0px 1px 5px #ececec;
+  box-shadow:0px 1px 5px #ececec;
+  @include flexbox(row, flex-start, center);
+  padding-bottom: 10px;
+}
+
+#mobile-menu {
+  border-radius: 3px;
+  width: 85%;
+  @include flexbox(column, center, center);
+  padding: 10px;
+  font-size: 18px;
+  padding-top: 15px;
+}
+
+
 
 @media only screen and (max-width: 1024px) {
   .map-card {
@@ -247,11 +292,19 @@ a:hover {
   .section-container {
     width: 400px;
   }
-  .sub-nav-container{
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 10px;
+  .sub-nav-container {
+    display: none;
   }
 
+  .hamburger-menu {
+    visibility: visible;
+  }
+
+  .sub-nav-button {
+    border-bottom: none;
+  }
+  .sub-nav-button:hover {
+    border-bottom: none;
+  }
 }
 
