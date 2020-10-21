@@ -71,13 +71,16 @@
   border-radius: 15px;
   padding-top: 15px;
   color: $blue;
-  box-sizing: content-box
+  box-sizing: content-box;
+  -webkit-box-shadow:7px 7px 5px #d6d6d6;
+  -moz-box-shadow:7px 7px 5px #d6d6d6;
+  box-shadow:7px 7px 5px #d6d6d6;
 }
 
 .map-card:hover {
-  -webkit-box-shadow:7px 7px 5px #d3d3d3;
-  -moz-box-shadow:7px 7px 5px #d3d3d3;
-  box-shadow:7px 7px 5px #d3d3d3;
+  -webkit-box-shadow:7px 7px 5px #b9b9b9;
+  -moz-box-shadow:7px 7px 5px #b9b9b9;
+  box-shadow:7px 7px 5px #b9b9b9;
   border: 2px solid $blue;
   margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }

@@ -235,7 +235,7 @@ $(document).ready(() => {
     }
     if (errorPresent)
       return;
-    const numDeleted = markDeleteIds.length;
+    // const numDeleted = markDeleteIds.length;
     const formData = $(this).serialize();
     const newData = formData + `&deleted=${markDeleteIds}&og_len=${dbData.length}&og_marks=${dbData}`;
     console.log(newData);

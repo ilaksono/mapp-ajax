@@ -11,9 +11,9 @@ const router = express.Router();
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.get("/", (req, res) => {
-    const loadedMaps = [];
     dbHelpers.loadAllMaps()
       .then(maps => {
+        const loadedMaps = [];
         for (const map of maps) {
           const zoomIndex = 16 - Math.floor(((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5 * 5)**0.38 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07);
           const markerArr = [];
@@ -25,13 +25,16 @@ module.exports = (db) => {
             return markerArr;
           })
           .then(markerArray => {
-            const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+            const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex*0.6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
             // query to see if req.session.id is in favourited maps for this map -> if true'
-            console.log(mapStaticURL);
             loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description, date_created: map.date_created, user: map.username });
           })
           .catch(error => console.log(error));
         }
+        return loadedMaps;
+      })
+      .then(loadedMaps => {
+        console.log("loadedMaps", loadedMaps)
         if (!req.session.userId) {
           return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
         } else {

@@ -17,6 +17,7 @@ h2 {
   color: $darkgrey;
   padding-top: 10px;
 }
+
 a {
   @include flexbox(column, flex-start, center);
   height: 220px;
@@ -43,12 +44,18 @@ a:hover {
   padding-top: 10px;
   color: #4b4b4b;
   box-sizing: content-box;
+  -webkit-box-shadow:7px 7px 5px #d6d6d6;
+  -moz-box-shadow:7px 7px 5px #d6d6d6;
+  box-shadow:7px 7px 5px #d6d6d6;
+}
+.fav-icon-like {
+  color: $red;
 }
 
 .map-card:hover {
-  -webkit-box-shadow:7px 7px 5px #d3d3d3;
-  -moz-box-shadow:7px 7px 5px #d3d3d3;
-  box-shadow:7px 7px 5px #d3d3d3;
+  -webkit-box-shadow:7px 7px 4px #b9b9b9;
+  -moz-box-shadow:7px 7px 4px #b9b9b9;
+  box-shadow:7px 7px 4px #b9b9b9;
   border: 2px solid $blue;
   margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
@@ -57,11 +64,21 @@ a:hover {
   justify-self: right;
   color: $darkgrey;
 }
+.fav-icon-not {
+  color: $darkgrey;
+}
+.fav-icon:hover {
+  cursor: pointer;
+}
 
 .map-container {
   @include flexbox(column, center, center);
   height: 250px;
   width: 250px;
+}
+
+.fa-heart {
+  font-size: 20px;
 }
 
 img {

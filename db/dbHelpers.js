@@ -10,8 +10,9 @@ module.exports = (db) => {
     FROM maps
     JOIN markers ON map_id = maps.id
     JOIN users ON users.id = maps.owner_id
+    WHERE maps.deleted = false
     GROUP BY maps.id, users.id
-    ORDER BY date_created DESC;
+    ORDER BY maps.id DESC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
@@ -27,7 +28,7 @@ module.exports = (db) => {
     const size = `&size=${width}x${height}`;
     let markers = ``;
     if (markerArr.length) {
-      markers += `&markers=`;
+      markers += `&markers=color:0xF55C5C|size:small|`;
     }
     for (let i = 0; i < markerArr.length; i++) {
       if (i === 0) {

@@ -192,7 +192,30 @@ module.exports = (db) => {
       return res.json(data);
     }).catch(err => console.log(err, '10'));
   })
+  router.get('/hearts/all', (req, res) => {
+    const query = `SELECT id FROM maps 
+    JOIN favourites ON maps.id = map_id    
+    ORDER BY id DESC;`;
+    
+    db.query(query, [])
+    .then(data => res.json(data.rows))
+    .catch(er => console.log('lul', er)); 
 
+  })
+
+  router.get('/personal/personal', (req, res) => {
+    if(req.session.userId) {
+      const query = `SELECT map_id FROM favourites
+      WHERE user_id = $1;`
+      return db.query(query, [req.session.userId])
+      .then(data => {
+        if (data.rows) return res.json(data.rows);
+        else return res.json({map_id:''});
+      })
+      .catch(er => console.log('hi', er));
+    }
+  })
+  
   router.get('/:id', (req, res) => {
     const query = `
     SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
@@ -207,6 +230,7 @@ module.exports = (db) => {
       })
       .catch(err => console.log(err, '123'));
   });
+
 
   return router;
 };
