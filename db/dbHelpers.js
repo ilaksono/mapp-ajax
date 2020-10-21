@@ -10,8 +10,9 @@ module.exports = (db) => {
     FROM maps
     JOIN markers ON map_id = maps.id
     JOIN users ON users.id = maps.owner_id
+    WHERE maps.deleted = false
     GROUP BY maps.id, users.id
-    ORDER BY date_created DESC;
+    ORDER BY maps.id DESC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
