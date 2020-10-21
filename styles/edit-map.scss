@@ -211,6 +211,10 @@ h1 {
   font-family: $font-stack;
 }
 
+.text-overflow-ellipses {
+  text-overflow:ellipsis;
+}
+
 .title {
   font-weight: bold;
   font-size: 16px;
@@ -235,6 +239,7 @@ h1 {
 
 .map-input:focus, .marker-input:focus, .marker-title-input:focus{
   border-bottom: 1px solid $blue;
+  box-shadow: 0 4px 2px -2px #6b6fa8;
 }
 
 .button-edit {

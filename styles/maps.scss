@@ -42,30 +42,45 @@ a:hover {
   display: block;
   border-radius: 15px;
   padding-top: 10px;
-  color: $blue;
+  color: #4b4b4b;
   box-sizing: content-box;
-}
-.fav-icon-like {
-  color: $red;
+  -webkit-box-shadow:7px 7px 5px #d6d6d6;
+  -moz-box-shadow:7px 7px 5px #d6d6d6;
+  box-shadow:7px 7px 5px #d6d6d6;
 }
 
 .map-card:hover {
-  -webkit-box-shadow:7px 7px 5px #d3d3d3;
-  -moz-box-shadow:7px 7px 5px #d3d3d3;
-  box-shadow:7px 7px 5px #d3d3d3;
+  -webkit-box-shadow:7px 7px 4px #b9b9b9;
+  -moz-box-shadow:7px 7px 4px #b9b9b9;
+  box-shadow:7px 7px 4px #b9b9b9;
   border: 2px solid $blue;
   margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
+
 .heart-div {
   align-self: flex-end;
   justify-self: right;
   color: $darkgrey;
 }
+
 .fav-icon-not {
   color: $darkgrey;
 }
+
 .fav-icon:hover {
   cursor: pointer;
+}
+
+.fav-icon-like {
+  color: $red;
+}
+
+.fa-heart {
+  font-size: 20px;
+}
+
+.fa-heart:hover {
+  color: $red;
 }
 
 .map-container {
@@ -81,8 +96,8 @@ img {
 
 .description-container {
   @include flexbox(column, flex-start, flex-start);
-  width: 100%;
-  margin-left: 10px;
+  width: 90%;
+  margin-left: 15px;
   font-size: 14px;
 }
 
@@ -95,7 +110,6 @@ img {
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
-
 }
 
 .description {

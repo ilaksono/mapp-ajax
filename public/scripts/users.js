@@ -51,19 +51,4 @@ $(document).ready(function() {
       $("#no-contribute").removeClass("error-hide")
     })
   })
-
-
-  $(function () {
-    const $heart = $(".heart-div")
-
-    $heart.on("click", function(event){
-      console.log("banana")
-    })
-  })
-
-  // $.get(`/api/users/${mapId}/fav`, data => {
-  //   console.log("DATA", data)
-  //   if (data.val) $('.heart-div').addClass('fav-icon-like');
-  //   else $('.heart-div').addClass('fav-icon-not');
-  // });
 })

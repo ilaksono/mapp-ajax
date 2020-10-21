@@ -21,26 +21,38 @@ module.exports = (db) => {
       });
   };
 
-  const checkIfMapFavourited = function(userId, mapId) {
-    const queryString = `
-    SELECT *
-    FROM favourites
-    WHERE user_id = $1 AND map_id = $2;
-    `;
-    const queryParams = [userId, mapId];
-    return db.query(queryString, queryParams)
-      .then(response => {
-        return response.rows
-      });
-  }
-  const buildStaticURL = function (lat, long, zoom, height, width, apiKey) {
+    const buildStaticURL = function (lat, long, zoom, height, width, apiKey, markerArr) {
     let staticURL = `https://maps.googleapis.com/maps/api/staticmap?`;
     const center = `center=${lat},${long}`;
     const zoomParam = `&zoom=${zoom}`;
     const size = `&size=${width}x${height}`;
+    let markers = ``;
+    if (markerArr.length) {
+      markers += `&markers=color:0xF55C5C|size:small|`;
+    }
+    for (let i = 0; i < markerArr.length; i++) {
+      if (i === 0) {
+        markers += `${markerArr[i].latitude},${markerArr[i].longitude}`;
+      } else {
+        markers += `|${markerArr[i].latitude},${markerArr[i].longitude}`;
+      }
+    }
     const key = `&key=${apiKey}`;
-    return staticURL += center + zoomParam + size + key;
+    return staticURL += center + zoomParam + size + markers + key;
   };
+
+  const getMarkersByMapID = function(mapId) {
+    const queryString = `
+    SELECT latitude, longitude
+    FROM markers
+    WHERE map_id = $1;
+    `;
+    const queryParams = [mapId]
+    return db.query(queryString, queryParams)
+    .then(response => {
+      return response.rows;
+    });
+  }
 
   const fetchLatlngByIP = () => {
     return request(ipify)
@@ -119,12 +131,13 @@ module.exports = (db) => {
 
   const getContributorById = (userId) => {
     const queryString = `
-    SELECT contributors.*, maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT contributors.*, maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM contributors
     JOIN maps ON contributors.map_id=maps.id
     JOIN markers ON markers.map_id = maps.id
-    WHERE contributors.user_id = $1
-    GROUP BY maps.id, contributors.id;
+    JOIN users ON users.id = maps.owner_id
+    WHERE contributors.user_id = $1 AND maps.owner_id <> $1
+    GROUP BY maps.id, contributors.id, users.id;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -132,12 +145,13 @@ module.exports = (db) => {
 
   const getFavouritesById = (userId) => {
     const queryString = `
-    SELECT favourites.*, maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT favourites.*, maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM favourites
     JOIN maps ON favourites.map_id=maps.id
     JOIN markers ON markers.map_id = maps.id
+    JOIN users ON users.id = maps.owner_id
     WHERE favourites.user_id = $1
-    GROUP BY maps.id, favourites.id;
+    GROUP BY maps.id, favourites.id, users.id;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -145,11 +159,12 @@ module.exports = (db) => {
 
   const getCreatedById = (userId) => {
     const queryString = `
-    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM maps
     JOIN markers ON markers.map_id = maps.id
+    JOIN users ON users.id = maps.owner_id
     WHERE maps.owner_id = $1
-    GROUP BY maps.id
+    GROUP BY maps.id, users.id
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -174,8 +189,7 @@ module.exports = (db) => {
     getContributorById,
     getFavouritesById,
     getNumberFromStrEnd,
-    getCreatedById,
-    checkIfMapFavourited,
-    userIsOwner
+    getMarkersByMapID,
+    getCreatedById
   };
 };

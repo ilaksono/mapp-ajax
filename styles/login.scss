@@ -15,6 +15,9 @@
   color: $darkgrey;
   background-color: $white;
   width: 100%;
+  -webkit-box-shadow:7px 7px 5px #d3d3d3;
+  -moz-box-shadow:7px 7px 5px #d3d3d3;
+  box-shadow:7px 7px 5px #d3d3d3;
 }
 
 input {
@@ -22,6 +25,11 @@ input {
   background-color: $white;
   border-bottom: 1px solid $darkgrey;
   width: 100%;
+}
+
+input:focus {
+  border-bottom: 1px solid $blue;
+  box-shadow: 0 4px 2px -2px #6b6fa8;
 }
 
 label {
