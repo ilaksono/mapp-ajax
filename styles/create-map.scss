@@ -210,7 +210,14 @@
 .text-error {
   border-bottom: 1px solid red;
 }
+@media only screen and (max-width: 1024px) {
 
+  .display-gps {
+    position: absolute;
+    margin-top: 86px;
+  }
+
+}
 @media only screen and (max-width: 900px) {
 
   .page-container {
