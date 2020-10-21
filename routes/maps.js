@@ -34,7 +34,6 @@ module.exports = (db) => {
         return loadedMaps;
       })
       .then(loadedMaps => {
-        console.log("loadedMaps", loadedMaps)
         if (!req.session.userId) {
           return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
         } else {

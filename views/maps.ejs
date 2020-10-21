@@ -29,26 +29,26 @@
     <div class="all-maps-container">
       <div class="section-container">
         <% for (const map of loadedMaps) { %>
-        <div class="map-card">
-          <a href="/maps/<%= map.id %>">
-            <div class="map-container">
-              <img src="<%= map.mapStaticURL %>" />
-            </div>
-          </a>
-          <div class="description-container">
-            <div class="title"><%= map.title %></div>
-            <div class="description"><%= map.description %></div>
-            <div class="created-container">
-              <div class="created-owner-data">
-                <div class="created-data">Created on: <%= new Date(map.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
-                <div class="created-data">Created by: <strong><%= map.user %></strong></div>
+          <div class="map-card">
+            <a href="/maps/<%= map.id %>">
+              <div class="map-container">
+                <img src="<%= map.mapStaticURL %>" />
               </div>
-              <div class="favourited-container">
+            </a>
+            <div class="description-container">
+              <div class="title"><%= map.title %></div>
+              <div class="description"><%= map.description %></div>
+              <div class="created-container">
+                <div class="created-owner-data">
+                  <div class="created-data">Created on: <%= new Date(map.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
+                  <div class="created-data">Created by: <strong><%= map.user %></strong></div>
+                </div>
+                <div class="favourited-container">
+                </div>
               </div>
             </div>
+            <span class='map-id' hidden> <%= map.id %> </span>
           </div>
-          <span class='map-id' hidden> <%= map.id %> </span>
-        </div>
         <% } %>
       </div>
     </div>

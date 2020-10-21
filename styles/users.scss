@@ -175,12 +175,24 @@ a:hover {
   cursor: pointer;
 }
 
+
 .fa-heart {
-  color: $darkgrey;
-  margin-top: 5px;
+  font-size: 20px;
 }
 
 .fa-heart:hover {
+  color: $red;
+}
+
+.fav-icon-not {
+  color: $darkgrey;
+}
+
+.fav-icon:hover {
+  cursor: pointer;
+}
+
+.fav-icon-like {
   color: $red;
 }
 

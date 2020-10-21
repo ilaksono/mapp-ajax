@@ -48,9 +48,6 @@ a:hover {
   -moz-box-shadow:7px 7px 5px #d6d6d6;
   box-shadow:7px 7px 5px #d6d6d6;
 }
-.fav-icon-like {
-  color: $red;
-}
 
 .map-card:hover {
   -webkit-box-shadow:7px 7px 4px #b9b9b9;
@@ -59,26 +56,37 @@ a:hover {
   border: 2px solid $blue;
   margin: 14px calc((100% - 275px * 3) / 6 - 4px);
 }
+
 .heart-div {
   align-self: flex-end;
   justify-self: right;
   color: $darkgrey;
 }
+
 .fav-icon-not {
   color: $darkgrey;
 }
+
 .fav-icon:hover {
   cursor: pointer;
+}
+
+.fav-icon-like {
+  color: $red;
+}
+
+.fa-heart {
+  font-size: 20px;
+}
+
+.fa-heart:hover {
+  color: $red;
 }
 
 .map-container {
   @include flexbox(column, center, center);
   height: 250px;
   width: 250px;
-}
-
-.fa-heart {
-  font-size: 20px;
 }
 
 img {
@@ -102,7 +110,6 @@ img {
   overflow: hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
-
 }
 
 .description {
