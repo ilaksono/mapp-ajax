@@ -37,6 +37,9 @@ a:hover {
   color: $blue;
   box-sizing: content-box;
 }
+.fav-icon-like {
+  color: $red;
+}
 
 .map-card:hover {
   -webkit-box-shadow:7px 7px 5px #d3d3d3;
@@ -49,6 +52,12 @@ a:hover {
   align-self: flex-end;
   justify-self: right;
   color: $darkgrey;
+}
+.fav-icon-not {
+  color: $darkgrey;
+}
+.fav-icon:hover {
+  cursor: pointer;
 }
 
 .map-container {

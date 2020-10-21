@@ -9,8 +9,9 @@ module.exports = (db) => {
     SELECT maps.id,MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description
     FROM maps
     JOIN markers ON map_id = maps.id
+    WHERE maps.deleted = false
     GROUP BY maps.id
-    ORDER BY date_created DESC;
+    ORDER BY maps.id DESC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
