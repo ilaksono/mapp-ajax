@@ -154,7 +154,16 @@ h1 {
   left: 50%;
   margin-left: -40px;
 }
-
+.fa-trash-alt {
+  margin-left: 20px;
+  opacity: 0.75;
+}
+.edit-container {
+  width: 40px;
+}
+.max-opacity {
+  opacity: 1;
+}
 .red {
   color: $red;
 }

@@ -155,6 +155,15 @@ module.exports = (db) => {
       .then(response => response.rows);
   }
 
+  const userIsOwner = (userId, mapId) => {
+    const query = `SELECT owner_id 
+    FROM maps WHERE id = $1
+    AND owner_id = $2;`;
+
+    return db.query(query, [mapId, userId])
+    .then(data => data.rows[0]);
+  }
+
   return {
     fetchLatlngByIP,
     createLocationsArray,
@@ -166,6 +175,7 @@ module.exports = (db) => {
     getFavouritesById,
     getNumberFromStrEnd,
     getCreatedById,
-    checkIfMapFavourited
+    checkIfMapFavourited,
+    userIsOwner
   };
 };

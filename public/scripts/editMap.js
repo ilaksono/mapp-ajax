@@ -217,6 +217,14 @@ $(document).ready(() => {
       $('#button-edit').removeClass("fa-lock-open").addClass("fa-lock");
     }
   });
+  $('#button-delete').on('mouseover', () => {
+    $('#button-delete-tooltip').show();
+    $('#button-delete').addClass('max-opacity');
+  })
+  $('#button-delete').on('mouseout', () => {
+    $('#button-delete-tooltip').hide();
+    $('#button-delete').removeClass('max-opacity');
+  })
   // map_id: mapId, deleted ids: markDeleteIds
   // numNew = numTotal-numDeleted(markDeleteIds.length)
   //

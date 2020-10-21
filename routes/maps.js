@@ -93,9 +93,15 @@ module.exports = (db) => {
     }
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
-        const templateVars = { username: user.username, userId: user.id, active: null };
-        return res.render('edit_map', templateVars);
-      });
+        return dbHelpers.userIsOwner(user.id, req.params.id)
+        .then(data => {
+          console.log(data); 
+          let templateVars;
+          if(data.owner_id) templateVars = { username: user.username, userId: user.id, active: null, isOwner:true };
+          else templateVars = { username: user.username, userId: user.id, active: null, isOwner:false };
+          return res.render('edit_map', templateVars);
+        }).catch(er => console.log(er));
+      }).catch(er => console.log(er));
 
   });
 
