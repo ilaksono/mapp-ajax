@@ -13,80 +13,33 @@ module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
 
   router.get("/:id", (req, res) => {
-    const allContributed = []
-    const allFavourited = []
-    const allCreated = []
-    console.log("userID", req.params.id)
-    dbHelpers.getCreatedById(req.params.id)
-    .then(created => {
-      for (const item of created) {
-        const markerArr = [];
-        dbHelpers.getMarkersByMapID(item.id)
-        .then(markers => {
-          for (const marker of markers) {
-            markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
-          }
-          return markerArr;
-        })
-        .then(markerArray => {
-          const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
-          allCreated.push({ id: item.id, mapStaticURL, title: item.title, description: item.description, date_created: item.date_created, user: item.username });
-        });
-      }
-    })
-    dbHelpers.getFavouritesById(req.params.id)
-    .then(fav => {
+    let allCreated = [];
+    let allFavourited = [];
+    let allContributed = [];
 
-      for (const item of fav) {
-        const markerArr = [];
-        dbHelpers.getMarkersByMapID(item.id)
-        .then(markers => {
-          for (const marker of markers) {
-            markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
-          }
-          return markerArr;
+    dbHelpers.getCreatedById(req.params.id)
+    .then(createdMarkers => {
+      allCreated = dbHelpers.convertMapMarkersToMapArray(createdMarkers);
+      dbHelpers.getFavouritesById(req.params.id)
+      .then(favouritedMarkers => {
+        allFavourited = dbHelpers.convertMapMarkersToMapArray(favouritedMarkers);
+        dbHelpers.getContributorById(req.params.id)
+        .then(contributedMarkers => {
+          allContributed = dbHelpers.convertMapMarkersToMapArray(contributedMarkers);
         })
-        .then(markerArray => {
-          const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
-          allFavourited.push({ id: item.id, mapStaticURL, title: item.title, description: item.description, date_created: item.date_created, user: item.username });
-        });
-      }
-    })
-    dbHelpers.getContributorById(req.params.id)
-    .then(data => {
-      for (const item of data) {
-        const markerArr = [];
-        dbHelpers.getMarkersByMapID(item.id)
-        .then(markers => {
-          for (const marker of markers) {
-            markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
+        .then(() => {
+          if (req.session.userId) {
+            dbHelpers.getUserById(req.session.userId)
+            .then(user => {
+              console.log(allCreated);
+              return res.render("users", { allCreated, allFavourited, allContributed, username: user.username, userId: user.id, active: "your-map" });
+            });
+          } else {
+            return res.render("users", { allCreated, allFavourited, allContributed, username: null, userId: null, active: "your-map" });
           }
-          return markerArr;
-        })
-        .then(markerArray => {
-          const mapStaticURL = dbHelpers.buildStaticURL(item.center_latitude, item.center_longitude, 6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
-          allContributed.push({ id: item.id, mapStaticURL, title: item.title, description: item.description, date_created: item.date_created, user: item.username });
         });
-      }
-      dbHelpers.getUserById(req.params.id)
-      .then(user => {
-        console.log("allCreated", allCreated)
-        const templateVars = {
-          allCreated,
-          allFavourited,
-          allContributed,
-          username: user.username,
-          userId: user.id,
-          active: "your-map"
-        }
-        res.render('users', templateVars);
-      })
+      });
     })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
-    });
   });
   return router;
 };

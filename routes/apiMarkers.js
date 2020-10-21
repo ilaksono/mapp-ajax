@@ -36,8 +36,8 @@ module.exports = (db) => {
     // console.log(insertObj, 'insert');
 
     //delete
-    const deleteQuery = `UPDATE markers 
-    SET deleted = true WHERE id = $1 
+    const deleteQuery = `UPDATE markers
+    SET deleted = true WHERE id = $1
     RETURNING *;`;
     for (const id of delArr) {
       db.query(deleteQuery, [Number(id)])
@@ -60,16 +60,16 @@ module.exports = (db) => {
 
     for (const i in updateObj.latitude) {
       let updateQuery;
-      updateQuery = `UPDATE markers 
+      updateQuery = `UPDATE markers
            SET title = $1 WHERE id = $2;`;
       db.query(updateQuery, [updateObj.title[i], Number(markerIDs[i])])
         .catch(err => console.log(err, '2-1'));
-      updateQuery = `UPDATE markers 
+      updateQuery = `UPDATE markers
             SET description = $1 WHERE id = $2
            ;`;
       db.query(updateQuery, [updateObj.description[i], Number(markerIDs[i])])
         .catch(err => console.log(err, '2-2'));
-      updateQuery = `UPDATE markers 
+      updateQuery = `UPDATE markers
             SET image_url = $1 WHERE id = $2
            ;`;
       db.query(updateQuery, [updateObj.image_url[i], Number(markerIDs[i])])
@@ -143,7 +143,7 @@ module.exports = (db) => {
   });
 
   router.delete('/:id/fav', (req, res) => {
-    const favQuery = `DELETE FROM favourites 
+    const favQuery = `DELETE FROM favourites
     WHERE user_id = $1 AND map_id = $2
     RETURNING *;`;
     db.query(favQuery, [req.session.userId, req.params.id])
@@ -154,7 +154,7 @@ module.exports = (db) => {
   });
 
   router.get('/images/:id', (req, res) => {
-    const query = `SELECT image_url FROM markers 
+    const query = `SELECT image_url FROM markers
     WHERE id = $1;`;
     db.query(query, [Number(req.params.id)])
       .then(data => {
@@ -235,8 +235,8 @@ module.exports = (db) => {
       }).catch(err => console.log(err, '10'));
   });
   router.get('/hearts/all', (req, res) => {
-    const query = `SELECT id FROM maps 
-    JOIN favourites ON maps.id = map_id    
+    const query = `SELECT id FROM maps
+    JOIN favourites ON maps.id = map_id
     ORDER BY id DESC;`;
 
     db.query(query, [])
@@ -252,12 +252,12 @@ module.exports = (db) => {
       return db.query(query, [req.session.userId])
         .then(data => {
           if (data.rows) return res.json(data.rows);
-          else return res.json([{ map_id: '' }]);
+          else return res.json([{}]);
         })
         .catch(er => console.log('hi', er));
     }
     else {
-      res.json({ map_id: [] });
+      res.json([{}]);
     }
   });
   router.delete('/:id', (req, res) => {
@@ -276,15 +276,15 @@ module.exports = (db) => {
   router.get('/:id', (req, res) => {
     const query = `
     SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
-    ,image_url,maps.title as maps_title,date_created as maps_date_created, maps.description as maps_description, users.username 
+    ,image_url,maps.title as maps_title,date_created as maps_date_created, maps.description as maps_description, users.username
     FROM markers JOIN maps ON (map_id = maps.id)
     JOIN users ON (owner_id = users.id)
     WHERE map_id = $1 AND markers.deleted = false;`;
     return db.query(query, [req.params.id])
       .then(data => {
         if (!data.rows[0]) {
-          const queryCase = `SELECT owner_id, maps.title as maps_title, date_created as maps_date_created, maps.description as maps_description, users.username  
-          FROM maps 
+          const queryCase = `SELECT owner_id, maps.title as maps_title, date_created as maps_date_created, maps.description as maps_description, users.username
+          FROM maps
           JOIN users on users.id = owner_id
           WHERE maps.id = $1;`;
           db.query(queryCase, [req.params.id])

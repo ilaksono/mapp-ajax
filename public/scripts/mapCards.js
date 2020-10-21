@@ -34,7 +34,6 @@ const renderCard = (json) => {
 $(document).ready(() => {
   addFavourites($('.favourited-container'));
   $.get('/api/maps/personal/personal', (data) => {
-    // console.log(data);
     fillHearts(data);
   }).fail(er => console.log(er));
 

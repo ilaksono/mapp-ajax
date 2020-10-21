@@ -51,8 +51,10 @@
                   <div class="created-data">Created on: <%= new Date(map.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
                   <div class="created-data">Created by: <strong><%= map.user %></strong></div>
                 </div>
+                <% if (userId) { %>
                 <div class="favourited-container">
                 </div>
+                <% } %>
               </div>
             </div>
             <span class='map-id' hidden> <%= map.id %> </span>

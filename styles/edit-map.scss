@@ -337,3 +337,35 @@ i {
 .text-error {
   border-bottom: 1px solid red;
 }
+
+@media only screen and (max-width: 1024px) {
+
+  .display-gps {
+    position: absolute;
+    margin-top: 86px;
+  }
+
+}
+
+@media only screen and (max-width: 900px) {
+
+  .page-container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #map {
+    height: 100%;
+    width: 100%;
+  }
+
+  .display-gps {
+    position: absolute;
+    margin-top: 86px;
+  }
+  .map-form-scroll-container {
+    position: relative;
+    height: 50%;
+    width: 100%;
+    margin: 0;
+  }
+}
