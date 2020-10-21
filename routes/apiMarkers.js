@@ -163,6 +163,33 @@ module.exports = (db) => {
       })
       .catch(err => console.log(err));
   });
+  // router.post('/search/marks', (req, res) => {
+  //   const query2 = `SELECT latitude, longitude
+  //   FROM markers WHERE map_id = $1;`;
+  //   db.query(query2, [req.body.map_id])
+  //     .then(response => {
+  //       console.log(response.rows, req.body.map_id);
+  //     }).catch(er => console.log(er));
+  // });
+  // router.post('/search/search', (req, res) => {
+  //   const query = `
+  //   SELECT maps.id,MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description, maps.date_created, users.username
+  //   FROM maps
+  //   JOIN markers ON map_id = maps.id
+  //   JOIN users ON users.id = maps.owner_id
+  //   WHERE maps.deleted = false 
+  //   AND maps.title LIKE $1
+  //   GROUP BY maps.id, users.id
+  //   ORDER BY maps.id DESC;
+  //   ;`;
+  //   db.query(query, [`%${req.body.search}%`])
+  //     .then(data => {
+  //       if (data.rows.length) {
+  //       };
+  //       res.json(data.rows);
+  //       return data.rows;
+  //     }).catch(er => console.log(er));
+  // });
 
   // router.get('/authorize/auth', (req, res) => {
 
@@ -195,7 +222,7 @@ module.exports = (db) => {
         let zoomIndex = 5;
         console.log(map.rows);
         if (map.rows[0])
-          zoomIndex = 0.8*(21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.42)*1.38)**0.44 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07)*8 - 0.3*(((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2)**0.5)*1.2) ** 0.12));
+          zoomIndex = 0.8 * (21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.42) * 1.38) ** 0.44 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07) * 8 - 0.3 * (((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.5) * 1.2) ** 0.12));
         console.log(zoomIndex);
         return res.json({ zoomIndex });
       }).catch(er => console.log(er));
@@ -225,12 +252,12 @@ module.exports = (db) => {
       return db.query(query, [req.session.userId])
         .then(data => {
           if (data.rows) return res.json(data.rows);
-          else return res.json({ map_id: '' });
+          else return res.json([{ map_id: '' }]);
         })
         .catch(er => console.log('hi', er));
     }
     else {
-      res.json({ map_id: '' });
+      res.json({ map_id: [] });
     }
   });
   router.delete('/:id', (req, res) => {

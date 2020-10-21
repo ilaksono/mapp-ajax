@@ -26,6 +26,14 @@
 <body>
   <%- include('partials/_navbar') %>
   <main>
+
+    <div class='sub-nav-container'>
+      <div class="sub-nav">
+      <form class='search'>
+        <input id='search-js' type='text'>
+      </form>
+    </div>
+    </div>
     <div class="all-maps-container">
       <div class="section-container">
         <% for (const map of loadedMaps) { %>

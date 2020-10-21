@@ -18,6 +18,19 @@ const fillHearts = jsonArr => {
   };
 };
 
+const buildStaticURL = () => {
+
+};
+//
+const renderCard = (json) => {
+  const $newMapCard = $(`<div class='map-card`);
+  const $newAnchor = $(`<a href=/maps/${json.id}>`);
+  const $mapContainer = $('<div class="map-container"');
+  const staticUrl = '';
+
+  const newImg = $(`<img >`);
+};
+
 $(document).ready(() => {
   addFavourites($('.favourited-container'));
   $.get('/api/maps/personal/personal', (data) => {
@@ -44,4 +57,21 @@ $(document).ready(() => {
       $(event.target).parent().parent().parent().parent().parent().remove();
     }
   });
+
+  // $('.search').on('input', (event) => {
+  //   // console.log($('#search-js').val());
+  //   $.ajax({ method: 'POST', url: '/api/maps/search/search', data: `search=${$('#search-js').val()}` })
+  //     .done(data => {
+  //       // forEach(data.)
+  //       // console.log(data);
+  //       data.forEach((val, index) => {
+  //         $.ajax({ method: 'POST', url: `/api/maps/search/marks`, data: `map_id=${val.id}` })
+  //         .done(res => {
+  //           console.log(res, index);
+  //           data.marks = res 
+  //         });
+  //       });
+  //       // console.log(data);
+  //     });
+  // });
 });
