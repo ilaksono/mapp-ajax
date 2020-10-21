@@ -5,7 +5,7 @@ const router = express.Router();
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.put('/:id', (req, res) => {
-    console.log(req.body, 'req');
+    // console.log(req.body, 'req');
     const dataJson = req.body;
     let delArr = dataJson.deleted.split(',');
     if (delArr[0] === '')
@@ -20,20 +20,20 @@ module.exports = (db) => {
         i--;
       }
     }
-    console.log(dataJson);
+    // console.log(dataJson);
     delete dataJson.deleted;
     delete dataJson.og_len;
     delete dataJson.map_title;
     delete dataJson.map_desc;
     delete dataJson.og_marks;
-    console.log(dataJson, 'trim');
+    // console.log(dataJson, 'trim');
     const updateObj = dbHelpers.createUpdateArray(dataJson, ogLen - delArr.length) || {};
 
-    console.log('update: ', updateObj);
-    console.log('new: ', dataJson);
+    // console.log('update: ', updateObj);
+    // console.log('new: ', dataJson);
 
     const insertObj = dbHelpers.createLocationsArray(dataJson) || {};
-    console.log(insertObj, 'insert');
+    // console.log(insertObj, 'insert');
 
     //delete
     const deleteQuery = `UPDATE markers 
@@ -137,7 +137,7 @@ module.exports = (db) => {
     `;
     db.query(favQuery, [req.session.userId, req.params.id])
       .then(data => {
-        console.log(data.rows[0]);
+        // console.log(data.rows[0]);
         return res.status(200).json({ val: 'INSERT' });
       }).catch(err => console.log(err, '2'));
   });
@@ -148,7 +148,7 @@ module.exports = (db) => {
     RETURNING *;`;
     db.query(favQuery, [req.session.userId, req.params.id])
       .then(data => {
-        console.log(data.rows[0]);
+        // console.log(data.rows[0]);
         return res.status(200).json({ val: 'DELETE' });
       }).catch(err => console.log(err, '3'));
   });
@@ -183,6 +183,23 @@ module.exports = (db) => {
   //   `
 
   // })
+  router.get('/:id/zoom', (req, res) => {
+    const query = `SELECT MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread
+    FROM markers
+    WHERE map_id = $1
+    AND deleted = false
+    GROUP BY map_id
+    ;`;
+    db.query(query, [req.params.id])
+      .then(map => {
+        let zoomIndex = 5;
+        console.log(map.rows);
+        if (map.rows[0])
+          zoomIndex = 0.8*(21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.42)*1.38)**0.44 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07)*8 - 0.3*(((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2)**0.5)*1.2) ** 0.12));
+        console.log(zoomIndex);
+        return res.json({ zoomIndex });
+      }).catch(er => console.log(er));
+  });
 
   router.get('/center/center', (req, res) => {
     return dbHelpers.fetchLatlngByIP()
@@ -211,6 +228,9 @@ module.exports = (db) => {
           else return res.json({ map_id: '' });
         })
         .catch(er => console.log('hi', er));
+    }
+    else {
+      res.json({ map_id: '' });
     }
   });
   router.delete('/:id', (req, res) => {
@@ -244,8 +264,7 @@ module.exports = (db) => {
             .then(data => {
               data.rows[0].noMarkers = true;
               return res.status(200).json(data.rows);
-            }
-            )
+            })
             .catch(er => console.log(er));
         }
         else
