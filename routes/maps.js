@@ -15,7 +15,7 @@ module.exports = (db) => {
     dbHelpers.loadAllMaps()
       .then(maps => {
         for (const map of maps) {
-          const zoomIndex = 16 - Math.floor(((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5 * 5)**0.38 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07);
+          const zoomIndex = 16 - Math.floor(((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5 * 5) ** 0.38 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07);
           // console.log(zoomIndex);
           const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           // query to see if req.session.id is in favourited maps for this map -> if true
@@ -24,12 +24,12 @@ module.exports = (db) => {
         if (!req.session.userId) {
           return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
         } else {
-            dbHelpers.getUserById(req.session.userId)
-              .then(user => {
-                const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
-                return res.render("maps", templateVars);
-              })
-              .catch(err3 => console.log(err3));
+          dbHelpers.getUserById(req.session.userId)
+            .then(user => {
+              const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
+              return res.render("maps", templateVars);
+            })
+            .catch(err3 => console.log(err3));
         }
       })
       .catch(err => console.log(err));
@@ -60,6 +60,7 @@ module.exports = (db) => {
     locObj.dateCreated = dateCreated;
     locObj.mapTitle = mapTitle;
     locObj.mapDesc = mapDesc;
+    console.log(locObj, 'loc');
     // console.log(locObj);
     const query = `INSERT INTO maps (title, description, owner_id, date_created)
     VALUES ($1, $2, $3, $4)
@@ -68,14 +69,16 @@ module.exports = (db) => {
       , req.session.userId, locObj.dateCreated])
       .then(res1 => {
         // console.log(res1.rows[0]);
-        const query2 = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
+        if (locObj.lat) {
+          const query2 = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
         VALUES ($1, $2, $3, $4, $5, $6)
         RETURNING *;`;
-        for (const i in locObj.lat) {
-          const imgElement = locObj.img[i];
-          const queryParams = [res1.rows[0].id, locObj.lat[i]
-            , locObj.lng[i], locObj.title[i], locObj.desc[i], imgElement];
-          db.query(query2, queryParams).catch(err => console.log(err));
+          for (const i in locObj.lat) {
+            const imgElement = locObj.img[i];
+            const queryParams = [res1.rows[0].id, locObj.lat[i]
+              , locObj.lng[i], locObj.title[i], locObj.desc[i], imgElement];
+            db.query(query2, queryParams).catch(err => console.log(err));
+          }
         }
         const queryContrib = `INSERT INTO contributors
         (map_id, user_id) VALUES ($1, $2)
@@ -94,13 +97,13 @@ module.exports = (db) => {
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
         return dbHelpers.userIsOwner(user.id, req.params.id)
-        .then(data => {
-          console.log(data); 
-          let templateVars;
-          if(data.length) templateVars = { username: user.username, userId: user.id, active: null, isOwner:true };
-          else templateVars = { username: user.username, userId: user.id, active: null, isOwner:false };
-          return res.render('edit_map', templateVars);
-        }).catch(er => console.log(er));
+          .then(data => {
+            console.log(data);
+            let templateVars;
+            if (data.length) templateVars = { username: user.username, userId: user.id, active: null, isOwner: true };
+            else templateVars = { username: user.username, userId: user.id, active: null, isOwner: false };
+            return res.render('edit_map', templateVars);
+          }).catch(er => console.log(er));
       }).catch(er => console.log(er));
 
   });

@@ -4,8 +4,6 @@ const router = express.Router();
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
-
-
   router.put('/:id', (req, res) => {
     console.log(req.body, 'req');
     const dataJson = req.body;
@@ -237,8 +235,22 @@ module.exports = (db) => {
     WHERE map_id = $1 AND markers.deleted = false;`;
     return db.query(query, [req.params.id])
       .then(data => {
-        // console.log(data.rows);
-        return res.json(data.rows);
+        if (!data.rows[0]) {
+          const queryCase = `SELECT owner_id, maps.title as maps_title, date_created as maps_date_created, maps.description as maps_description, users.username  
+          FROM maps 
+          JOIN users on users.id = owner_id
+          WHERE maps.id = $1;`;
+          db.query(queryCase, [req.params.id])
+            .then(data => {
+              data.rows[0].noMarkers = true;
+              return res.status(200).json(data.rows);
+            }
+            )
+            .catch(er => console.log(er));
+        }
+        else
+          // console.log(data.rows);
+          return res.json(data.rows);
       })
       .catch(err => console.log(err, '123'));
   });
