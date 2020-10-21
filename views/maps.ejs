@@ -34,8 +34,15 @@
                 <div class="description-container">
                   <div class="title"><%= map.title %></div>
                   <div class="description"><%= map.description %></div>
-                  <div class="created_data"><%= map.date_created %><%= map.user %></div>
-                  <div class="favourited"></div>
+                  <div class="created-container">
+                    <div class="created-owner-data">
+                      <div class="created-data">Created on: <%= new Date(map.date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
+                      <div class="created-data">Created by: <strong><%= map.user %></strong></div>
+                    </div>
+                    <div class="favourited-container">
+                      <div class="favourited">Heart</div>
+                    </div>
+                  </div>
                 </div>
               </a>
             </div>
