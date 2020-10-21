@@ -10,20 +10,43 @@ const router = express.Router();
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.get("/", (req, res) => {
-    let username = null;
-    let userId = null;
-    if (req.session.userId) {
-      dbHelpers.getUserById(req.session.userId)
-      .then(user => {
-        username = user.username;
-        userId = user.id;
+    dbHelpers.loadAllMaps()
+      .then(maps => {
+        const loadedMaps = [];
+        for (const map of maps) {
+          const zoomIndex = 16 - Math.floor((((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5) * 6)**0.6 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07 - (((map.lat_spread ** 2 + map.lng_spread ** 2)**0.5)*2) ** 0.16);
+          const markerArr = [];
+          dbHelpers.getMarkersByMapID(map.id)
+          .then(markers => {
+            for (const marker of markers) {
+              markerArr.push({ latitude: marker.latitude, longitude: marker.longitude });
+            }
+            return markerArr;
+          })
+          .then(markerArray => {
+            const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex*0.6, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+            // query to see if req.session.id is in favourited maps for this map -> if true'
+            loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description, date_created: map.date_created, user: map.username });
+          })
+          .catch(error => console.log(error));
+        }
+        console.log(loadedMaps);
+        return loadedMaps;
       })
-    }
-    dbHelpers.loadAllMapMarkers()
-    .then(markers => {
-      const loadedMaps = dbHelpers.convertMapMarkersToMapArray(markers);
-      return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
-    })
+      .then(loadedMaps => {
+        //console.log(loadedMaps);
+        if (!req.session.userId) {
+          return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
+        } else {
+          dbHelpers.getUserById(req.session.userId)
+            .then(user => {
+              const templateVars = { loadedMaps, username: user.username, userId: user.id, active: "maps" };
+              return res.render("maps", templateVars);
+            })
+            .catch(err3 => console.log(err3));
+        }
+      })
+      .catch(err => console.log(err));
   });
 
   router.get('/new', (req, res) => {

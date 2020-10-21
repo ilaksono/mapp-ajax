@@ -21,7 +21,82 @@ module.exports = (db) => {
       });
   };
 
-    const buildStaticURL = function (lat, long, zoom, height, width, apiKey, markerArr) {
+  const loadAllMapMarkers = function () {
+    const queryString = `
+    SELECT maps.id, maps.title, maps.description, maps.date_created, users.username, markers.latitude, markers.longitude
+    FROM maps
+    LEFT JOIN markers ON map_id = maps.id
+    JOIN users ON users.id = maps.owner_id
+    WHERE maps.deleted = false
+    ORDER BY maps.id DESC;
+    `;
+    const queryParams = [];
+    return db.query(queryString, queryParams)
+      .then(response => {
+        return response.rows
+      });
+  };
+
+  const convertMapMarkersToMapArray = data => {
+    let latSums = {}, longSums = {};
+    let latCounts = {}, longCounts = {};
+    let latMax = {}, latMin = {}, longMax = {}, longMin = {};
+    let loadedMaps = [];
+    const markerArray = [];
+    let id;
+    for (const marker of data) {
+      id = marker.id;
+      if(!(id in latSums)) {
+        latSums[id] = 0;
+        longSums[id] = 0;
+        latCounts[id] = 0;
+        longCounts[id] = 0;
+        latMax[id] = marker.latitude;
+        latMin[id] = marker.latitude;
+        longMax[id] = marker.longitude;
+        longMin[id] = marker.longitude;
+      } else {
+        if (marker.latitude > latMax[id]) {
+          latMax[id] = marker.latitude;
+        }
+        if (marker.latitude < latMin[id]) {
+          latMin[id] = marker.latitude;
+        }
+        if (marker.longitude > longMax[id]) {
+          longMax[id] = marker.longitude;
+        }
+        if (marker.longitude < longMin[id]) {
+          longMin[id] = marker.longitude;
+        }
+      }
+      markerArray.push({ latitude: marker.latitude, longitude: marker.longitude });
+      latSums[id] += marker.latitude;
+      longSums[id] += marker.longitude;
+      latCounts[id]++;
+      longCounts[id]++;
+    }
+    for (id in latSums) {
+      const object = data.filter(obj => obj.id === Number(id));
+      const title = object[0].title;
+      const description = object[0].description;
+      const user = object[0].username;
+      const date_created = object[0].date_created;
+      const center_latitude = latSums[id] / latCounts[id];
+      const center_longitude = longSums[id] / longCounts[id];
+      const lat_spread = latMax[id] - latMin[id];
+      const long_spread = longMax[id] - longMin[id];
+      const zoom = getZoomIndex(lat_spread, long_spread);
+      const mapStaticURL = buildStaticURL(center_latitude, center_longitude, zoom, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+      loadedMaps.push({ id, title, description, user, date_created, lat_spread, long_spread, center_latitude, center_longitude, mapStaticURL });
+    }
+    return loadedMaps;
+  };
+
+  const getZoomIndex = (maxLatSpread, maxLongSpread) => {
+    return 16 - Math.floor((((maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.5) * 6)**0.6 + (maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.07 - (((maxLatSpread ** 2 + maxLongSpread ** 2)**0.5)*2) ** 0.16);
+  };
+
+  const buildStaticURL = function (lat, long, zoom, height, width, apiKey, markerArr) {
     let staticURL = `https://maps.googleapis.com/maps/api/staticmap?`;
     const center = `center=${lat},${long}`;
     const zoomParam = `&zoom=${zoom}`;
@@ -131,13 +206,12 @@ module.exports = (db) => {
 
   const getContributorById = (userId) => {
     const queryString = `
-    SELECT contributors.*, maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT contributors.*, maps.id, maps.title, maps.description, maps.date_created, users.username, markers.latitude, markers.longitude
     FROM contributors
-    JOIN maps ON contributors.map_id=maps.id
-    JOIN markers ON markers.map_id = maps.id
+    JOIN maps ON contributors.map_id = maps.id
+    LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id
-    WHERE contributors.user_id = $1 AND maps.owner_id <> $1
-    GROUP BY maps.id, contributors.id, users.id;
+    WHERE contributors.user_id = $1 AND maps.owner_id <> $1;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -145,13 +219,12 @@ module.exports = (db) => {
 
   const getFavouritesById = (userId) => {
     const queryString = `
-    SELECT favourites.*, maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT favourites.*, maps.id, maps.title, maps.description, maps.date_created, users.username, markers.latitude, markers.longitude
     FROM favourites
     JOIN maps ON favourites.map_id=maps.id
-    JOIN markers ON markers.map_id = maps.id
+    LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id
-    WHERE favourites.user_id = $1
-    GROUP BY maps.id, favourites.id, users.id;
+    WHERE favourites.user_id = $1;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -159,19 +232,18 @@ module.exports = (db) => {
 
   const getCreatedById = (userId) => {
     const queryString = `
-    SELECT maps.*, username, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
+    SELECT maps.*, maps.id, maps.title, maps.description, maps.date_created, users.username, markers.latitude, markers.longitude
     FROM maps
-    JOIN markers ON markers.map_id = maps.id
+    LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id
-    WHERE maps.owner_id = $1
-    GROUP BY maps.id, users.id
+    WHERE maps.owner_id = $1;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
   }
 
   const userIsOwner = (userId, mapId) => {
-    const query = `SELECT owner_id 
+    const query = `SELECT owner_id
     FROM maps WHERE id = $1
     AND owner_id = $2;`;
     return db.query(query, [mapId, userId])
@@ -182,10 +254,13 @@ module.exports = (db) => {
     fetchLatlngByIP,
     createLocationsArray,
     loadAllMaps,
+    convertMapMarkersToMapArray,
+    loadAllMapMarkers,
     buildStaticURL,
     createUpdateArray,
     getUserById,
     getContributorById,
+    getZoomIndex,
     getFavouritesById,
     getNumberFromStrEnd,
     getMarkersByMapID,
