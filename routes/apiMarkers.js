@@ -215,6 +215,14 @@ module.exports = (db) => {
       .catch(er => console.log('hi', er));
     }
   })
+  router.delete('/:id', (req, res) => {
+    query = `UPDATE maps
+    SET deleted = true
+    WHERE id = $1;`;
+    return db.query(query, [req.params.id])
+    .then(() => res.json({url: '/maps'}))
+    .catch(er => console.log(er));
+  })
   
   router.get('/:id', (req, res) => {
     const query = `

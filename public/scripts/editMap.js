@@ -225,6 +225,14 @@ $(document).ready(() => {
     $('#button-delete-tooltip').hide();
     $('#button-delete').removeClass('max-opacity');
   })
+  $('#button-delete').on('click', () => {
+    const maptitle = $('#map-title-js').val();
+    $.ajax({method:'DELETE', url: `/api/maps/${mapId}`, data:''})
+    .done( (data) => {
+      // console.log(maptitle, 'deleted');
+      window.location.assign(data.url)
+    }).fail(er => console.log(er));
+  })
   // map_id: mapId, deleted ids: markDeleteIds
   // numNew = numTotal-numDeleted(markDeleteIds.length)
   //
