@@ -144,14 +144,9 @@ module.exports = (db) => {
 
   const getCreatedById = (userId) => {
     const queryString = `
-    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude,
-      CASE
-        WHEN favourites.user_id = maps.id THEN 'true'
-        ELSE 'false'
-      END AS favourited_own
+    SELECT maps.*, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude
     FROM maps
     JOIN markers ON markers.map_id = maps.id
-    JOIN favourites ON favourites.map_id = maps.id
     WHERE maps.owner_id = $1
     GROUP BY maps.id
     `;
