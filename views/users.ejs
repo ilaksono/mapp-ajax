@@ -37,6 +37,15 @@
           </div>
       </div>
 
+      <div class="hamburger-menu">
+        <div class="hamburger"><i class="fas fa-bars"></i></div>
+          <div id="mobile-menu" hidden>
+            <div id="ham-created" class="sub-nav-active sub-nav-button darkgrey">YOUR MAPS</div>
+            <div id="ham-fav" class="sub-nav-button darkgrey">FAVOURITES</div>
+            <div id="ham-contributed" class="sub-nav-button darkgrey">CONTRIBUTED TO</div>
+          </div>
+      </div>
+
       <% if (allCreated.length === 0) { %>
         <div id="no-create" class="error-hide">You have not created any maps</div>
       <% } %>
