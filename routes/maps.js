@@ -15,6 +15,7 @@ module.exports = (db) => {
         const loadedMaps = [];
         for (const map of maps) {
           const zoomIndex = 16 - Math.floor((((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5) * 6)**0.6 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07 - (((map.lat_spread ** 2 + map.lng_spread ** 2)**0.5)*2) ** 0.16);
+          // console.log(zoomIndex * 0.6, map.id);
           const markerArr = [];
           dbHelpers.getMarkersByMapID(map.id)
           .then(markers => {
@@ -110,7 +111,7 @@ module.exports = (db) => {
       .then(user => {
         return dbHelpers.userIsOwner(user.id, req.params.id)
           .then(data => {
-            console.log(data);
+            // console.log(data);
             let templateVars;
             if (data.length) templateVars = { username: user.username, userId: user.id, active: null, isOwner: true };
             else templateVars = { username: user.username, userId: user.id, active: null, isOwner: false };

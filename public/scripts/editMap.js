@@ -2,6 +2,7 @@ const mapId = Number(window.location.pathname.split('').slice(6).join(''));
 const markerArr = [];
 const dbData = [];
 const markDeleteIds = [];
+let zoom = 5;
 let map;
 let mapTitle;
 let userIsTrue = false;
@@ -108,7 +109,7 @@ function formAddRowEditEnabled(mJson) {
 
 function initMap(center) {
   var options = {
-    zoom: 8,
+    zoom,
     center
   };
   map = new google.maps.Map(document.getElementById('map'), options);
@@ -165,24 +166,28 @@ function throwError(element) {
 }
 
 $(document).ready(() => {
-  $.get(`/api/maps/${mapId}`, data => {
-    console.log(data);
-    center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length || 43.6532;
-    center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length || -79.3832;
-    initMap(center);
-    $('.creator').text(data[0].username);
-    $('.creation-date').text(new Date(data[0].maps_date_created).toISOString().slice(0, 10).replace('T', ' '));
-    return data;
-  }).done(data => {
-    $('#map-title-container').prepend($(`<div class="edit-title">${data[0].maps_title}</div>`));
-    $('#map-title-js').val(data[0].maps_title);
-    $('#map-desc-js').val(data[0].maps_description);
-    console.log(data);
-    if (!data[0].noMarkers) {
-      data.forEach((val, index) => {
-        initializeMarker(val, index);
-      });
-    }
+  $.get(`/api/maps/${mapId}/zoom`, data => {
+    zoom = data.zoomIndex;
+  }).done(() => {
+    $.get(`/api/maps/${mapId}`, data => {
+      console.log(data);
+      center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length || 43.6532;
+      center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length || -79.3832;
+      initMap(center);
+      $('.creator').text(data[0].username);
+      $('.creation-date').text(new Date(data[0].maps_date_created).toISOString().slice(0, 10).replace('T', ' '));
+      return data;
+    }).done(data => {
+      $('#map-title-container').prepend($(`<div class="edit-title">${data[0].maps_title}</div>`));
+      $('#map-title-js').val(data[0].maps_title);
+      $('#map-desc-js').val(data[0].maps_description);
+      console.log(data);
+      if (!data[0].noMarkers) {
+        data.forEach((val, index) => {
+          initializeMarker(val, index);
+        });
+      }
+    });
   });
 
   $('#button-edit').on('click', function (event) {
@@ -231,11 +236,16 @@ $(document).ready(() => {
   });
   $('#button-delete').on('click', () => {
     const maptitle = $('#map-title-js').val();
-    $.ajax({ method: 'DELETE', url: `/api/maps/${mapId}`, data: '' })
-      .done((data) => {
-        // console.log(maptitle, 'deleted');
-        window.location.assign(data.url);
-      }).fail(er => console.log(er));
+    if (window.confirm(`Click OK to delete ${maptitle}`)) {
+      $.ajax({ method: 'DELETE', url: `/api/maps/${mapId}`, data: '' })
+        .done((data) => {
+          window.location.assign(data.url);
+
+          // console.log(maptitle, 'deleted');
+        }).fail(er => console.log(er));
+    }
+    else
+      return;
   });
   // map_id: mapId, deleted ids: markDeleteIds
   // numNew = numTotal-numDeleted(markDeleteIds.length)
