@@ -198,18 +198,21 @@ module.exports = (db) => {
     ORDER BY id DESC;`;
     
     db.query(query, [])
-    .then(data => res.json(data.rows)); 
+    .then(data => res.json(data.rows))
+    .catch(er => console.log('lul', er)); 
 
   })
 
   router.get('/personal/personal', (req, res) => {
     if(req.session.userId) {
       const query = `SELECT map_id FROM favourites
-      WHERE user_id = $1;
-      `
+      WHERE user_id = $1;`
       return db.query(query, [req.session.userId])
-      .then (data => res.json(data.rows));
-
+      .then(data => {
+        if (data.rows) return res.json(data.rows);
+        else return res.json({map_id:''});
+      })
+      .catch(er => console.log('hi', er));
     }
   })
   

@@ -16,7 +16,7 @@ module.exports = (db) => {
       .then(maps => {
         for (const map of maps) {
           const zoomIndex = 16 - Math.floor(((map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.5 * 5)**0.38 + (map.lat_spread ** 2 + map.lng_spread ** 2) ** 0.07);
-          console.log(zoomIndex);
+          // console.log(zoomIndex);
           const mapStaticURL = dbHelpers.buildStaticURL(map.center_latitude, map.center_longitude, zoomIndex, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I");
           // query to see if req.session.id is in favourited maps for this map -> if true
           loadedMaps.push({ id: map.id, mapStaticURL, title: map.title, description: map.description, date_created: map.date_created, user: map.username });
