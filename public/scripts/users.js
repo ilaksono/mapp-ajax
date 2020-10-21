@@ -83,6 +83,7 @@ $(document).ready(function() {
       $("#no-fav").removeClass("error-hide")
     })
   })
+
   $(function() {
     const $contribute = $("#ham-contributed")
 
