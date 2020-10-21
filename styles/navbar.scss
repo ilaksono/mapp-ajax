@@ -266,6 +266,7 @@
   }
   .left-container {
     @include flexbox(row, center, center);
+    height: 55px;
   }
   .logo {
     margin: 0;
