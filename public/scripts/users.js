@@ -51,4 +51,16 @@ $(document).ready(function() {
       $("#no-contribute").removeClass("error-hide")
     })
   })
+
+  $(function() {
+    const $hamburger = $(".hamburger")
+
+    $hamburger.on("click", function(event) {
+      if ($('#mobile-menu').attr("hidden")) {
+        $('#mobile-menu').attr("hidden", false);
+      } else {
+        $('#mobile-menu').attr("hidden", true);
+      }
+    })
+  })
 })

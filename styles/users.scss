@@ -31,6 +31,7 @@
   color: #4b4b4b;
   width: 400px;
   height: 100%;
+  visibility: visible;
 }
 
 .darkgrey {
@@ -218,6 +219,14 @@ a:hover {
   display: none;
 }
 
+.hamburger-menu {
+  visibility: hidden;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+}
+
+
 
 @media only screen and (max-width: 1024px) {
   .map-card {
@@ -252,6 +261,11 @@ a:hover {
     padding-left: 20px;
     padding-right: 10px;
   }
-
+  .hamburger-menu {
+    visibility: visible;
+  }
+  .sub-nav {
+    visibility: hidden;
+  }
 }
 
