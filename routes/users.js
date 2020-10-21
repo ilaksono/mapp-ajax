@@ -13,46 +13,33 @@ module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
 
   router.get("/:id", (req, res) => {
+    let allCreated = [];
+    let allFavourited = [];
+    let allContributed = [];
 
-    let username = null;
-    let userId = null;
-    if (req.session.userId) {
-      dbHelpers.getUserById(req.session.userId)
-      .then(user => {
-        username = user.username;
-        userId = user.id;
-      })
-    }
-
-    const allContributed = [];
-    const allFavourited = [];
-    const allCreated = [];
-    console.log("userID", req.params.id)
     dbHelpers.getCreatedById(req.params.id)
     .then(createdMarkers => {
-      const loadedMaps = dbHelpers.convertMapMarkersToMapArray(createdMarkers);
-      allCreated.push(loadedMaps);
-
+      allCreated = dbHelpers.convertMapMarkersToMapArray(createdMarkers);
       dbHelpers.getFavouritesById(req.params.id)
       .then(favouritedMarkers => {
-        const loadedMaps = dbHelpers.convertMapMarkersToMapArray(favouritedMarkers);
-        allFavourited.push(loadedMaps);
-
+        allFavourited = dbHelpers.convertMapMarkersToMapArray(favouritedMarkers);
         dbHelpers.getContributorById(req.params.id)
         .then(contributedMarkers => {
-          const loadedMaps = dbHelpers.convertMapMarkersToMapArray(contributedMarkers);
-          allContributed.push(loadedMaps);
-
-
-        return res.render("users", { allCreated, allFavourited, allContributed, username, userId, active: "your-map" });
+          allContributed = dbHelpers.convertMapMarkersToMapArray(contributedMarkers);
         })
-        .catch(err => {
-          res
-            .status(500)
-            .json({ error: err.message });
+        .then(() => {
+          if (req.session.userId) {
+            dbHelpers.getUserById(req.session.userId)
+            .then(user => {
+              console.log(allCreated);
+              return res.render("users", { allCreated, allFavourited, allContributed, username: user.username, userId: user.id, active: "your-map" });
+            });
+          } else {
+            return res.render("users", { allCreated, allFavourited, allContributed, username: null, userId: null, active: "your-map" });
+          }
         });
       });
-    });
+    })
   });
   return router;
 };

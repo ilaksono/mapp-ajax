@@ -232,7 +232,7 @@ module.exports = (db) => {
 
   const getCreatedById = (userId) => {
     const queryString = `
-    SELECT maps.*, maps.id, maps.title, maps.description, maps.date_created, users.username, markers.latitude, markers.longitude
+    SELECT maps.id, maps.title, maps.description, maps.date_created, users.username, markers.latitude, markers.longitude
     FROM maps
     LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id

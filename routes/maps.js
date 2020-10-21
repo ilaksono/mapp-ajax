@@ -10,20 +10,18 @@ const router = express.Router();
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.get("/", (req, res) => {
-    let username = null;
-    let userId = null;
-    if (req.session.userId) {
-      dbHelpers.getUserById(req.session.userId)
-      .then(user => {
-        username = user.username;
-        userId = user.id;
-      })
-    }
     dbHelpers.loadAllMapMarkers()
     .then(markers => {
       const loadedMaps = dbHelpers.convertMapMarkersToMapArray(markers);
-      return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
-    })
+      if (req.session.userId) {
+        dbHelpers.getUserById(req.session.userId)
+        .then(user => {
+          return res.render("maps", { loadedMaps, username: user.username, userId: user.id, active: "maps" });
+        });
+      } else {
+        return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
+      }
+    });
   });
 
   router.get('/new', (req, res) => {
