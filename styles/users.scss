@@ -146,14 +146,12 @@ a:hover {
   cursor: pointer;
 }
 
-.heart-div {
-  align-self: flex-end;
-  justify-self: right;
+.fa-heart {
   color: $darkgrey;
   margin-top: 5px;
 }
 
-.heart-div:hover {
+.fa-heart:hover {
   color: $red;
 }
 
