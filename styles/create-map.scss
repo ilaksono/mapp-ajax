@@ -38,6 +38,7 @@
   width: 90px;
   height: 40px;
   font-size: 0.9em;
+  font-family: $font-stack;
 }
 
 .map-form-scroll-container {
@@ -209,3 +210,33 @@
 .text-error {
   border-bottom: 1px solid red;
 }
+
+.mediaquery-form-container {
+  display: none;
+  margin-top: 3px;
+  height: 30%;
+  width: 100%;
+  background-color: $white;
+}
+
+@media only screen and (max-width: 1024px) {
+  .map-form-scroll-container {
+    display: none;
+  }
+  #map {
+    height: 70%;
+    width: 100%;
+  }
+
+  .display-gps {
+    position: absolute;
+    margin-top: 86px;
+  }
+  .mediaquery-form-container {
+    display: flex;
+  }
+  .mark-container {
+    width: 35%;
+  }
+}
+
