@@ -20,26 +20,38 @@ module.exports = (db) => {
       });
   };
 
-  const checkIfMapFavourited = function(userId, mapId) {
-    const queryString = `
-    SELECT *
-    FROM favourites
-    WHERE user_id = $1 AND map_id = $2;
-    `;
-    const queryParams = [userId, mapId];
-    return db.query(queryString, queryParams)
-      .then(response => {
-        return response.rows
-      });
-  }
-  const buildStaticURL = function (lat, long, zoom, height, width, apiKey) {
+    const buildStaticURL = function (lat, long, zoom, height, width, apiKey, markerArr) {
     let staticURL = `https://maps.googleapis.com/maps/api/staticmap?`;
     const center = `center=${lat},${long}`;
     const zoomParam = `&zoom=${zoom}`;
     const size = `&size=${width}x${height}`;
+    let markers = ``;
+    if (markerArr.length) {
+      markers += `&markers=`;
+    }
+    for (let i = 0; i < markerArr.length; i++) {
+      if (i === 0) {
+        markers += `${markerArr[i].latitude},${markerArr[i].longitude}`;
+      } else {
+        markers += `|${markerArr[i].latitude},${markerArr[i].longitude}`;
+      }
+    }
     const key = `&key=${apiKey}`;
-    return staticURL += center + zoomParam + size + key;
+    return staticURL += center + zoomParam + size + markers + key;
   };
+
+  const getMarkersByMapID = function(mapId) {
+    const queryString = `
+    SELECT latitude, longitude
+    FROM markers
+    WHERE map_id = $1;
+    `;
+    const queryParams = [mapId]
+    return db.query(queryString, queryParams)
+    .then(response => {
+      return response.rows;
+    });
+  }
 
   const fetchLatlngByIP = () => {
     return request(ipify)
@@ -164,7 +176,7 @@ module.exports = (db) => {
     getContributorById,
     getFavouritesById,
     getNumberFromStrEnd,
-    getCreatedById,
-    checkIfMapFavourited
+    getMarkersByMapID,
+    getCreatedById
   };
 };

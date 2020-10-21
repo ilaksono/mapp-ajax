@@ -41,7 +41,7 @@ a:hover {
   display: block;
   border-radius: 15px;
   padding-top: 10px;
-  color: $blue;
+  color: #4b4b4b;
   box-sizing: content-box;
 }
 
@@ -71,8 +71,8 @@ img {
 
 .description-container {
   @include flexbox(column, flex-start, flex-start);
-  width: 100%;
-  margin-left: 10px;
+  width: 90%;
+  margin-left: 15px;
   font-size: 14px;
 }
 
