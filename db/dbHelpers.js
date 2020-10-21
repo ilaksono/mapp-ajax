@@ -174,9 +174,8 @@ module.exports = (db) => {
     const query = `SELECT owner_id 
     FROM maps WHERE id = $1
     AND owner_id = $2;`;
-
     return db.query(query, [mapId, userId])
-    .then(data => data.rows[0]);
+    .then(data => data.rows);
   }
 
   return {
@@ -190,6 +189,7 @@ module.exports = (db) => {
     getFavouritesById,
     getNumberFromStrEnd,
     getMarkersByMapID,
-    getCreatedById
+    getCreatedById,
+    userIsOwner
   };
 };

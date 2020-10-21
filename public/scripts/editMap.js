@@ -166,8 +166,9 @@ function throwError(element) {
 
 $(document).ready(() => {
   $.get(`/api/maps/${mapId}`, data => {
-    center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length;
-    center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length;
+    console.log(data);
+    center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length || 43.6532;
+    center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length || -79.3832;
     initMap(center);
     $('.creator').text(data[0].username);
     $('.creation-date').text(new Date(data[0].maps_date_created).toISOString().slice(0, 10).replace('T', ' '));
@@ -176,9 +177,12 @@ $(document).ready(() => {
     $('#map-title-container').prepend($(`<div class="edit-title">${data[0].maps_title}</div>`));
     $('#map-title-js').val(data[0].maps_title);
     $('#map-desc-js').val(data[0].maps_description);
-    data.forEach((val, index) => {
-      initializeMarker(val, index);
-    });
+    console.log(data);
+    if (!data[0].noMarkers) {
+      data.forEach((val, index) => {
+        initializeMarker(val, index);
+      });
+    }
   });
 
   $('#button-edit').on('click', function (event) {
@@ -220,11 +224,19 @@ $(document).ready(() => {
   $('#button-delete').on('mouseover', () => {
     $('#button-delete-tooltip').show();
     $('#button-delete').addClass('max-opacity');
-  })
+  });
   $('#button-delete').on('mouseout', () => {
     $('#button-delete-tooltip').hide();
     $('#button-delete').removeClass('max-opacity');
-  })
+  });
+  $('#button-delete').on('click', () => {
+    const maptitle = $('#map-title-js').val();
+    $.ajax({ method: 'DELETE', url: `/api/maps/${mapId}`, data: '' })
+      .done((data) => {
+        // console.log(maptitle, 'deleted');
+        window.location.assign(data.url);
+      }).fail(er => console.log(er));
+  });
   // map_id: mapId, deleted ids: markDeleteIds
   // numNew = numTotal-numDeleted(markDeleteIds.length)
   //

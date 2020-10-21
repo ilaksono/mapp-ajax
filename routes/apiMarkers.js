@@ -4,8 +4,6 @@ const router = express.Router();
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
-
-  
   router.put('/:id', (req, res) => {
     console.log(req.body, 'req');
     const dataJson = req.body;
@@ -188,34 +186,46 @@ module.exports = (db) => {
 
   router.get('/center/center', (req, res) => {
     return dbHelpers.fetchLatlngByIP()
-    .then(data => {
-      return res.json(data);
-    }).catch(err => console.log(err, '10'));
-  })
+      .then(data => {
+        return res.json(data);
+      }).catch(err => console.log(err, '10'));
+  });
   router.get('/hearts/all', (req, res) => {
     const query = `SELECT id FROM maps 
     JOIN favourites ON maps.id = map_id    
     ORDER BY id DESC;`;
-    
-    db.query(query, [])
-    .then(data => res.json(data.rows))
-    .catch(er => console.log('lul', er)); 
 
-  })
+    db.query(query, [])
+      .then(data => res.json(data.rows))
+      .catch(er => console.log('lul', er));
+
+  });
 
   router.get('/personal/personal', (req, res) => {
-    if(req.session.userId) {
+    if (req.session.userId) {
       const query = `SELECT map_id FROM favourites
-      WHERE user_id = $1;`
+      WHERE user_id = $1;`;
       return db.query(query, [req.session.userId])
-      .then(data => {
-        if (data.rows) return res.json(data.rows);
-        else return res.json({map_id:''});
-      })
-      .catch(er => console.log('hi', er));
+        .then(data => {
+          if (data.rows) return res.json(data.rows);
+          else return res.json({ map_id: '' });
+        })
+        .catch(er => console.log('hi', er));
     }
-  })
-  
+  });
+  router.delete('/:id', (req, res) => {
+    const query1 = `UPDATE maps
+    SET deleted = true
+    WHERE id = $1;`;
+    const query2 = `UPDATE markers
+    SET deleted = true
+    WHERE map_id = $1;`;
+    return db.query(query1, [req.params.id])
+      .then(() => db.query(query2, [req.params.id]))
+      .then(() => res.json({ url: '/maps' }))
+      .catch(er => console.log(er));
+  });
+
   router.get('/:id', (req, res) => {
     const query = `
     SELECT markers.id,owner_id, latitude, longitude, markers.title, markers.description
@@ -225,8 +235,22 @@ module.exports = (db) => {
     WHERE map_id = $1 AND markers.deleted = false;`;
     return db.query(query, [req.params.id])
       .then(data => {
-        // console.log(data.rows);
-        return res.json(data.rows);
+        if (!data.rows[0]) {
+          const queryCase = `SELECT owner_id, maps.title as maps_title, date_created as maps_date_created, maps.description as maps_description, users.username  
+          FROM maps 
+          JOIN users on users.id = owner_id
+          WHERE maps.id = $1;`;
+          db.query(queryCase, [req.params.id])
+            .then(data => {
+              data.rows[0].noMarkers = true;
+              return res.status(200).json(data.rows);
+            }
+            )
+            .catch(er => console.log(er));
+        }
+        else
+          // console.log(data.rows);
+          return res.json(data.rows);
       })
       .catch(err => console.log(err, '123'));
   });
