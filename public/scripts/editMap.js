@@ -166,11 +166,9 @@ function throwError(element) {
 
 $(document).ready(() => {
   $.get(`/api/maps/${mapId}`, data => {
-    console.log(data);
     center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length;
     center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length;
     initMap(center);
-    console.log('ok', data[0]);
     $('.creator').text(data[0].username);
     $('.creation-date').text(new Date(data[0].maps_date_created).toISOString().slice(0, 10).replace('T', ' '));
     return data;
