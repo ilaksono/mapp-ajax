@@ -1,3 +1,4 @@
+const mapArr = [];
 
 const addFavourites = (mapsContainer) => {
   for (const card of mapsContainer) {
@@ -80,7 +81,6 @@ const renderCard = (json) => {
             .addClass('fav-icon-not');
         }).fail(err => console.log(err));
     }
-
   });
 
   $createdDate.appendTo($createOwner);
@@ -102,7 +102,6 @@ const renderCard = (json) => {
   $newMapCard.appendTo($('#section__container'));
 
 };
-const mapArr = [];
 
 $(document).ready(() => {
   addFavourites($('.favourited-container'));
