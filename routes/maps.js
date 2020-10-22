@@ -81,7 +81,7 @@ module.exports = (db) => {
 
   router.get('/:id', (req, res) => {
     if (!req.session.userId) {
-      return res.render('edit_map', { username: null, userId: null, active: null });
+      return res.render('edit_map', { username: null, userId: null, active: null, isOwner: null });
     }
     dbHelpers.getUserById(req.session.userId)
       .then(user => {
