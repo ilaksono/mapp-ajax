@@ -25,7 +25,10 @@ const buildStaticURL = (json) => {
   const width = 250;
   const lat = json.center_latitude || 43.6532;
   const long = json.center_longitude || -79.3832;
-  const zoom = 16 - Math.floor((((json.lat_spread ** 2 + json.lng_spread ** 2) ** 0.5) * 6) ** 0.6 + (json.lat_spread ** 2 + json.lng_spread ** 2) ** 0.07 - (((json.lat_spread ** 2 + json.lng_spread ** 2) ** 0.5) * 2) ** 0.16);
+  let zoom;
+  if(json.lat_spread && json.lng_spread)
+    zoom = 16 - Math.floor((((json.lat_spread ** 2 + json.lng_spread ** 2) ** 0.5) * 6) ** 0.6 + (json.lat_spread ** 2 + json.lng_spread ** 2) ** 0.07 - (((json.lat_spread ** 2 + json.lng_spread ** 2) ** 0.5) * 2) ** 0.16);
+  else zoom = 20;
   const center = `center=${lat},${long}`;
   const zoomParam = `&zoom=${zoom * 0.6}`;
   const size = `&size=${width}x${height}`;
