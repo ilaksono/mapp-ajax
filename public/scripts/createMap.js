@@ -47,7 +47,9 @@ function clickHandle(map) {
     const lngVal = mapsMouseEvent.latLng.toJSON().lng;
     const markCntr = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
+      animation: google.maps.Animation.DROP,
       position: { lat: latVal, lng: lngVal },
+      draggable: true,
       map: map,
       icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`
     });
@@ -67,12 +69,16 @@ function clickHandle(map) {
     $imgURL.appendTo($newDiv);
     formArr.push($newDiv);
     $newDiv.appendTo($('.mark-container'));
+
     marker.addListener('click', function () {
       marker.setMap(null);
       let index = markersArr.indexOf(this);
       $(`#entry${index}`).remove();
       numDeleted++;
     });
+
+    
+    
     markersArr.push(marker);
     $(':input').on('change', event => {
       $(event.target).removeClass('text-error');
@@ -101,8 +107,6 @@ function throwError(element) {
 }
 
 $(document).ready(function () {
-
-
 
   $('#lat-lngs').on('submit', function (event) {
     errorPresent = false;

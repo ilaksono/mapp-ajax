@@ -34,29 +34,30 @@
         </div>
       </div>
       <div class="section-container">
-          <% for(let i = loadedMaps.length - 1; i >=0 ; i--) {%>
-          <div class="map-card">
-            <a href="/maps/<%= loadedMaps[i].id %>">
-              <div class="map-container">
-                <img src="<%= loadedMaps[i].mapStaticURL %>" />
-              </div>
-            </a>
-            <div class="description-container">
-              <div class="title"><%= loadedMaps[i].title %></div>
-              <div class="description"><%= loadedMaps[i].description %></div>
-              <div class="created-container">
-                <div class="created-owner-data">
-                  <div class="created-data">Created on: <%= new Date(loadedMaps[i].date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
-                  <div class="created-data">Created by: <strong><%= loadedMaps[i].user %></strong></div>
-                </div>
-                <% if (userId) { %>
-                <div class="favourited-container">
-                </div>
-                <% } %>
-              </div>
+        <% for(let i = loadedMaps.length - 1; i >=0 ; i--) {%>
+        <div class="map-card">
+          <a href="/maps/<%= loadedMaps[i].id %>">
+            <div class="map-container">
+              <img src="<%= loadedMaps[i].mapStaticURL %>" />
             </div>
-            <span class='map-id' hidden> <%= loadedMaps[i].id %> </span>
+          </a>
+          <div class="description-container">
+            <div class="title"><%= loadedMaps[i].title %></div>
+            <div class="description"><%= loadedMaps[i].description %></div>
+            <div class="created-container">
+              <div class="created-owner-data">
+                <div class="created-data">Created on:
+                  <%= new Date(loadedMaps[i].date_created).toISOString().slice(0, 10).replace('T', ' ') %></div>
+                <div class="created-data">Created by: <strong><%= loadedMaps[i].user %></strong></div>
+              </div>
+              <% if (userId) { %>
+              <div class="favourited-container">
+              </div>
+              <% } %>
+            </div>
           </div>
+          <span class='map-id' hidden> <%= loadedMaps[i].id %> </span>
+        </div>
         <% } %>
       </div>
     </div>
