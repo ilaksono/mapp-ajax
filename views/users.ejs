@@ -16,7 +16,7 @@
     <script type="text/javascript" src="/scripts/app.js"></script>
     <script type="text/javascript" src="/scripts/users.js"></script>
     <script type="text/javascript" src="/scripts/nav.js"></script>
-    <script type="text/javascript" src="/scripts/mapCards.js"></script>
+    <script type="text/javascript" src="/scripts/mapCardsProfile.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -46,6 +46,8 @@
 
       <% if (allCreated.length === 0) { %>
         <div id="no-create" class="error-hide">You have not created any maps</div>
+      <% } else { %>
+        <div id="no-create" class="error-hide" hidden>You have not created any maps</div>
       <% } %>
 
       <div id="created2" >
@@ -76,6 +78,8 @@
 
       <% if (allFavourited.length === 0) { %>
         <div id="no-fav" class="error-hide">You have not favourited any maps</div>
+      <% } else { %>
+        <div id="no-fav" class="error-hide" hidden>You have not favourited any maps</div>
       <% } %>
 
         <div id="favourites2" >
@@ -107,6 +111,8 @@
 
         <% if (allContributed.length === 0) { %>
           <div id="no-contribute" class="error-hide">You have not contributed to any maps</div>
+        <% } else { %>
+          <div id="no-contribute" class="error-hide" hidden>You have not contributed to any maps</div>
         <% } %>
 
         <div id="contributed2" class="hide">
