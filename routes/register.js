@@ -72,7 +72,7 @@ module.exports = (db) => {
                 return res.redirect('maps');
               });
           } else {
-            db.query(alterQueryWithPassword, [userInput.username, userInput.email, bcrypt.hashSync(user.password, salt), req.session.userId])
+            db.query(alterQueryWithPassword, [userInput.username, userInput.email, bcrypt.hashSync(userInput.password, salt), req.session.userId])
               .then(response => {
                 req.session.userId = response.rows[0].id;
                 return res.redirect('maps');
