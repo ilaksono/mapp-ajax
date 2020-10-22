@@ -212,7 +212,7 @@ $(document).ready(() => {
       center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length || 43.6532;
       center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length || -79.3832;
       initMap(center);
-      $('.creator').text(data[0].username);
+      $('.creator').text(data[0].username).addClass("text-overflow-ellipses");
       $('.creation-date').text(new Date(data[0].maps_date_created).toISOString().slice(0, 10).replace('T', ' '));
       return data;
     }).done(data => {
