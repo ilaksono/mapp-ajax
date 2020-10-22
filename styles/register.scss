@@ -1,7 +1,8 @@
 @import 'helper';
 
 .page-container {
-  padding-top: 150px;
+  @include flexbox(column, flex-start, center);
+  padding-top: 100px;
   width: 300px;
 }
 
@@ -20,11 +21,17 @@
   box-shadow:7px 7px 5px #d3d3d3;
 }
 
+#hidden {
+  position: fixed;
+  margin-top: -70px;
+}
+
 input {
   border: 0;
   background-color: $white;
   border-bottom: 1px solid $darkgrey;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 input:focus {

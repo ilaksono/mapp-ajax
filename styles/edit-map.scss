@@ -193,6 +193,7 @@ h1 {
   background-color: $grey;
   font-family: $font-stack;
 }
+
 .marker-input {
   width: calc(100% - 20px);
   margin: 5px 10px 5px 10px;
@@ -200,6 +201,10 @@ h1 {
   border-bottom: 1px solid #dfdfdf;
   background-color: $grey;
   font-family: $font-stack;
+}
+
+.image-url {
+  width: calc(100% - 70px);
 }
 
 .map-input {

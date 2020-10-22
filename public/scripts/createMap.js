@@ -3,7 +3,7 @@ let center;
 
 function initMap() {
   $.get('/api/maps/center/center', (data) => {
-    center = { lat: Number(JSON.parse(data).data.latitude), lng: Number(JSON.parse(data).data.longitude) } || { lat: 43.6532, lng: -79.3832 };
+    center = { lat: Number(data.lat), lng: Number(data.lng) } || { lat: 43.6532, lng: -79.3832 };
     var options = {
       zoom: 8,
       center

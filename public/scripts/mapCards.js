@@ -45,5 +45,4 @@ $(document).ready(() => {
       $(event.target).parent().parent().parent().parent().parent().remove();
     }
   });
-  
 });

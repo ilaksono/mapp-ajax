@@ -42,7 +42,6 @@ module.exports = (db) => {
     let latCounts = {}, longCounts = {};
     let latMax = {}, latMin = {}, longMax = {}, longMin = {};
     let loadedMaps = [];
-    const markerArray = [];
     let id;
     for (const marker of data) {
       id = marker.id;
@@ -69,13 +68,17 @@ module.exports = (db) => {
           longMin[id] = marker.longitude;
         }
       }
-      markerArray.push({ latitude: marker.latitude, longitude: marker.longitude });
       latSums[id] += marker.latitude;
       longSums[id] += marker.longitude;
       latCounts[id]++;
       longCounts[id]++;
     }
     for (id in latSums) {
+      const markerArray = [];
+      const filteredById = data.filter((data) => data.id === Number(id));
+      for (const markers of filteredById) {
+        markerArray.push({ latitude: markers.latitude, longitude: markers.longitude });
+      }
       const object = data.filter(obj => obj.id === Number(id));
       const title = object[0].title;
       const description = object[0].description;
@@ -155,7 +158,6 @@ module.exports = (db) => {
       descArr.push(datajson[`loc_desc${index}`]);
       imgArr.push(datajson[`img_url${index}`]);
     }
-    // console.log(latArr, lngArr);
     return {
       lat: latArr, lng: lngArr, title: titleArr
       , desc: descArr, img: imgArr

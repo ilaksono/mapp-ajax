@@ -25,50 +25,51 @@
 
     <main>
       <div class="page-container">
-      <div class="register-container">
 
-      <% if(!userId) { %>
-        <h3> Register </h3>
-      <% } else { %>
-        <h3> Modify Account </h3>
-      <% } %>
-
-      <form action="/register" method="POST">
-        <div>
-          <% if(!userId) { %>
-            <label for="username">Username:</label><br>
-            <input type="username" name="username"><br>
-            <label for="email">Email:</label><br>
-            <input type="email" name="email"><br>
-            <label for="password">Password:</label><br>
-            <input type="password" name="password">
-          <% } else { %>
-            <label for="username">Change your username:</label><br>
-            <input type="username" name="username" value="<%= username %>"><br>
-            <label for="email">Change your email:</label><br>
-            <input type="email" name="email" value="<%= email %>"><br>
-            <label for="password">Change your password:</label><br>
-            <input type="password" name="password">
-          <% } %>
-        </div>
-        <br>
-        <% if(!userId) { %>
-          <div class="my-button">
-          <button class="register-button" type="submit">Register</button>
-          </div>
-        <% } else { %>
-          <div class="my-button">
-          <button class="register-button" type="submit">Submit Changes</button>
-          </div>
-        <% } %>
-      </form>
-      <br>
-      </div>
       <% if(locals.err_msg) { %>
-        <div id="hidden" class="alert alert-danger" role="alert"><%= err_msg %>
+        <div id="hidden" class="alert alert-danger" role="alert"><%= err_msg %>&nbsp
           <span id="close-message">&times;</span>
         </div>
       <% } %>
+        <div class="register-container">
+
+        <% if(!userId) { %>
+          <h3> Register </h3>
+        <% } else { %>
+          <h3> Modify Account </h3>
+        <% } %>
+
+        <form action="/register" method="POST">
+          <div>
+            <% if(!userId) { %>
+              <label for="username">Username:</label><br>
+              <input type="username" name="username"><br>
+              <label for="email">Email:</label><br>
+              <input type="email" name="email"><br>
+              <label for="password">Password:</label><br>
+              <input type="password" name="password">
+            <% } else { %>
+              <label for="username">Change your username:</label><br>
+              <input type="username" name="username" value="<%= username %>"><br>
+              <label for="email">Change your email:</label><br>
+              <input type="email" name="email" value="<%= email %>"><br>
+              <label for="password">Change your password:</label><br>
+              <input type="password" name="password">
+            <% } %>
+          </div>
+          <br>
+          <% if(!userId) { %>
+            <div class="my-button">
+            <button class="register-button" type="submit">Register</button>
+            </div>
+          <% } else { %>
+            <div class="my-button">
+            <button class="register-button" type="submit">Submit Changes</button>
+            </div>
+          <% } %>
+        </form>
+        <br>
+        </div>
       </div>
     </main>
   </body>

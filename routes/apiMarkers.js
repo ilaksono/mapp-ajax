@@ -1,11 +1,9 @@
 const express = require('express');
-const { request } = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
   const dbHelpers = require('../db/dbHelpers')(db);
   router.put('/:id', (req, res) => {
-    // console.log(req.body, 'req');
     const dataJson = req.body;
     let delArr = dataJson.deleted.split(',');
     if (delArr[0] === '')
@@ -20,20 +18,15 @@ module.exports = (db) => {
         i--;
       }
     }
-    // console.log(dataJson);
     delete dataJson.deleted;
     delete dataJson.og_len;
     delete dataJson.map_title;
     delete dataJson.map_desc;
     delete dataJson.og_marks;
-    // console.log(dataJson, 'trim');
     const updateObj = dbHelpers.createUpdateArray(dataJson, ogLen - delArr.length) || {};
 
-    // console.log('update: ', updateObj);
-    // console.log('new: ', dataJson);
 
     const insertObj = dbHelpers.createLocationsArray(dataJson) || {};
-    // console.log(insertObj, 'insert');
 
     //delete
     const deleteQuery = `UPDATE markers
@@ -82,7 +75,6 @@ module.exports = (db) => {
     for (const i in insertObj.lat) {
       const queryParams = [Number(req.params.id), insertObj.lat[i], insertObj.lng[i]
         , insertObj.title[i], insertObj.desc[i], insertObj.img[i]];
-      // console.log(queryParams);
       db.query(insertQuery, queryParams)
         .catch(err => console.log(err, '3'));
     }
@@ -93,8 +85,6 @@ module.exports = (db) => {
 
     db.query(contribQuery, [req.params.id, req.session.userId])
       .then(data => {
-        // console.log(data.rows[0]);
-
         if (!data.rows[0]) {
           const contribInsQuery = `INSERT INTO contributors (map_id, user_id)
       VALUES ($1, $2)
@@ -105,14 +95,6 @@ module.exports = (db) => {
         return data.rows[0];
       })
       .catch(er => console.log(er, 'con'));
-    // console.log(exists);
-    // if (!exists[0]) {
-    //   const contribQuery = `INSERT INTO contributors (map_id, user_id)
-    //   VALUES ($1, $2)
-    //   RETURNING *;`;
-    //   db.query(contribQuery, [req.params.id, req.session.userId])
-    //     .catch(er => console.log(er));
-    // }
     return res.status(200).json({ url: '/maps' });
   });
 
@@ -137,7 +119,6 @@ module.exports = (db) => {
     `;
     db.query(favQuery, [req.session.userId, req.params.id])
       .then(data => {
-        // console.log(data.rows[0]);
         return res.status(200).json({ val: 'INSERT' });
       }).catch(err => console.log(err, '2'));
   });
@@ -148,7 +129,6 @@ module.exports = (db) => {
     RETURNING *;`;
     db.query(favQuery, [req.session.userId, req.params.id])
       .then(data => {
-        // console.log(data.rows[0]);
         return res.status(200).json({ val: 'DELETE' });
       }).catch(err => console.log(err, '3'));
   });
@@ -158,7 +138,6 @@ module.exports = (db) => {
     WHERE id = $1;`;
     db.query(query, [Number(req.params.id)])
       .then(data => {
-        // console.log(data.rows);
         return res.status(200).json(data.rows[0]);
       })
       .catch(err => console.log(err));
@@ -176,43 +155,7 @@ module.exports = (db) => {
           res.json([]);
       }).catch(er => console.log(er));
   });
-  router.post('/search/search', (req, res) => {
-    const query = `
-    SELECT maps.id,MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread, AVG(latitude) AS center_latitude, AVG(longitude) AS center_longitude, maps.title, maps.description, maps.date_created, users.username
-    FROM maps
-    LEFT JOIN markers ON map_id = maps.id
-    JOIN users ON users.id = maps.owner_id
-    WHERE maps.deleted = false 
-    AND maps.title LIKE $1
-    GROUP BY maps.id, users.id
-    ;`;
-    db.query(query, [`%${req.body.search}%`])
-      .then(data => {
-        if (data.rows.length) res.json(data.rows);
-         else res.json([])
-        return data.rows;
-      }).catch(er => console.log(er));
-  });
 
-  // router.get('/authorize/auth', (req, res) => {
-
-  //   if (!req.session.userId)
-  //     return res.json({ login: false });
-  //   dbHelpers.getUserById(req.session.userId)
-  //     .then(user => {
-  //       if (user)
-  //         return res.status(200).json({ login: true });
-  //       else
-  //         return res.json({ login: false });
-  //     }).catch(err => console.log(err));
-  // });
-
-  // router.get('/fav', (req, res) => {
-
-  //   query = `
-  //   `
-
-  // })
   router.get('/:id/zoom', (req, res) => {
     const query = `SELECT MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread
     FROM markers
@@ -223,7 +166,6 @@ module.exports = (db) => {
     db.query(query, [req.params.id])
       .then(map => {
         let zoomIndex = 5;
-        console.log(map.rows);
         if (map.rows[0])
           zoomIndex = 0.8 * (21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.42) * 1.38) ** 0.44 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07) * 8 - 0.3 * (((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.5) * 1.2) ** 0.12));
         console.log(zoomIndex);
@@ -232,10 +174,13 @@ module.exports = (db) => {
   });
 
   router.get('/center/center', (req, res) => {
-    return dbHelpers.fetchLatlngByIP()
-      .then(data => {
-        return res.json(data);
-      }).catch(err => console.log(err, '10'));
+    // console.log(req.session.coords);
+    return res.status(200).json(req.session.coords);
+    
+    // return dbHelpers.fetchLatlngByIP()
+    //   .then(data => {
+    //     return res.json(data);
+    //   }).catch(err => console.log(err, '10'));
   });
   router.get('/hearts/all', (req, res) => {
     const query = `SELECT id FROM maps
@@ -298,7 +243,6 @@ module.exports = (db) => {
             .catch(er => console.log(er));
         }
         else
-          // console.log(data.rows);
           return res.json(data.rows);
       })
       .catch(err => console.log(err, '123'));

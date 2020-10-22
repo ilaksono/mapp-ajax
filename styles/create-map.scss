@@ -167,6 +167,10 @@
   font-family: $font-stack;
 }
 
+.image-url {
+  width: calc(100% - 70px);
+}
+
 .create-button-container {
   @include flexbox(column, space-between, center);
   width: 100%;

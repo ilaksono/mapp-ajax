@@ -44,7 +44,7 @@
 
 .right-container-logged {
   @include flexbox(row, flex-end, center);
-  margin-right: 20px;
+  padding-right: 20px;
   width: 350px;
   height: 100%;
 }
