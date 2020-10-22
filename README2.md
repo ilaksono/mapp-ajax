@@ -1,4 +1,4 @@
-# mapp by DF AM IL
+# mApp by DF AM IL
 
 A node app with jQuery/AJAX, express, and PostgresQL where users can create public maps and build a personal profile.
 
