@@ -9,6 +9,7 @@ module.exports = (db) => {
     JOIN markers ON map_id = maps.id
     JOIN users ON users.id = maps.owner_id
     WHERE maps.deleted = false
+    AND markers.deleted = false
     GROUP BY maps.id, users.id
     ORDER BY maps.id ASC;
     `;
@@ -26,6 +27,7 @@ module.exports = (db) => {
     LEFT JOIN markers ON map_id = maps.id
     JOIN users ON users.id = maps.owner_id
     WHERE maps.deleted = false
+    AND markers.deleted = false
     ORDER BY maps.id ASC;
     `;
     const queryParams = [];
@@ -125,7 +127,8 @@ module.exports = (db) => {
     const queryString = `
     SELECT latitude, longitude
     FROM markers
-    WHERE map_id = $1;
+    WHERE map_id = $1
+    AND deleted = false;
     `;
     const queryParams = [mapId];
     return db.query(queryString, queryParams)
@@ -215,7 +218,8 @@ module.exports = (db) => {
     JOIN maps ON contributors.map_id = maps.id
     LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id
-    WHERE contributors.user_id = $1 AND maps.owner_id <> $1;
+    WHERE contributors.user_id = $1 AND maps.owner_id <> $1
+    AND markers.deleted = false AND maps.deleted = false;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -228,7 +232,7 @@ module.exports = (db) => {
     JOIN maps ON favourites.map_id=maps.id
     LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id
-    WHERE favourites.user_id = $1;
+    WHERE favourites.user_id = $1 AND markers.deleted = false AND maps.deleted = false;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
@@ -240,7 +244,7 @@ module.exports = (db) => {
     FROM maps
     LEFT JOIN markers ON markers.map_id = maps.id
     JOIN users ON users.id = maps.owner_id
-    WHERE maps.owner_id = $1;
+    WHERE maps.owner_id = $1 AND markers.deleted = false AND maps.deleted = false;
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
