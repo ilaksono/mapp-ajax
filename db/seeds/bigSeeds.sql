@@ -1,30 +1,6 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 9.5.10
--- Dumped by pg_dump version 9.5.10
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-SET search_path = public, pg_catalog;
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: vagrant
---
-
-INSERT INTO users (username, email, password) VALUES ('Andrew', 'test@test.ca', '$2b$10$pmH/vR0thGNE5LqX4F1JxeDhJ.dpOvN/s1cbyHfKMywZpOPUCp6bq');
 
 
---
--- Data for Name: maps; Type: TABLE DATA; Schema: public; Owner: vagrant
---
+INSERT INTO users (username, email, password) VALUES ('master branch', 'test@test.ca', '$2b$10$pmH/vR0thGNE5LqX4F1JxeDhJ.dpOvN/s1cbyHfKMywZpOPUCp6bq');
 
 INSERT INTO maps (title, description, owner_id, date_created, deleted) VALUES ('Great Food and Music', 'Good vibes', 1, '2018-10-22', false);
 INSERT INTO maps (title, description, owner_id, date_created, deleted) VALUES ('Fresh Supermarkets in GTA', 'Supermarkets with fresh produce', 1, '2018-11-28', false);
@@ -32,37 +8,11 @@ INSERT INTO maps (title, description, owner_id, date_created, deleted) VALUES ('
 INSERT INTO maps (title, description, owner_id, date_created, deleted) VALUES ('Ontario''s Power Stations', 'Built by OPG and operating 24/7 for over 30 years', 1, '2018-12-22', false);
 INSERT INTO maps (title, description, owner_id, date_created, deleted) VALUES ('Summer Vacation', 'My dream vacation spots', 1, '2018-12-25', false);
 
-
---
--- Data for Name: contributors; Type: TABLE DATA; Schema: public; Owner: vagrant
---
-
 INSERT INTO contributors (user_id, map_id) VALUES (1, 1);
 INSERT INTO contributors (user_id, map_id) VALUES (1, 2);
 INSERT INTO contributors (user_id, map_id) VALUES (1, 3);
 INSERT INTO contributors (user_id, map_id) VALUES (1, 4);
 INSERT INTO contributors (user_id, map_id) VALUES (1, 5);
-
-
---
--- Name: contributors_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
---
-
-SELECT pg_catalog.setval('contributors_id_seq', 5, true);
-
---
--- Name: favourites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
---
---
--- Name: maps_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
---
-
-SELECT pg_catalog.setval('maps_id_seq', 5, true);
-
-
---
--- Data for Name: markers; Type: TABLE DATA; Schema: public; Owner: vagrant
---
 
 INSERT INTO markers (map_id, latitude, longitude, title, description, image_url, deleted) VALUES (4, 43.7735729320042495, -79.5018768310546875, 'York', 'Shulich School of Business', 'https://www.macleans.ca/wp-content/uploads/2018/04/MACU01_ON_YORK01.jpg', false);
 INSERT INTO markers (map_id, latitude, longitude, title, description, image_url, deleted) VALUES (4, 43.6629045238366587, -79.3957042694091797, 'U of T St. George', 'Rotman Commerce ', 'https://www.utoronto.ca/sites/default/files/stgeorge-campus-cover.jpg', false);
@@ -87,22 +37,4 @@ INSERT INTO markers (map_id, latitude, longitude, title, description, image_url,
 INSERT INTO markers (map_id, latitude, longitude, title, description, image_url, deleted) VALUES (1, 43.6778045496729206, -79.624786376953125, 'Pearson Airport', 'Leaving Canada', 'https://www.ctvnews.ca/polopoly_fs/1.4435921.1597153479!/httpImage/image.jpg_gen/derivatives/landscape_1020/image.jpg', false);
 INSERT INTO markers (map_id, latitude, longitude, title, description, image_url, deleted) VALUES (1, 42.755748194596201, 12.6669996401543372, 'Sapporo', 'Sapporo, Japan', 'https://content.r9cdn.net/rimg/dimg/eb/cf/4baa6c11-city-36215-168a0ae741b.jpg?crop=true&width=1000&height=600&xhint=1500&yhint=1005', false);
 
-
---
--- Name: markers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
---
-
-SELECT pg_catalog.setval('markers_id_seq', 22, true);
-
-
---
--- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
---
-
-SELECT pg_catalog.setval('users_id_seq', 1, true);
-
-
---
--- PostgreSQL database dump complete
---
 
