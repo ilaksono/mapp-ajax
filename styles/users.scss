@@ -33,10 +33,6 @@
   visibility: visible;
 }
 
-.darkgrey {
-  color: $darkgrey;
-}
-
 .username {
   font-size: 16px;
   color: #4b4b4b;
@@ -51,6 +47,7 @@
   display: flex;
   align-items: center;
   border-bottom: 2px solid transparent;
+  color: $darkgrey;
 }
 
 .sub-nav > .sub-nav-active {
