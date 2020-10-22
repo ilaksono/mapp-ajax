@@ -35,8 +35,8 @@ const initializeMarker = (markersJson, count) => {
   marker.addListener('mouseover', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
       // console.log(data);
-      $('.img-container').show();
       $('.loc-img').attr('src', data.image_url);
+      $('.img-container').show();
     });
     $(`#entry${count}`).addClass("active-marker");
     $(`#entry${count}`).find('.icon-label').addClass("active-icon");
@@ -94,11 +94,14 @@ function formAddRowEditDisabled(mJson) {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
     $newDiv.find('.icon-label').addClass("active-icon");
     $newDiv.addClass("active-marker");
+    $('.loc-img').attr('src', mJson.image_url);
+    $('.img-container').show();
   });
   $newDiv.on('mouseout', function() {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
     $newDiv.find('.icon-label').removeClass("active-icon");
     $newDiv.removeClass("active-marker");
+    $('.img-container').hide();
   });
 };
 
@@ -128,11 +131,14 @@ function formAddRowEditEnabled(mJson) {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
     $newDiv.find('.icon-label').addClass("active-icon");
     $newDiv.addClass("active-marker");
+    $('.loc-img').attr('src', mJson.image_url);
+    $('.img-container').show();
   });
   $newDiv.on('mouseout', function() {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
     $newDiv.find('.icon-label').removeClass("active-icon");
     $newDiv.removeClass("active-marker");
+    $('.img-container').hide();
   });
 }
 
