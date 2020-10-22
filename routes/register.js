@@ -96,8 +96,7 @@ module.exports = (db) => {
                 req.session.userId = response.rows[0].id;
                 dbHelpers.fetchLatlngByIP()
                   .then(data => {
-                    const coords = { latitude: JSON.parse(data).data.latitude, longitude: JSON.parse(data).data.longitude };
-                    console.log({ lat: JSON.parse(data).data.latitude, lng: JSON.parse(data).data.longitude });
+                    const coords = { lat: JSON.parse(data).data.latitude, lng: JSON.parse(data).data.longitude };
                     req.session.coords = coords;
                     return res.redirect('maps');
             });
