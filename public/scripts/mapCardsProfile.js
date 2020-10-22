@@ -1,3 +1,5 @@
+let mapArr = [];
+
 const addFavourites = (mapsContainer) => {
   for (const card of mapsContainer) {
     const $newDiv = $(`<div class='heart-div'>`);
@@ -6,7 +8,6 @@ const addFavourites = (mapsContainer) => {
     $newDiv.appendTo(card);
   }
 };
-
 const fillHearts = jsonArr => {
   const $container = $('.section-container');
   for (const child of $($container).children()) {
@@ -23,7 +24,6 @@ $(document).ready(() => {
   $.get('/api/maps/personal/personal', (data) => {
     fillHearts(data);
   }).fail(er => console.log(er));
-
   $('.page-container').on('click', '.fa-heart', function (event) {
     const mapId = ($(event.target).parent().parent().parent().parent().parent().children()[2].innerText);
 
@@ -71,6 +71,11 @@ $(document).ready(() => {
 
     // removes or adds the map from favourites
     if ($(event.target).hasClass('fav-icon-like')) {
+      console.log($('#favourites2').children().children().length);
+      if ($('#favourites2').children().children().length === 1) {
+        console.log($('.page-container').find('#no-fav'));
+        $('.page-container').find('#no-fav').attr("hidden", false);
+      }
       for (const child of $('#favourites2').children().children()) {
         const childMapId = child.children[2].innerText;
         const heart = child.children[1].children[2].children[1].children[0].children[0];
@@ -78,13 +83,16 @@ $(document).ready(() => {
           $(heart).parent().parent().parent().parent().parent().remove();
         }
       }
+
     }
     if ($(event.target).hasClass('fav-icon-not')) {
       const mapCard = $(event.target).parent().parent().parent().parent().parent();
       const mapCardCopy = $(mapCard).clone();
       $(mapCardCopy).find('.fa-heart').addClass('fav-icon-like').removeClass('fav-icon-not');
-      console.log(mapCardCopy[0]);
       const favouriteContainer = $('#favourites2').children();
+      if ($(favouriteContainer).children().length === 0) {
+        $('.page-container').find('#no-fav').attr("hidden", true);
+      }
       $(mapCardCopy).appendTo($(favouriteContainer));
     }
 
@@ -102,19 +110,5 @@ $(document).ready(() => {
             .addClass('fav-icon-not');
         }).fail(err => console.log(err));
     }
-
-    /*
-        if ($(event.target).hasClass('fav-icon-not')) {
-    
-        const $container = $('.section-container');
-        for (const child of $($container).children()) {
-          const title = child.children[1].children[0].innerText.toLowerCase();
-          const description = child.children[1].children[1].innerText.toLowerCase();
-          if (title.includes(event.target.value.toLowerCase()) || description.includes(event.target.value.toLowerCase())) {
-            $(child).first().attr("hidden", false);
-          } else {
-            $(child).first().attr("hidden", true);
-          }
-        } */
   });
 });

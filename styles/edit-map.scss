@@ -348,9 +348,9 @@ i {
 .img-container {
   position: fixed;
   // width: 135px;
-  height: 18%;
-  right: 8%;
-  bottom: 3%;
+  height: 20%;
+  left: 350px;
+  top: 140px;
   z-index: 3;
   border: none;
 }
@@ -392,5 +392,12 @@ i {
     height: 50%;
     width: 100%;
     margin: 0;
+  }
+
+  .img-container {
+    position: fixed;
+    // width: 135px;
+    left: 0;
+    top: 270px;
   }
 }

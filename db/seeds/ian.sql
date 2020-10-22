@@ -19,7 +19,7 @@ SET search_path = public, pg_catalog;
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
-INSERT INTO users (id, username, email, password) VALUES (1, 'Ian Likes Maps', 'test@test.ca', '$2b$10$P8GyMgSpsf4hcuWU7zAzTOyF35EuoXwEwbAdLm1cI8YYcGuvWVIL2');
+INSERT INTO users (id, username, email, password) VALUES (1, 'Andrew', 'test@test.ca', '$2b$10$pmH/vR0thGNE5LqX4F1JxeDhJ.dpOvN/s1cbyHfKMywZpOPUCp6bq');
 
 
 --
@@ -44,13 +44,14 @@ SELECT pg_catalog.setval('contributors_id_seq', 5, true);
 -- Data for Name: favourites; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
+INSERT INTO favourites (id, user_id, map_id) VALUES (2, 1, 4);
 
 
 --
 -- Name: favourites_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
 --
 
-SELECT pg_catalog.setval('favourites_id_seq', 1, false);
+SELECT pg_catalog.setval('favourites_id_seq', 2, true);
 
 
 --

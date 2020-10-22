@@ -34,8 +34,8 @@ const initializeMarker = (markersJson, count) => {
   marker.addListener('mouseover', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
       // console.log(data);
-      $('.img-container').show();
       $('.loc-img').attr('src', data.image_url);
+      $('.img-container').show();
     });
     $(`#entry${count}`).addClass("active-marker");
     $(`#entry${count}`).find('.icon-label').addClass("active-icon");
@@ -91,11 +91,14 @@ function formAddRowEditDisabled(mJson) {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|1B2365|1B2365`);
     $newDiv.find('.icon-label').addClass("active-icon");
     $newDiv.addClass("active-marker");
+    $('.loc-img').attr('src', mJson.image_url);
+    $('.img-container').show();
   });
   $newDiv.on('mouseout', function() {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|FE6256`);
     $newDiv.find('.icon-label').removeClass("active-icon");
     $newDiv.removeClass("active-marker");
+    $('.img-container').hide();
   });
 };
 
@@ -125,11 +128,14 @@ function formAddRowEditEnabled(mJson) {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
     $newDiv.find('.icon-label').addClass("active-icon");
     $newDiv.addClass("active-marker");
+    $('.loc-img').attr('src', mJson.image_url);
+    $('.img-container').show();
   });
   $newDiv.on('mouseout', function() {
     markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
     $newDiv.find('.icon-label').removeClass("active-icon");
     $newDiv.removeClass("active-marker");
+    $('.img-container').hide();
   });
 }
 
@@ -212,7 +218,7 @@ $(document).ready(() => {
       center.lat = data.reduce((a, val) => a + val.latitude, 0) / data.length || 43.6532;
       center.lng = data.reduce((a, val) => a + val.longitude, 0) / data.length || -79.3832;
       initMap(center);
-      $('.creator').text(data[0].username);
+      $('.creator').text(data[0].username).addClass("text-overflow-ellipses");
       $('.creation-date').text(new Date(data[0].maps_date_created).toISOString().slice(0, 10).replace('T', ' '));
       return data;
     }).done(data => {
