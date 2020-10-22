@@ -122,8 +122,8 @@ function throwError(element) {
     $.ajax({ method: 'POST', data: `mark_error`, url: `/maps` })
       .fail(res => {
         $('.err-msg').text(res.responseJSON.error).show();
-        console.log($(element.children[3])[0]);
-        $(element.children[3]).addClass('text-error');
+        console.log($(element.children[2])[0]);
+        $(element.children[2]).addClass('text-error');
       });
   return;
 }
@@ -134,7 +134,7 @@ $(document).ready(function () {
     errorPresent = false;
     event.preventDefault();
     for (const $elem of $('.mark-container').children()) {
-      if (!$($elem).children()[3].value) {
+      if (!$($elem).children()[2].value) {
         throwError($elem);
         errorPresent = true;
       }
