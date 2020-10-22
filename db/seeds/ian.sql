@@ -23,6 +23,17 @@ INSERT INTO users (id, username, email, password) VALUES (1, 'Andrew', 'test@tes
 
 
 --
+-- Data for Name: maps; Type: TABLE DATA; Schema: public; Owner: vagrant
+--
+
+INSERT INTO maps (id, title, description, owner_id, date_created, deleted) VALUES (2, 'Great Food and Music', 'Good vibes', 1, '2020-10-22', false);
+INSERT INTO maps (id, title, description, owner_id, date_created, deleted) VALUES (3, 'Fresh Supermarkets in GTA', 'Supermarkets with fresh produce', 1, '2020-10-22', false);
+INSERT INTO maps (id, title, description, owner_id, date_created, deleted) VALUES (4, 'Universities in GTA', 'Some university campuses', 1, '2020-10-22', false);
+INSERT INTO maps (id, title, description, owner_id, date_created, deleted) VALUES (5, 'Ontario''s Power Stations', 'Built by OPG and operating 24/7 for over 30 years', 1, '2020-10-22', false);
+INSERT INTO maps (id, title, description, owner_id, date_created, deleted) VALUES (1, 'Summer Vacation', 'My dream vacation spots', 1, '2020-10-22', false);
+
+
+--
 -- Data for Name: contributors; Type: TABLE DATA; Schema: public; Owner: vagrant
 --
 
@@ -52,6 +63,13 @@ INSERT INTO favourites (id, user_id, map_id) VALUES (2, 1, 4);
 --
 
 SELECT pg_catalog.setval('favourites_id_seq', 2, true);
+
+
+--
+-- Name: maps_id_seq; Type: SEQUENCE SET; Schema: public; Owner: vagrant
+--
+
+SELECT pg_catalog.setval('maps_id_seq', 5, true);
 
 
 --
