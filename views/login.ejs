@@ -25,6 +25,16 @@
     <main>
       <div class="page-container">
 
+        <% if(locals.err_msg) { %>
+          <div id="hidden" class="alert alert-danger" role="alert"><%= err_msg %>&nbsp
+            <span id="close-message">&times;</span>
+          </div>
+        <% } %>
+        <% if(locals.success) { %>
+          <div id="hidden" class="alert alert-success" role="alert"><%= success_msg %>&nbsp
+            <span id="close-message">&times;</span>
+          </div>
+        <% } %>
       <div class="login-container">
 
 
@@ -48,16 +58,6 @@
     <br>
 
     </div>
-    <% if(locals.err_msg) { %>
-      <div id="hidden" class="alert alert-danger" role="alert"><%= err_msg %>
-        <span id="close-message">&times;</span>
-      </div>
-    <% } %>
-    <% if(locals.success) { %>
-      <div id="hidden" class="alert alert-success" role="alert"><%= success_msg %>
-        <span id="close-message">&times;</span>
-      </div>
-    <% } %>
   </main>
   </body>
 </html>

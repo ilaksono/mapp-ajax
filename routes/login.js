@@ -16,7 +16,7 @@ module.exports = (db) => {
     WHERE email = $1;
     `;
     if (user.email === "" || user.password === "") {
-      const err_msg = 'Please enter valid email and password';
+      const err_msg = 'Please enter a valid email and password';
       return res.status(400).render('login', { err_msg: err_msg, username: null, userId: null, active: "login" } );
     }
     db.query(query, [user.email])
