@@ -8,6 +8,7 @@ const addFavourites = (mapsContainer) => {
     $newDiv.appendTo(card);
   }
 };
+
 const fillHearts = jsonArr => {
   const $container = $('.section-container');
   for (const child of $($container).children()) {

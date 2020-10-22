@@ -1,5 +1,4 @@
 const express = require('express');
-const { request } = require('express');
 const router = express.Router();
 
 module.exports = (db) => {
@@ -175,10 +174,13 @@ module.exports = (db) => {
   });
 
   router.get('/center/center', (req, res) => {
-    return dbHelpers.fetchLatlngByIP()
-      .then(data => {
-        return res.json(data);
-      }).catch(err => console.log(err, '10'));
+    // console.log(req.session.coords);
+    return res.status(200).json(req.session.coords);
+    
+    // return dbHelpers.fetchLatlngByIP()
+    //   .then(data => {
+    //     return res.json(data);
+    //   }).catch(err => console.log(err, '10'));
   });
   router.get('/hearts/all', (req, res) => {
     const query = `SELECT id FROM maps
