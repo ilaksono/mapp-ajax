@@ -34,7 +34,6 @@ module.exports = (db) => {
   });
 
   router.post('/', (req, res) => {
-    // console.log(req.body, 'here');
     if (req.body.hasOwnProperty('map_error')) return res.status(400).json({ error: 'Map Title field cannot be empty!' });
     if (req.body.hasOwnProperty('mark_error')) return res.status(400).json({ error: 'Marker Title field cannot be empty!' });
     const datajson = req.body;
@@ -44,20 +43,17 @@ module.exports = (db) => {
     delete datajson.date_created;
     delete datajson.map_title;
     delete datajson.map_desc;
-    // console.log(datajson);
     const locObj = dbHelpers.createLocationsArray(datajson);
     locObj.dateCreated = dateCreated;
     locObj.mapTitle = mapTitle;
     locObj.mapDesc = mapDesc;
     console.log(locObj, 'loc');
-    // console.log(locObj);
     const query = `INSERT INTO maps (title, description, owner_id, date_created)
     VALUES ($1, $2, $3, $4)
     RETURNING *;`;
     db.query(query, [locObj.mapTitle, locObj.mapDesc
       , req.session.userId, locObj.dateCreated])
       .then(res1 => {
-        // console.log(res1.rows[0]);
         if (locObj.lat) {
           const query2 = `INSERT INTO markers (map_id, latitude, longitude, title, description, image_url)
         VALUES ($1, $2, $3, $4, $5, $6)
@@ -74,7 +70,6 @@ module.exports = (db) => {
         RETURNING *;`;
         db.query(queryContrib, [res1.rows[0].id, req.session.userId])
           .catch(er => console.log(er));
-        // console.log(res.rows);
         return res.status(200).json({ url: `/maps/${res1.rows[0].id}` });
       }).catch(err1 => console.log(err1));
   });
