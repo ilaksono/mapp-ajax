@@ -1,5 +1,3 @@
-let mapArr = [];
-
 const addFavourites = (mapsContainer) => {
   for (const card of mapsContainer) {
     const $newDiv = $(`<div class='heart-div'>`);

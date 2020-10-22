@@ -1,5 +1,3 @@
-const userIP = '162.245.144.188';
-const defaultLatlng = { latitude: '49.27670', longitude: '-123.13000' };
 const request = require('request-promise-native');
 const ipify = 'https://api.ipify.org/?format=json';
 
@@ -12,7 +10,7 @@ module.exports = (db) => {
     JOIN users ON users.id = maps.owner_id
     WHERE maps.deleted = false
     GROUP BY maps.id, users.id
-    ORDER BY maps.id DESC;
+    ORDER BY maps.id ASC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
@@ -28,7 +26,7 @@ module.exports = (db) => {
     LEFT JOIN markers ON map_id = maps.id
     JOIN users ON users.id = maps.owner_id
     WHERE maps.deleted = false
-    ORDER BY maps.id DESC;
+    ORDER BY maps.id ASC;
     `;
     const queryParams = [];
     return db.query(queryString, queryParams)
@@ -91,7 +89,7 @@ module.exports = (db) => {
       const lat_spread = latMax[id] - latMin[id];
       const long_spread = longMax[id] - longMin[id];
       const zoom = getZoomIndex(lat_spread, long_spread);
-      const mapStaticURL = buildStaticURL(center_latitude, center_longitude, zoom, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+      const mapStaticURL = buildStaticURL(center_latitude, center_longitude, 0.6 * zoom, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
       console.log(mapStaticURL, title);
       loadedMaps.push({ id, title, description, user, date_created, lat_spread, long_spread, center_latitude, center_longitude, mapStaticURL });
     }
@@ -118,6 +116,7 @@ module.exports = (db) => {
         markers += `|${markerArr[i].latitude},${markerArr[i].longitude}`;
       }
     }
+
     const key = `&key=${apiKey}`;
     return staticURL += center + zoomParam + size + markers + key;
   };
