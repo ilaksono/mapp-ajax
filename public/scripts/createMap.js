@@ -48,10 +48,9 @@ function clickHandle(map) {
     const markCntr = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
-      draggable: true,
       position: { lat: latVal, lng: lngVal },
       map: map,
-      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`
+      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|FE6256`
     });
     const $newLat = $(`<input type="text" name='lat${markCntr - 1}' hidden>`).val(latVal);
     const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(lngVal);
@@ -59,9 +58,7 @@ function clickHandle(map) {
     const $newDesc = $(`<input type='text' class='marker-input' name='loc_desc${markCntr - 1}' placeholder='Marker Description'>`);
     const $imgURL = $(`<input type='text' id="img_url" class='marker-input' name='img_url${markCntr - 1}' placeholder='Marker Image URL'>`);
     const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
-    const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
     // $('#lat-lngs').append($newLat).append($newLng);
-    $newLabel.appendTo($newDiv);
     $newLat.appendTo($newDiv);
     $newLng.appendTo($newDiv);
     $newTitle.appendTo($newDiv);
