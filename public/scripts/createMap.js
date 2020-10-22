@@ -47,6 +47,8 @@ function clickHandle(map) {
     const lngVal = mapsMouseEvent.latLng.toJSON().lng;
     const markCntr = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
+      animation: google.maps.Animation.DROP,
+      draggable: true,
       position: { lat: latVal, lng: lngVal },
       map: map,
       icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`
@@ -67,33 +69,16 @@ function clickHandle(map) {
     $imgURL.appendTo($newDiv);
     formArr.push($newDiv);
     $newDiv.appendTo($('.mark-container'));
+
     marker.addListener('click', function () {
       marker.setMap(null);
       let index = markersArr.indexOf(this);
       $(`#entry${index}`).remove();
       numDeleted++;
     });
-    marker.addListener('mouseover', function () {
-      $newDiv.addClass("active-marker");
-      $newDiv.find('.icon-label').addClass("active-icon");
-      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
-    });
-    marker.addListener('mouseout', function () {
-      $newDiv.removeClass("active-marker");
-      $newDiv.find('.icon-label').removeClass("active-icon");
-      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
-    });
-    $newDiv.on('mouseover', function() {
-      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
-      $newDiv.find('.icon-label').addClass("active-icon");
-      $newDiv.addClass("active-marker");
-    });
-    $newDiv.on('mouseout', function() {
-      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
-      $newDiv.find('.icon-label').removeClass("active-icon");
-      $newDiv.removeClass("active-marker");
-    });
 
+    
+    
     markersArr.push(marker);
     $(':input').on('change', event => {
       $(event.target).removeClass('text-error');
@@ -122,8 +107,6 @@ function throwError(element) {
 }
 
 $(document).ready(function () {
-
-
 
   $('#lat-lngs').on('submit', function (event) {
     errorPresent = false;

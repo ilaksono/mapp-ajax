@@ -14,6 +14,8 @@ const initializeMarker = (markersJson, count) => {
   // console.log(dbData);
   // console.log(typeof markersJson.latitude, markersJson.latitude)
   const marker = new google.maps.Marker({
+    animation: google.maps.Animation.DROP,
+    draggable: true,
     position: { lat: markersJson.latitude, lng: markersJson.longitude },
     map,
     icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|FE6256|000000`
@@ -149,6 +151,8 @@ function clickHandle() {
     const lng = mapsMouseEvent.latLng.toJSON().lng;
     const markerNumber = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
+      animation: google.maps.Animation.DROP,
+      draggable: true,
       position: { lat, lng },
       map,
       icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`
