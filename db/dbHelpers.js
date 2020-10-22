@@ -75,7 +75,9 @@ module.exports = (db) => {
       const markerArray = [];
       const filteredById = data.filter((data) => data.id === Number(id));
       for (const markers of filteredById) {
-        markerArray.push({ latitude: markers.latitude, longitude: markers.longitude });
+        if (markers.latitude && markers.longitude) {
+          markerArray.push({ latitude: markers.latitude, longitude: markers.longitude });
+        }
       }
       const object = data.filter(obj => obj.id === Number(id));
       const title = object[0].title;
