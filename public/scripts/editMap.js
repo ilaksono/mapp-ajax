@@ -36,12 +36,14 @@ const initializeMarker = (markersJson, count) => {
       $('.img-container').show();
       $('.loc-img').attr('src', data.image_url);
     });
+    $(`#entry${count}`).addClass("active-marker");
   });
   marker.addListener('mouseout', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
       // console.log(data);
       $('.img-container').hide();
     });
+    $(`#entry${count}`).removeClass("active-marker");
   });
 
   formAddRowEditDisabled(markersJson);
