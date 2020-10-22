@@ -1,3 +1,5 @@
+// let mapArr = [];
+
 // const buildStaticURL = (json) => {
 //   let staticURL = `https://maps.googleapis.com/maps/api/staticmap?`;
 //   const height = 220;
