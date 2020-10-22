@@ -57,7 +57,7 @@ function clickHandle(map) {
     const $newLng = $(`<input type="text" name='lng${markCntr - 1}' hidden>`).val(lngVal);
     const $newTitle = $(`<input type='text' class='m-title marker-title-input' name='loc_title${markCntr - 1}' placeholder='Marker Title*'>`);
     const $newDesc = $(`<input type='text' class='marker-input' name='loc_desc${markCntr - 1}' placeholder='Marker Description'>`);
-    const $imgURL = $(`<input type='text' class='marker-input' name='img_url${markCntr - 1}' placeholder='Marker Image URL'>`);
+    const $imgURL = $(`<input type='text' id="img_url" class='marker-input' name='img_url${markCntr - 1}' placeholder='Marker Image URL'>`);
     const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
     const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
     // $('#lat-lngs').append($newLat).append($newLng);
@@ -82,21 +82,28 @@ function clickHandle(map) {
       $newDiv.find('.icon-label').addClass("active-icon");
       marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
     });
+
     marker.addListener('mouseout', function () {
       $newDiv.removeClass("active-marker");
       $newDiv.find('.icon-label').removeClass("active-icon");
       marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
+      $('.img-container').hide();
     });
     $newDiv.on('mouseover', function() {
       marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
       $newDiv.find('.icon-label').addClass("active-icon");
       $newDiv.addClass("active-marker");
+      $('.loc-img').attr('src', $(`#entry${markCntr - 1}`).find('#img_url').val());
+      $('.img-container').show();
+
     });
     $newDiv.on('mouseout', function() {
       marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
       $newDiv.find('.icon-label').removeClass("active-icon");
       $newDiv.removeClass("active-marker");
+      $('.img-container').hide();
     });
+
 
     markersArr.push(marker);
     $(':input').on('change', event => {
