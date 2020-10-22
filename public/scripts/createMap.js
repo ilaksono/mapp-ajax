@@ -87,7 +87,6 @@ function clickHandle(map) {
       $newDiv.removeClass("active-marker");
       $newDiv.find('.icon-label').removeClass("active-icon");
       marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
-      $('.img-container').hide();
     });
     $newDiv.on('mouseover', function() {
       marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
