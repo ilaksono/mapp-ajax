@@ -12,13 +12,12 @@ let numDeleted = 0;
 const initializeMarker = (markersJson, count) => {
   dbData.push(markersJson.id);
   // console.log(dbData);
-  // console.log(typeof markersJson.latitude, markersJson.latitude)
+  // console.log(typeof markersJson.latitude, markersJson.latitude);
   const marker = new google.maps.Marker({
     animation: google.maps.Animation.DROP,
-    draggable: true,
     position: { lat: markersJson.latitude, lng: markersJson.longitude },
     map,
-    icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|FE6256|000000`
+    icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|000000`
   });
   // marker.addListener('click', function () {
   //   marker.setMap(null);
@@ -40,7 +39,7 @@ const initializeMarker = (markersJson, count) => {
     });
     $(`#entry${count}`).addClass("active-marker");
     $(`#entry${count}`).find('.icon-label').addClass("active-icon");
-    marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|1B2365|FFFFFF`);
+    marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|1B2365|FFFFFF`);
   });
   marker.addListener('mouseout', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
@@ -49,7 +48,7 @@ const initializeMarker = (markersJson, count) => {
     });
     $(`#entry${count}`).removeClass("active-marker");
     $(`#entry${count}`).find('.icon-label').removeClass("active-icon");
-    marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|FE6256|000000`);
+    marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|000000`);
   });
 
   markerArr.push(marker);
@@ -77,9 +76,7 @@ function formAddRowEditDisabled(mJson) {
   const $newDesc = $(`<input type='text' class='marker-input text-overflow-ellipses' disabled='disabled' name='loc_desc${markCntr - 1}' placeholder='Marker Description' value='${mJson.description}'>`);
   const $imgURL = $(`<input type='text' class='marker-input text-overflow-ellipses image-url' disabled='disabled' name='img_url${markCntr - 1}' placeholder='Marker Image URL' value='${mJson.image_url}'>`);
   const $newDiv = $(`<div id='entry${markCntr - 1}' class='group-card'>`);
-  const $newLabel = $(`<label class='icon-label'>`).text(markCntr);
 
-  $newLabel.appendTo($newDiv);
   $newLat.appendTo($newDiv);
   $newLng.appendTo($newDiv);
   $newTitle.appendTo($newDiv);
@@ -91,12 +88,12 @@ function formAddRowEditDisabled(mJson) {
     $('.err-msg').hide();
   });
   $newDiv.on('mouseover', function() {
-    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|1B2365|1B2365`);
     $newDiv.find('.icon-label').addClass("active-icon");
     $newDiv.addClass("active-marker");
   });
   $newDiv.on('mouseout', function() {
-    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|FE6256`);
     $newDiv.find('.icon-label').removeClass("active-icon");
     $newDiv.removeClass("active-marker");
   });
@@ -152,7 +149,6 @@ function clickHandle() {
     const markerNumber = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
-      draggable: true,
       position: { lat, lng },
       map,
       icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`
