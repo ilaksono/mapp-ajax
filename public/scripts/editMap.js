@@ -38,16 +38,22 @@ const initializeMarker = (markersJson, count) => {
       $('.img-container').show();
       $('.loc-img').attr('src', data.image_url);
     });
+    $(`#entry${count}`).addClass("active-marker");
+    $(`#entry${count}`).find('.icon-label').addClass("active-icon");
+    marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|1B2365|FFFFFF`);
   });
   marker.addListener('mouseout', function () {
     $.get(`/api/maps/images/${markersJson.id}`, data => {
       // console.log(data);
       $('.img-container').hide();
     });
+    $(`#entry${count}`).removeClass("active-marker");
+    $(`#entry${count}`).find('.icon-label').removeClass("active-icon");
+    marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${count + 1}|FE6256|000000`);
   });
 
-  formAddRowEditDisabled(markersJson);
   markerArr.push(marker);
+  formAddRowEditDisabled(markersJson);
 };
 
 function hoverHandle(map) {
@@ -84,6 +90,16 @@ function formAddRowEditDisabled(mJson) {
     $(event.target).removeClass('text-error');
     $('.err-msg').hide();
   });
+  $newDiv.on('mouseover', function() {
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
+    $newDiv.find('.icon-label').addClass("active-icon");
+    $newDiv.addClass("active-marker");
+  });
+  $newDiv.on('mouseout', function() {
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
+    $newDiv.find('.icon-label').removeClass("active-icon");
+    $newDiv.removeClass("active-marker");
+  });
 };
 
 function formAddRowEditEnabled(mJson) {
@@ -107,7 +123,18 @@ function formAddRowEditEnabled(mJson) {
     $(event.target).removeClass('text-error');
     $('.err-msg').hide();
   });
-};
+
+  $newDiv.on('mouseover', function() {
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
+    $newDiv.find('.icon-label').addClass("active-icon");
+    $newDiv.addClass("active-marker");
+  });
+  $newDiv.on('mouseout', function() {
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
+    $newDiv.find('.icon-label').removeClass("active-icon");
+    $newDiv.removeClass("active-marker");
+  });
+}
 
 function initMap(center) {
   var options = {
@@ -122,18 +149,29 @@ function clickHandle() {
   map.addListener('click', (mapsMouseEvent) => {
     const lat = mapsMouseEvent.latLng.toJSON().lat;
     const lng = mapsMouseEvent.latLng.toJSON().lng;
+    const markerNumber = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
       draggable: true,
       position: { lat, lng },
       map,
-      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${$('.mark-container').children().length + 1 + numDeleted}|FE6256|000000`
+      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`
     });
     marker.addListener('click', function () {
       marker.setMap(null);
       let index = markerArr.indexOf(this);
       $(`#entry${index}`).remove();
       numDeleted++;
+    });
+    marker.addListener('mouseover', function () {
+      $(`#entry${markerArr.indexOf(this)}`).addClass("active-marker");
+      $(`#entry${markerArr.indexOf(this)}`).find('.icon-label').addClass("active-icon");
+      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|1B2365|FFFFFF`);
+    });
+    marker.addListener('mouseout', function () {
+      $(`#entry${markerArr.indexOf(this)}`).removeClass("active-marker");
+      $(`#entry${markerArr.indexOf(this)}`).find('.icon-label').removeClass("active-icon");
+      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`);
     });
 
     const markJson = {
@@ -143,8 +181,8 @@ function clickHandle() {
       description: '',
       image_url: ''
     };
-    formAddRowEditEnabled(markJson);
     markerArr.push(marker);
+    formAddRowEditEnabled(markJson);
     // console.log(markerArr.length);
   });
 }

@@ -48,8 +48,8 @@ function clickHandle(map) {
     const markCntr = $('.mark-container').children().length + 1 + numDeleted;
     const marker = new google.maps.Marker({
       animation: google.maps.Animation.DROP,
-      position: { lat: latVal, lng: lngVal },
       draggable: true,
+      position: { lat: latVal, lng: lngVal },
       map: map,
       icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`
     });

@@ -150,6 +150,19 @@
   background-color: $grey;
   font-family: $font-stack;
 }
+
+.active-marker {
+  border: 1px solid $blue;
+  -webkit-box-shadow:3px 3px 4px $blue;
+  -moz-box-shadow:3px 3px 4px $blue;
+  box-shadow:3px 3px 4px $blue;
+}
+
+.active-icon {
+  background-color: $blue;
+  color: $white;
+}
+
 .marker-input {
   width: calc(100% - 20px);
   margin: 5px 10px 5px 10px;
