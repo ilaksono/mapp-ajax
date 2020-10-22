@@ -143,6 +143,19 @@ module.exports = (db) => {
       })
       .catch(err => console.log(err));
   });
+  router.post('/search/marks', (req, res) => {
+    const query2 = `SELECT latitude, longitude
+    FROM markers
+    WHERE map_id = $1;`;
+    db.query(query2, [req.body.map_id])
+      .then(response => {
+        console.log(response.rows, req.body.map_id);
+        if(response.rows.length)
+          res.json(response.rows);
+        else
+          res.json([]);
+      }).catch(er => console.log(er));
+  });
 
   router.get('/:id/zoom', (req, res) => {
     const query = `SELECT MAX(latitude) - MIN(latitude) as lat_spread,MAX(longitude) - MIN(longitude) as lng_spread
@@ -155,7 +168,8 @@ module.exports = (db) => {
       .then(map => {
         let zoomIndex = 5;
         if (map.rows[0])
-          zoomIndex = 0.8*(21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.42)*1.38)**0.44 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07)*8 - 0.3*(((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2)**0.5)*1.2) ** 0.12));
+          zoomIndex = 0.8 * (21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.42) * 1.38) ** 0.44 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07) * 8 - 0.3 * (((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.5) * 1.2) ** 0.12));
+        console.log(zoomIndex);
         return res.json({ zoomIndex });
       }).catch(er => console.log(er));
   });

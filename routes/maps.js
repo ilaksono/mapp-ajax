@@ -21,7 +21,7 @@ module.exports = (db) => {
       } else {
         return res.render("maps", { loadedMaps, username: null, userId: null, active: "maps" });
       }
-    });
+    }); 
   });
 
   router.get('/new', (req, res) => {

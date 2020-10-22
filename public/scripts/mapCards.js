@@ -1,3 +1,5 @@
+let mapArr = [];
+
 const addFavourites = (mapsContainer) => {
   for (const card of mapsContainer) {
     const $newDiv = $(`<div class='heart-div'>`);
@@ -6,7 +8,6 @@ const addFavourites = (mapsContainer) => {
     $newDiv.appendTo(card);
   }
 };
-
 const fillHearts = jsonArr => {
   const $container = $('.section-container');
   for (const child of $($container).children()) {

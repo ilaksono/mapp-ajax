@@ -17,7 +17,7 @@ module.exports = (db) => {
     const queryParams = [];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows
+        return response.rows;
       });
   };
 
@@ -33,7 +33,7 @@ module.exports = (db) => {
     const queryParams = [];
     return db.query(queryString, queryParams)
       .then(response => {
-        return response.rows
+        return response.rows;
       });
   };
 
@@ -45,7 +45,7 @@ module.exports = (db) => {
     let id;
     for (const marker of data) {
       id = marker.id;
-      if(!(id in latSums)) {
+      if (!(id in latSums)) {
         latSums[id] = 0;
         longSums[id] = 0;
         latCounts[id] = 0;
@@ -90,13 +90,14 @@ module.exports = (db) => {
       const long_spread = longMax[id] - longMin[id];
       const zoom = getZoomIndex(lat_spread, long_spread);
       const mapStaticURL = buildStaticURL(center_latitude, center_longitude, zoom, 220, 250, "AIzaSyAzhpPYg-ucwzqHgAPqZfYbXVnmsMazg2I", markerArray);
+      console.log(mapStaticURL, title);
       loadedMaps.push({ id, title, description, user, date_created, lat_spread, long_spread, center_latitude, center_longitude, mapStaticURL });
     }
     return loadedMaps;
   };
 
   const getZoomIndex = (maxLatSpread, maxLongSpread) => {
-    return 16 - Math.floor((((maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.5) * 6)**0.6 + (maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.07 - (((maxLatSpread ** 2 + maxLongSpread ** 2)**0.5)*2) ** 0.16);
+    return 16 - Math.floor((((maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.5) * 6) ** 0.6 + (maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.07 - (((maxLatSpread ** 2 + maxLongSpread ** 2) ** 0.5) * 2) ** 0.16);
   };
 
   const buildStaticURL = function (lat, long, zoom, height, width, apiKey, markerArr) {
@@ -119,18 +120,18 @@ module.exports = (db) => {
     return staticURL += center + zoomParam + size + markers + key;
   };
 
-  const getMarkersByMapID = function(mapId) {
+  const getMarkersByMapID = function (mapId) {
     const queryString = `
     SELECT latitude, longitude
     FROM markers
     WHERE map_id = $1;
     `;
-    const queryParams = [mapId]
+    const queryParams = [mapId];
     return db.query(queryString, queryParams)
-    .then(response => {
-      return response.rows;
-    });
-  }
+      .then(response => {
+        return response.rows;
+      });
+  };
 
   const fetchLatlngByIP = () => {
     return request(ipify)
@@ -242,15 +243,15 @@ module.exports = (db) => {
     `;
     return db.query(queryString, [userId])
       .then(response => response.rows);
-  }
+  };
 
   const userIsOwner = (userId, mapId) => {
     const query = `SELECT owner_id
     FROM maps WHERE id = $1
     AND owner_id = $2;`;
     return db.query(query, [mapId, userId])
-    .then(data => data.rows);
-  }
+      .then(data => data.rows);
+  };
 
   return {
     fetchLatlngByIP,
