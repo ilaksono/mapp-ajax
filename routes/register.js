@@ -29,58 +29,72 @@ module.exports = (db) => {
   });
 
   router.post("/", (req, res) => {
-    const user = req.body
+    const userInput = req.body
     // WHY AM I DOING THIS, you'll remember
     const insertQuery = `
     INSERT INTO users (username, email, password)
     VALUES ($1, $2, $3) RETURNING *;
     `;
-    const alterQuery = `
+    const alterQueryWithPassword = `
     UPDATE users
     SET username = $1, email = $2, password = $3
     WHERE id = $4
+    RETURNING *;
+    `;
+    const alterQueryNoPassword = `
+    UPDATE users
+    SET username = $1, email = $2
+    WHERE id = $3
     RETURNING *;
     `;
     const dbCheckQuery = `
     SELECT * FROM users
     WHERE email = $1;
     `;
-    if (user.username === "" || user.email === "" || user.password === "") {
-      if (req.session.userId) {
-        dbHelpers.getUserById(req.session.userId)
-        .then(user => {
+
+    if (req.session.userId) {
+      dbHelpers.getUserById(req.session.userId)
+      .then(user => {
+        if (userInput.username === "" || userInput.email === "") {
           const templateVars = {
             username: user.username,
             userId: user.id,
             email: user.email,
             active: "register",
-            err_msg: 'Please enter all fields to modify account'
+            err_msg: 'Please enter a new username or email'
           }
-        return res.status(400).render('register', templateVars );
-        })
-        .catch(err => res.status(400).render("login", { username: null, userId: null, active: 'login' }));
-      } else {
+          return res.status(400).render('register', templateVars);
+        }
+        if (userInput.password === "") {
+          db.query(alterQueryNoPassword, [userInput.username, userInput.email, req.session.userId])
+          .then(response => {
+            req.session.userId = response.rows[0].id;
+            return res.redirect('maps');
+          })
+        } else {
+          db.query(alterQueryWithPassword, [userInput.username, userInput.email, bcrypt.hashSync(user.password, salt), req.session.userId])
+          .then(response => {
+            req.session.userId = response.rows[0].id;
+            return res.redirect('maps');
+          })
+        }
+      });
+    } else {
+      if (userInput.username === "" || userInput.email === "" || userInput.password === "") {
         err_msg = 'Please enter all fields to register';
         return res.status(400).render('register', { err_msg: err_msg, username: null, userId: null, active: 'register' } );
       }
-    } else {
-      db.query(dbCheckQuery, [user.email])
+      db.query(dbCheckQuery, [userInput.email])
       .then(response => {
         const dbUser = response.rows[0];
-        if (req.session.userId) {
-          db.query(alterQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt), req.session.userId])
-          .then(response => {
-            req.session.userId = response.rows[0].id;
-            res.redirect('maps');
-          })
-        } else if (dbUser) {
+        if (dbUser) {
           err_msg = 'This email is already associated with an account';
           return res.status(400).render('register', { err_msg: err_msg, username: null, userId: null, active: 'register' } );
         } else {
-          db.query(insertQuery, [user.username, user.email, bcrypt.hashSync(user.password, salt)])
+          db.query(insertQuery, [userInput.username, userInput.email, bcrypt.hashSync(userInput.password, salt)])
           .then(response => {
             req.session.userId = response.rows[0].id;
-            res.redirect('maps');
+            return res.redirect('maps');
           })
         }
       });
