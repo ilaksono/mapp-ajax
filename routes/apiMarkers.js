@@ -165,7 +165,7 @@ module.exports = (db) => {
   });
   router.post('/search/marks', (req, res) => {
     const query2 = `SELECT latitude, longitude
-    FROM maps LEFT JOIN markers ON map_id = maps.id 
+    FROM markers
     WHERE map_id = $1;`;
     db.query(query2, [req.body.map_id])
       .then(response => {
@@ -173,7 +173,7 @@ module.exports = (db) => {
         if(response.rows.length)
           res.json(response.rows);
         else
-          res.json([{}]);
+          res.json([]);
       }).catch(er => console.log(er));
   });
   router.post('/search/search', (req, res) => {
@@ -185,7 +185,6 @@ module.exports = (db) => {
     WHERE maps.deleted = false 
     AND maps.title LIKE $1
     GROUP BY maps.id, users.id
-    ORDER BY maps.id DESC;
     ;`;
     db.query(query, [`%${req.body.search}%`])
       .then(data => {

@@ -1,4 +1,4 @@
-const mapArr = [];
+let mapArr = [];
 
 const addFavourites = (mapsContainer) => {
   for (const card of mapsContainer) {
@@ -48,6 +48,7 @@ const buildStaticURL = (json) => {
 };
 //
 const renderCard = (json) => {
+  console.log(json);
   const $newMapCard = $(`<div class='map-card'>`);
   const $newAnchor = $(`<a href='/maps/${json.id}'>`);
   const $mapContainer = $('<div class="map-container">');
@@ -129,6 +130,7 @@ $(document).ready(() => {
     }
   });
   $('.search').on('input', (event) => {
+    mapArr = [];
     if ($('#search-js').val())
       $('#section__container').empty();
     $.ajax({ method: 'POST', url: '/api/maps/search/search', data: `search=${$('#search-js').val()}` })
