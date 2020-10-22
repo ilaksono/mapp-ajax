@@ -71,7 +71,7 @@ function throwError (element) {
     $('.err-msg').text('Location title fields cannot be empty!').show();
   else if (element === 'MAPTITLE')
     $('.err-msg').text('Map title cannot be empty!').show();
-  return  
+  return
 }
 $(document).ready(function () {
   $('#lat-lngs').on('submit', function (event) {
