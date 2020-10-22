@@ -2,7 +2,7 @@ const mapId = Number(window.location.pathname.split('').slice(6).join(''));
 const markerArr = [];
 const dbData = [];
 const markDeleteIds = [];
-let zoom = 5;
+let zoom = 3;
 let map;
 let mapTitle;
 let userIsTrue = false;
@@ -211,7 +211,7 @@ function throwError(element) {
 
 $(document).ready(() => {
   $.get(`/api/maps/${mapId}/zoom`, data => {
-    zoom = data.zoomIndex;
+    zoom = 0.6 * data.zoomIndex;
   }).done(() => {
     $.get(`/api/maps/${mapId}`, data => {
       console.log(data);

@@ -165,10 +165,12 @@ module.exports = (db) => {
     ;`;
     db.query(query, [req.params.id])
       .then(map => {
-        let zoomIndex = 5;
+        let zoomIndex = 2;
         if (map.rows[0])
-          zoomIndex = 0.8 * (21 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 1.2) ** 0.35) * 1.32) ** 0.35 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.07) * 8 - 0.3 * (((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.5) * 1.2) ** 0.12));
+          zoomIndex = 24 - Math.floor((((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.5) * 1.6) ** 0.51 + ((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.08) * 6 - 0.3 * (((map.rows[0].lat_spread ** 2 + map.rows[0].lng_spread ** 2) ** 0.5) * 1.1) ** 0.1);
         console.log(zoomIndex);
+        if(zoomIndex < 2.5)
+          zoomIndex = 2.5;
         return res.json({ zoomIndex });
       }).catch(er => console.log(er));
   });
