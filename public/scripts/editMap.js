@@ -125,14 +125,14 @@ function formAddRowEditEnabled(mJson) {
   });
 
   $newDiv.on('mouseover', function() {
-    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|1B2365|FFFFFF`);
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|1B2365|FFFFFF`);
     $newDiv.find('.icon-label').addClass("active-icon");
     $newDiv.addClass("active-marker");
     $('.loc-img').attr('src', mJson.image_url);
     $('.img-container').show();
   });
   $newDiv.on('mouseout', function() {
-    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markCntr}|FE6256|000000`);
+    markerArr[markCntr - 1].setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|000000`);
     $newDiv.find('.icon-label').removeClass("active-icon");
     $newDiv.removeClass("active-marker");
     $('.img-container').hide();
@@ -157,7 +157,7 @@ function clickHandle() {
       animation: google.maps.Animation.DROP,
       position: { lat, lng },
       map,
-      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`
+      icon: `http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|000000`
     });
     marker.addListener('click', function () {
       marker.setMap(null);
@@ -168,12 +168,12 @@ function clickHandle() {
     marker.addListener('mouseover', function () {
       $(`#entry${markerArr.indexOf(this)}`).addClass("active-marker");
       $(`#entry${markerArr.indexOf(this)}`).find('.icon-label').addClass("active-icon");
-      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|1B2365|FFFFFF`);
+      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|1B2365|FFFFFF`);
     });
     marker.addListener('mouseout', function () {
       $(`#entry${markerArr.indexOf(this)}`).removeClass("active-marker");
       $(`#entry${markerArr.indexOf(this)}`).find('.icon-label').removeClass("active-icon");
-      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=${markerNumber}|FE6256|000000`);
+      marker.setIcon(`http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%20|FE6256|000000`);
     });
 
     const markJson = {
